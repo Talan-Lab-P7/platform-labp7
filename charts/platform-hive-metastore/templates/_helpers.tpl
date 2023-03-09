@@ -6,7 +6,7 @@ Expand the name of the chart.
 {{- end }}
 
 {{- define "hiveMetaStore.app.name" -}}
-{{- template "hdfs-k8s.name" . -}}-app
+{{- template "hiveMetaStore.name" . -}}-app
 {{- end -}}
 
 {{/*
