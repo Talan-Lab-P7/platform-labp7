@@ -8,6 +8,7 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  serviceName: {{ include "hiveMetaStore.fullname" . }}
   selector:
     matchLabels:
       {{- include "hiveMetaStore.selectorLabels" . | nindent 6 }}
