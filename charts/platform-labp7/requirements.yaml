@@ -1,0 +1,42 @@
+dependencies:
+  - name: platform-config
+    version: "0.1.0"
+    repository: "file://../platform-config"
+    condition: condition.subchart.config
+    tags:
+      - ranger
+      - simple
+  - name: platform-hdfs
+    version: "0.1.0"
+    repository: "file://../platform-hdfs/charts/hdfs-k8s"
+    condition: condition.subchart.hdfs
+    tags:
+      - ranger
+      - simple
+  - name: platform-spark
+    version: "0.1.0"
+    repository: "file://../platform-spark"
+    condition: condition.subchart.spark
+    tags:
+      - ranger
+      - simple
+  - name: platform-hive-metastore
+    version: "0.1.0"
+    repository: "file://../platform-hive-metastore"
+    condition: condition.subchart.hiveMetaStore
+    tags:
+      - ranger
+      - simple
+
+  - name: platform-ranger-kms
+    version: "0.1.0"
+    repository: "file://../platform-ranger-kms"
+    condition: condition.subchart.rangerKMS
+    tags:
+      - ranger
+  - name: platform-ranger-policy
+    version: "0.1.0"
+    repository: "file://../platform-ranger-policy"
+    condition: condition.subchart.ranger
+    tags:
+      - ranger

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spark.config.fullname" . }}
+  labels:
+    app: {{ template "spark.app.name" . }}
+    chart: {{ template "spark.subchart" . }}
+    release: {{ .Release.Name }}
+data:
+  spark-defaults.conf: |
+    spark.kubernetes.driver.master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}
+    spark.kubernetes.authenticate.serviceAccountName default
+    spark.kubernetes.namespace {{ .Release.Name }
+    spark.executor.memory 1g
+    spark.executor.cores 1
+    spark.executor.instances 3
+    spark.driver.memory 2g
+    spark.driver.host {{ template "spark.spark-svc" . }}
+    spark.driver.port 16780
+    spark.sql.extensions org.apache.kyuubi.plugin.spark.authz.ranger.RangerSparkExtension
+    spark.kerberos.principal {{ template "spark-principal" . }}
+    spark.kerberos.keytab /etc/security/spark.keytab
+    spark.kubernetes.kerberos.krb5.path /etc/krb5.conf

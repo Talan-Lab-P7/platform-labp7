@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  labels:
+    app: hdfs-krb5
+    release: hdfs-k8s-krb5-nodeport
+  name: hdfs-k8s-krb5-nodeport
+  namespace: my-hdfs
+spec:
+  internalTrafficPolicy: Cluster
+  ports:
+  - name: kdc-tcp
+    port: 88
+    protocol: TCP
+    targetPort: 88
+  - name: kdc-udp
+    port: 88
+    protocol: UDP
+    targetPort: 88
+  selector:
+    app: hdfs-krb5
+    release: hdfs-k8s-1674471125
+  type: NodePort

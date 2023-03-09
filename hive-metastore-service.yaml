@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hive-metastore-service
+  labels:
+    app: hive-service
+    chart: hive-service-k8s
+    release: hive-metastore-service-k8s
+spec:
+  ports:
+  - port: 9083
+    name: thrift
+  selector:
+    app: hive
+    release: hive-metastore-k8s

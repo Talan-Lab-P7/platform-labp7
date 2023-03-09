@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hiveMetaStore.config.fullname" . }}
+  labels:
+    app: {{ template "hiveMetaStore.app.name" . }}
+    chart: {{ template "hiveMetaStore.subchart" . }}
+    release: {{ .Release.Name }}
+data:
+  hive-site.xml: |
+    <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
+    <?xml-stylesheet type=\"text/xsl\" href=\"configuration.xsl\"?>
+    <configuration>    
+      <property>
+        <name>hive.metastore.local</name>
+        <value>true</value>    
+      </property>
+      <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>hdfs://{{ template "namenode-svc-0" . }}:8020/hive/warehouse</value>
+      </property>
+      <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>org.postgresql.Driver</value>
+      </property>
+      <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:postgresql://37.59.140.97:5432/hivemetastoredb</value>
+      </property>
+      <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>kube</value>
+      </property>
+      <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>kubeadmin</value>
+      </property>
+      <property>
+        <name>hive.server2.thrift.port</name>
+        <value>10000</value>
+      </property>
+      <property>
+        <name>hive.execution.engine</name>
+        <value>mr</value>
+      </property>
+      <property>
+        <name>hive.metastore.port</name>
+        <value>9083</value>
+      </property>
+      <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://{{ template "hiveMetaStore.metastore-svc-0" . }}:9083</value>
+      </property>
+      <property>
+        <name>mapreduce.input.fileinputformat.input.dir.recursive</name>
+        <value>true</value>
+      </property>
+      <property>    
+        <name>hive.metastore.sasl.enabled</name>    
+        <value>true</value>     
+      </property>    
+      <property>    
+        <name>hive.metastore.kerberos.keytab.file</name>    
+        <value>/etc/security/hive.keytab</value>      
+      </property>    
+      <property>    
+        <name>hive.metastore.kerberos.principal</name>    
+        <value>{{ template "hive-principal" . }}</value>      
+      </property>    
+      <property>
+        <name>hive.server2.authentication</name>
+        <value>KERBEROS</value>
+        <description>authenticationtype</description>
+      </property>
+      <property>
+        <name>hive.server2.authentication.kerberos.principal</name>
+        <value>{{ template "hive-principal" . }}</value>
+      </property>
+      <property>
+        <name>hive.server2.authentication.kerberos.keytab</name>
+        <value>/etc/security/hive.keytab</value>
+      </property>
+      <property>
+        <name>hive.server2.enable.doAs</name>
+        <value>true</value>
+      </property>
+      <property>
+        <name>hive.server2.thrift.sasl.qop</name>
+        <value>auth-conf</value>
+        <description></description>
+      </property>
+    </configuration>

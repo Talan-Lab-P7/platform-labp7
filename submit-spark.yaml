@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-submit-thrift
+  labels:
+    app: spark-thrift
+    chart: spark-k8s
+    release: spark-thrift-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-thrift
+      release: spark-thrift-k8s
+  template:
+    metadata:
+      labels:
+        app: spark-thrift
+        release: spark-thrift-k8s
+    spec:
+      hostNetwork: true
+      hostPID: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: spark-thrift-client
+          image: adel1992/spark-3.2.2:kyuubi_root
+          env:
+          command: ['/bin/sh']
+          args: ["-c","/opt/spark/bin/spark-submit --master k8s://5.135.90.212:6443  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
+#          args: ["-c","sleep infinity"]
+          volumeMounts:
+            - name: spark-config
+              mountPath: /opt/spark/conf/
+              readOnly: true
+            - name: kerberos-config
+              mountPath: /etc/krb5.conf
+              subPath: krb5.conf
+              readOnly: true
+            - name: kerberos-keytabs
+              mountPath: /etc/security/
+              readOnly: true  
+      restartPolicy: Always
+      volumes:
+        - name: spark-config
+          projected:
+            sources:
+              - configMap:
+                  name: spark-config-map
+              - configMap:
+                  name: hive-config-map
+              - configMap:
+                  name: core-config-map
+              - configMap:
+                  name: hdfs-site-map
+              - configMap:
+                  name: ranger-spark-security-config-map
+              - configMap:
+                  name: ranger-spark-audit-config-map
+        - name: kerberos-config
+          configMap:
+            name: kerberos-config-map    
+        - name: kerberos-keytabs
+          secret:
+            secretName: kerberos-keytabs-secret

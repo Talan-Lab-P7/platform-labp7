@@ -1,0 +1,45 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  ...
+spec:
+  deps: {}
+  driver:
+    coreLimit: 1200m
+    cores: 1
+    labels:
+      version: 2.3.0
+    memory: 512m
+    serviceAccount: spark
+  executor:
+    cores: 1
+    instances: 1
+    labels:
+      version: 2.3.0
+    memory: 512m
+  image: adel1992/spark-3.2.2:kyuubi_root
+  mainApplicationFile: spark-internal
+  mainClass: org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
+  mode: client
+  restartPolicy:
+      type: OnFailure
+      onFailureRetries: 3
+      onFailureRetryInterval: 10
+      onSubmissionFailureRetries: 5
+      onSubmissionFailureRetryInterval: 20
+  type: Scala
+status:
+  sparkApplicationId: spark-5f4ba921c85ff3f1cb04bef324f9154c9
+  applicationState:
+    state: COMPLETED
+  completionTime: 2018-02-20T23:33:55Z
+  driverInfo:
+    podName: spark-pi-83ba921c85ff3f1cb04bef324f9154c9-driver
+    webUIAddress: 35.192.234.248:31064
+    webUIPort: 31064
+    webUIServiceName: spark-pi-2402118027-ui-svc
+    webUIIngressName: spark-pi-ui-ingress
+    webUIIngressAddress: spark-pi.ingress.cluster.com
+  executorState:
+    spark-pi-83ba921c85ff3f1cb04bef324f9154c9-exec-1: COMPLETED
+  LastSubmissionAttemptTime: 2018-02-20T23:32:27Z

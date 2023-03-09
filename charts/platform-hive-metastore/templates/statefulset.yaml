@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "hiveMetaStore.fullname" . }}
+  labels:
+    {{- template "hiveMetaStore.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- template "hiveMetaStore.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- template "hiveMetaStore.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ template "hiveMetaStore.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ['/bin/sh']
+          args: ["-c","hive --service metastore"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: metastore
+              containerPort: 9083
+              protocol: TCP
+            - name: thrift
+              containerPort: 10000
+              protocol: TCP  
+          volumeMounts:
+            - name: hive-config
+              mountPath: /opt/hive/conf/
+              readOnly: true  
+            - name: kerberos-config
+              mountPath: /etc/krb5.conf
+              subPath: krb5.conf
+              readOnly: true
+            - name: kerberos-keytabs
+              mountPath: /etc/security/
+              readOnly: true 
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: kerberos-config
+          configMap:
+            name: {{ template "krb5-configmap" . }}
+        - name: hive-config
+          configMap:
+            name: {{ template "hiveMetaStore.config.fullname" . }}    
+        - name: kerberos-keytabs
+          secret:
+            secretName: {{ template "hive-keytabs-secret" . }}
