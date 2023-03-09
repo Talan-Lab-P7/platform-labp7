@@ -10,7 +10,7 @@ data:
   spark-defaults.conf: |
     spark.kubernetes.driver.master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}
     spark.kubernetes.authenticate.serviceAccountName default
-    spark.kubernetes.namespace {{ .Release.Name }
+    spark.kubernetes.namespace {{ .Release.Name }}
     spark.executor.memory 1g
     spark.executor.cores 1
     spark.executor.instances 3
