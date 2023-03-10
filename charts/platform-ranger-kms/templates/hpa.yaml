@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "labp7Platform.fullname" . }}
+  name: {{ include "platform-labp7.fullname" . }}
   labels:
-    {{- include "labp7Platform.labels" . | nindent 4 }}
+    {{- include "platform-labp7.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "labp7Platform.fullname" . }}
+    name: {{ include "platform-labp7.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ template "hiveMetaStore.fullname" . }}
+  name: {{ template "hive-meta-store.fullname" . }}
   labels:
-    {{- include "hiveMetaStore.labels" . | nindent 4 }}
+    {{- include "hive-meta-store.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
-  serviceName: {{ include "hiveMetaStore.fullname" . }}
+  serviceName: {{ include "hive-meta-store.fullname" . }}
   selector:
     matchLabels:
-      {{- include "hiveMetaStore.selectorLabels" . | nindent 6 }}
+      {{- include "hive-meta-store.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,13 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "hiveMetaStore.selectorLabels" . | nindent 8 }}
+        {{- include "hive-meta-store.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ template "hiveMetaStore.serviceAccountName" . }}
+      serviceAccountName: {{ template "hive-meta-store.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -82,7 +82,7 @@ spec:
             name: {{ template "krb5-configmap" . }}
         - name: hive-config
           configMap:
-            name: {{ template "hiveMetaStore.config.fullname" . }}    
+            name: {{ template "hive-meta-store.config.fullname" . }}    
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "hive-keytabs-secret" . }}

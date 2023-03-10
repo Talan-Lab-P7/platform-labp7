@@ -82,7 +82,7 @@ spec:
               - configMap:
                   name: {{ template "spark.config.fullname" . }}
               - configMap:
-                  name: {{ template "hiveMetaStore.config.fullname" . }}
+                  name: {{ template "hive-meta-store.config.fullname" . }}
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}
               {{- if not .Values.global.ranger.enabled }}

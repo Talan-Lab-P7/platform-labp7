@@ -1,5 +1,5 @@
 dependencies:
-  - name: platformConfig
+  - name: platform-config
     version: "0.1.0"
     repository: "file://../platform-config"
     condition: condition.subchart.config
@@ -20,21 +20,21 @@ dependencies:
     tags:
       - ranger
       - simple
-  - name: hiveMetaStore
+  - name: hive-meta-store
     version: "0.1.0"
     repository: "file://../platform-hive-metastore"
-    condition: condition.subchart.hiveMetaStore
+    condition: condition.subchart.hive-meta-store
     tags:
       - ranger
       - simple
 
-  - name: rangerKms
+  - name: ranger-kms
     version: "0.1.0"
     repository: "file://../platform-ranger-kms"
-    condition: condition.subchart.rangerKMS
+    condition: condition.subchart.ranger-kms
     tags:
       - ranger
-  - name: rangerPolicy
+  - name: ranger-policy
     version: "0.1.0"
     repository: "file://../platform-ranger-policy"
     condition: condition.subchart.ranger

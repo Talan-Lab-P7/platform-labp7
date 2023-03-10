@@ -1,8 +1,6 @@
-# Default values for labp7Platform.
+# Default values for platform-labp7.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
-kerberosRealm: MYCOMPANY.COM
 
 replicaCount: 1
 

@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "platformConfig.name" -}}
+{{- define "platform-config.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -9,14 +9,14 @@ Expand the name of the chart.
 Create the kerberos principal suffix for core Hive services
 */}}
 {{- define "hive-principal" -}}
-{{- printf "hive@%s" .Values.kerberosRealm -}}
+{{- printf "hive@%s" .Values.global.kerberosRealm -}}
 {{- end -}}
 
 {{/*
 Create the kerberos principal suffix for core Spark services
 */}}
 {{- define "spark-principal" -}}
-{{- printf "spark@%s" .Values.kerberosRealm -}}
+{{- printf "spark@%s" .Values.global.kerberosRealm -}}
 {{- end -}}
 
 {{/*
@@ -24,7 +24,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "platformConfig.fullname" -}}
+{{- define "platform-config.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -40,16 +40,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "platformConfig.chart" -}}
+{{- define "platform-config.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "platformConfig.labels" -}}
-helm.sh/chart: {{ include "platformConfig.chart" . }}
-{{ include "platformConfig.selectorLabels" . }}
+{{- define "platform-config.labels" -}}
+helm.sh/chart: {{ include "platform-config.chart" . }}
+{{ include "platform-config.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -59,17 +59,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "platformConfig.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "platformConfig.name" . }}
+{{- define "platform-config.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "platform-config.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "platformConfig.serviceAccountName" -}}
+{{- define "platform-config.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "platformConfig.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "platform-config.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

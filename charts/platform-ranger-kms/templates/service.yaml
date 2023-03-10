@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "labp7Platform.fullname" . }}
+  name: {{ include "platform-labp7.fullname" . }}
   labels:
-    {{- include "labp7Platform.labels" . | nindent 4 }}
+    {{- include "platform-labp7.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "labp7Platform.selectorLabels" . | nindent 4 }}
+    {{- include "platform-labp7.selectorLabels" . | nindent 4 }}

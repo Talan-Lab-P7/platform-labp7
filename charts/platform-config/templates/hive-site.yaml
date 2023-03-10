@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "hiveMetaStore.config.fullname" . }}
+  name: {{ include "hive-meta-store.config.fullname" . }}
   labels:
-    app: {{ template "hiveMetaStore.app.name" . }}
-    chart: {{ template "hiveMetaStore.subchart" . }}
+    app: {{ template "hive-meta-store.app.name" . }}
+    chart: {{ template "hive-meta-store.subchart" . }}
     release: {{ .Release.Name }}
 data:
   hive-site.xml: |
@@ -25,7 +25,7 @@ data:
       </property>
       <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://37.59.140.97:5432/hivemetastoredb</value>
+        <value>jdbc:postgresql://37.59.140.97:5432/hive-meta-storedb</value>
       </property>
       <property>
         <name>javax.jdo.option.ConnectionUserName</name>
@@ -49,7 +49,7 @@ data:
       </property>
       <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://{{ template "hiveMetaStore.metastore-svc-0" . }}:9083</value>
+        <value>thrift://{{ template "hive-meta-store.metastore-svc-0" . }}:9083</value>
       </property>
       <property>
         <name>mapreduce.input.fileinputformat.input.dir.recursive</name>

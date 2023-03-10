@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "labp7Platform.fullname" . }}
+  name: {{ include "platform-labp7.fullname" . }}
   labels:
-    {{- include "labp7Platform.labels" . | nindent 4 }}
+    {{- include "platform-labp7.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "labp7Platform.selectorLabels" . | nindent 6 }}
+      {{- include "platform-labp7.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "labp7Platform.selectorLabels" . | nindent 8 }}
+        {{- include "platform-labp7.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "labp7Platform.serviceAccountName" . }}
+      serviceAccountName: {{ include "platform-labp7.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
