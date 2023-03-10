@@ -6,6 +6,7 @@ replicaCount: 1
 
 global:
   kubernetes: 
+    kerberosRealm: LABP7.CNAM
     master:
       port: "5.135.90.212"
       host: "6443"

@@ -233,7 +233,7 @@ global:
 
   ## Required to be non-empty if Kerberos is enabled. Specify your Kerberos realm name.
   ## This should match the realm name in your Kerberos config file.
-  kerberosRealm: MYCOMPANY.COM
+  kerberosRealm: LABP7.CNAM
 
   ## Effective only if Kerberos is enabled. Enable protection of datanodes using
   ## the jsvc utility. See the reference doc at
