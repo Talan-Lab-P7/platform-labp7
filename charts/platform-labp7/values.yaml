@@ -13,6 +13,14 @@ global:
   ranger:
     enabled: false
 
+condition:
+  subchart:
+    config: true
+    hdfs: true
+    spark: true
+    hive-meta-store: true
+    ranger-kms: false
+    ranger-policy: false
 
 
 image:

@@ -37,6 +37,6 @@ dependencies:
   - name: ranger-policy
     version: "0.1.0"
     repository: "file://../platform-ranger-policy"
-    condition: condition.subchart.ranger
+    condition: condition.subchart.ranger-policy
     tags:
       - ranger
