@@ -53,6 +53,7 @@ dependencies:
     condition: condition.subchart.kerberos
     tags:
       - kerberos
+      - simple
   - name: hdfs-journalnode-k8s
     version: "0.1.0"
     repository: "file://../hdfs-journalnode-k8s"
