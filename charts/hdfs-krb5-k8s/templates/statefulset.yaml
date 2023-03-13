@@ -67,12 +67,12 @@ spec:
             - name: kdc-udp
               containerPort: 88
               protocol: UDP
-#          livenessProbe:
-#            tcpSocket:
-#              port: kdc-tcp
-#          readinessProbe:
-#            tcpSocket:
-#              port: kdc-tcp
+          livenessProbe:
+            tcpSocket:
+              port: kdc-tcp
+          readinessProbe:
+            tcpSocket:
+              port: kdc-tcp
           volumeMounts:
             - mountPath: /var/lib/krb5kdc
               name: datadir

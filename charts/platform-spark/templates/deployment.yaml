@@ -42,14 +42,12 @@ spec:
             - name: driver
               containerPort: 16780
               protocol: TCP
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
-#          readinessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            tcpSocket:
+              port: driver
+          readinessProbe:
+            tcpSocket:
+              port: driver
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -85,7 +83,7 @@ spec:
                   name: {{ template "hive-meta-store.config.fullname" . }}
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}
-              {{- if not .Values.global.ranger.enabled }}
+              {{- if .Values.global.ranger.enabled }}
               - configMap:
                   name: ranger-spark-security-config-map
               - configMap:
