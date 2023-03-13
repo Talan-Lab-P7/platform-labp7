@@ -81,7 +81,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: datanode
-          image: adel1992/datanode:3.1.1
+          image: adel1992/datanode:centos
           env:
             - name: HADOOP_CUSTOM_CONF_DIR
               value: /etc/hadoop-custom-conf

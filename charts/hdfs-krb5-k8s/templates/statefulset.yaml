@@ -68,9 +68,13 @@ spec:
               containerPort: 88
               protocol: UDP
           livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 30
             tcpSocket:
               port: kdc-tcp
           readinessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 30
             tcpSocket:
               port: kdc-tcp
           volumeMounts:
