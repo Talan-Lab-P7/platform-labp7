@@ -8,8 +8,8 @@ metadata:
     release: {{ .Release.Name }}
 data:
   hive-site.xml: |
-    <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
-    <?xml-stylesheet type=\"text/xsl\" href=\"configuration.xsl\"?>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
     <configuration>    
       <property>
         <name>hive.metastore.local</name>
