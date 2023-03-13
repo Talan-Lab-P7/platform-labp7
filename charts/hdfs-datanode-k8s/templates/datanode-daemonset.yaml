@@ -144,7 +144,7 @@ spec:
           image: busybox:1.27.1
           command: ['sh', '-c']
           args:
-            - cp /kerberos-keytabs/$MY_NODE_NAME.keytab /kerberos-keytab-copy/hdfs.keytab
+            - cp /kerberos-keytabs/hdfs.keytab /kerberos-keytab-copy/hdfs.keytab
           env:
             - name: MY_NODE_NAME
               valueFrom:
