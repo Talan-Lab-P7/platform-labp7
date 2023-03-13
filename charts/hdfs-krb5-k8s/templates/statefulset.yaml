@@ -76,7 +76,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/krb5kdc
               name: datadir
-              readOnly: true
+              readOnly: false
       restartPolicy: Always
       {{- if .Values.global.podSecurityContext.enabled }}
       securityContext:
