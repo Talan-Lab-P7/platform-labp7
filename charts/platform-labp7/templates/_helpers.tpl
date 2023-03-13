@@ -186,14 +186,14 @@ Create chart name and version as used by the subchart label.
 Create the kerberos principal suffix for core HDFS services
 */}}
 {{- define "hdfs-principal" -}}
-{{- printf "hdfs/_HOST@%s" .Values.global.kerberosRealm -}}
+{{- printf "hdfs/@%s" .Values.global.kerberosRealm -}}
 {{- end -}}
 
 {{/*
 Create the kerberos principal for HTTP services
 */}}
 {{- define "http-principal" -}}
-{{- printf "HTTP/_HOST@%s" .Values.global.kerberosRealm -}}
+{{- printf "HTTP/@%s" .Values.global.kerberosRealm -}}
 {{- end -}}
 
 {{/*
