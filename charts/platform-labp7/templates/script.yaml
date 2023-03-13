@@ -9,6 +9,9 @@ metadata:
 data:
   script: |
     #! /bin/bash
+    _KDC = kubectl -n {{ .Release.Namespace }} get pod -l app=hdfs-krb5 --no-headers -o name | cut -d/ -f2
+    kubectl -n {{ .Release.Namespace }} cp $_KDC:/etc/krb5.conf /tmp/krb5.conf
+    kubectl -n {{ .Release.Namespace }} create configmap {{ template "krb5-configmap" . }}  --from-file=/tmp/krb5.conf
     kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }} -- kadmin.local -q {{ print "addprinc -randkey hdfs@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }} -- kadmin.local -q {{ print "addprinc -randkey hive@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }} -- kadmin.local -q {{ print "addprinc -randkey spark@" .Values.global.kerberosRealm | quote }}
