@@ -286,10 +286,10 @@ global:
 
   ## Parameters for determining which Unix user and group IDs to use in pods.
   ## Persistent volume permission may need to match these.
-  podSecurityContext:
-    enabled: false
-    runAsUser: 0
-    fsGroup: 1000
+  #podSecurityContext:
+  #  enabled: false
+  #  runAsUser: 0
+  #  fsGroup: 1000
 
   ## Whether or not to expect namenodes in the HA setup.
   namenodeHAEnabled: true
