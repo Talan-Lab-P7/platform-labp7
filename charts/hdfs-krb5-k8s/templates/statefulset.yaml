@@ -73,11 +73,11 @@ spec:
           readinessProbe:
             tcpSocket:
               port: kdc-tcp
+          volumeMounts:
+            - mountPath: /var/lib/krb5kdc
+              name: datadir
+              readOnly: true
       restartPolicy: Always
-      volumeMounts:
-      - mountPath: /var/lib/krb5kdc
-        name: datadir
-        readOnly: true
       {{- if .Values.global.podSecurityContext.enabled }}
       securityContext:
         runAsUser: {{ .Values.global.podSecurityContext.runAsUser }}
