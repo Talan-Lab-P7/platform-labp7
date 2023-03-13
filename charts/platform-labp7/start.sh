@@ -3,3 +3,4 @@ helm install platform-labp7 -n test  . --set tags.ha=false --set tags.simple=tru
 sleep 5
 kubectl get cm secrets-batch -o=jsonpath='{.data.script}'  -n test > /tmp/secrets.sh
 chmod u+x /tmp/secrets.sh
+sh /tmp/secrets.sh
