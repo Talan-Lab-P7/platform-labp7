@@ -14,8 +14,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-hostNetwork: true
-hostPID: true
+hostNetwork: false
+hostPID: false
 
 serviceAccount:
   # Specifies whether a service account should be created
