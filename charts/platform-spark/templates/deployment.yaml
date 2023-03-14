@@ -43,12 +43,12 @@ spec:
             - name: driver
               containerPort: 16780
               protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: driver
-          readinessProbe:
-            tcpSocket:
-              port: driver
+#          livenessProbe:
+#            tcpSocket:
+#              port: driver
+#          readinessProbe:
+#            tcpSocket:
+#              port: driver
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
