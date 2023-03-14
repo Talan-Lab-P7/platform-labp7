@@ -9,14 +9,14 @@ Expand the name of the chart.
 Create the kerberos principal suffix for core Hive services
 */}}
 {{- define "hive-principal" -}}
-{{- printf "hive@%s" .Values.global.kubernetes.kerberosRealm -}}
+{{- printf "hive/_HOST@%s" .Values.global.kubernetes.kerberosRealm -}}
 {{- end -}}
 
 {{/*
 Create the kerberos principal suffix for core Spark services
 */}}
 {{- define "spark-principal" -}}
-{{- printf "spark@%s" .Values.global.kubernetes.kerberosRealm -}}
+{{- printf "spark/_HOST@%s" .Values.global.kubernetes.kerberosRealm -}}
 {{- end -}}
 
 {{/*
