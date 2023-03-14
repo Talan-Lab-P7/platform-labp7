@@ -101,17 +101,18 @@ spec:
             {{- end }}
           command: ['/bin/sh', '-c']
           args:
-            - "/entrypoint.sh && /run.sh"  
-          livenessProbe:
-            exec:
-              command:
-                - /dn-scripts/check-status.sh
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          readinessProbe:
-            exec:
-              command:
-                - /dn-scripts/check-status.sh
+#            - "/entrypoint.sh && /run.sh"
+            - "sleep infinity"  
+#          livenessProbe:
+#            exec:
+#              command:
+#                - /dn-scripts/check-status.sh
+#            initialDelaySeconds: 60
+#            periodSeconds: 30
+#          readinessProbe:
+#            exec:
+#              command:
+#                - /dn-scripts/check-status.sh
             initialDelaySeconds: 60
             periodSeconds: 30
           securityContext:
