@@ -113,8 +113,8 @@ spec:
 #            exec:
 #              command:
 #                - /dn-scripts/check-status.sh
-            initialDelaySeconds: 60
-            periodSeconds: 30
+#            initialDelaySeconds: 60
+#            periodSeconds: 30
           securityContext:
             privileged: true
           volumeMounts:
