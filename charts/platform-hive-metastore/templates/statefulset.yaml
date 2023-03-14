@@ -54,12 +54,12 @@ spec:
             - name: kerberos-keytabs
               mountPath: /etc/security/
               readOnly: true 
-          livenessProbe:
-            tcpSocket:
-              port: metastore
-          readinessProbe:
-            tcpSocket:
-              port: metastore
+#          livenessProbe:
+#            tcpSocket:
+#              port: metastore
+#          readinessProbe:
+#            tcpSocket:
+#              port: metastore
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
