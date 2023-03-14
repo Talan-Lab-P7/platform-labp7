@@ -1,11 +1,9 @@
 #! /bin/bash
 helm install platform-labp7 -n test  . --set tags.ha=false --set tags.simple=true --set tags.ranger=false --set global.namenodeHAEnabled=false --set hdfs-simple-namenode-k8s.nodeSelector.hdfs-namenode-selector=hdfs-namenode-0 --set global.kerberosEnabled=true
-echo date +"waiting 10 seconds for kerberos pod creation -%a %b %e %H:%M:%S %Z %Y"
 kubectl get cm secrets-batch -o=jsonpath='{.data.script}'  -n test > /tmp/secrets.sh
 chmod u+x /tmp/secrets.sh
-until [  $(kubectl get po -n test | grep krb5 | awk '{print $2}') != "1/1" ]; do
+while ( $(kubectl get po -n test | grep krb5 | awk '{print $2}') != "1/1" ); do
     echo "waiting 10 seconds for kerberos pod creation " date
     sleep 5
 done
-
 sh /tmp/secrets.sh
