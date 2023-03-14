@@ -35,7 +35,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
 #          args: ["-c","hive --service metastore"]
-          args: ["-c","sleep infinity"]
+          args: ["-c","sleep 10000000000000000000000000000000000000000"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: metastore
