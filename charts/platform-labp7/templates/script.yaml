@@ -17,7 +17,7 @@ data:
      temp=$(nslookup $_HOST | grep 'Name:' | awk '{print $2}')
      _HOSTS_FQDN+="$temp "
     done
-    _HOSTS+={{ template "spark.spark-svc" . }}
+    _HOSTS+={{ template "namenode-svc-0" . }}
     for _HOST in $_HOSTS; do
      kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey hdfs/$_HOST@" .Values.global.kerberosRealm | quote }}
      kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey HTTP/$_HOST@" .Values.global.kerberosRealm | quote }}
