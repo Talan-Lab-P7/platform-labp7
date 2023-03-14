@@ -80,8 +80,13 @@ spec:
           configMap:
             name: {{ template "krb5-configmap" . }}
         - name: hive-config
-          configMap:
-            name: {{ template "hive-meta-store.config.fullname" . }}    
+          projected:
+            sources:
+              - configMap:
+                  name: {{ template "hive-meta-store.config.fullname" . }}
+              - configMap:
+                  name: {{ template "hdfs-k8s.config.fullname" . }}    
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "hive-keytabs-secret" . }}
+        
