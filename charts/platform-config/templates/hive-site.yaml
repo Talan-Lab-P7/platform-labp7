@@ -25,7 +25,7 @@ data:
       </property>
       <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://37.59.140.97:5432/hive-meta-storedb</value>
+        <value>jdbc:postgresql://37.59.140.97:5432/hivemetastoredb</value>
       </property>
       <property>
         <name>javax.jdo.option.ConnectionUserName</name>
