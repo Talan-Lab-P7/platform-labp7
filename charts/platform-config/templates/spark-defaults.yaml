@@ -11,6 +11,7 @@ data:
     spark.kubernetes.driver.master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}
     spark.kubernetes.authenticate.serviceAccountName default
     spark.kubernetes.namespace {{ .Release.Namespace }}
+    spark.kubernetes.container.image adel1992/spark-3.2.2:0.0.3
     spark.executor.memory 1g
     spark.executor.cores 1
     spark.executor.instances 3
