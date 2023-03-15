@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "spark.labels" . | nindent 4 }}
 spec:
-#  type: {{ .Values.service.type }}
+  type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       protocol: TCP
       name: thrift
-  clusterIP: None
+  clusterIP: "None"
   selector:
     {{- include "spark.selectorLabels" . | nindent 4 }}
