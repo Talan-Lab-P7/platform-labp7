@@ -18,7 +18,9 @@ data:
     spark.driver.memory 2g
     spark.driver.host {{ template "spark.spark-svc-0" . }}
     spark.driver.port 16780
+    {{- if .Values.global.ranger.enabled }}
     spark.sql.extensions org.apache.kyuubi.plugin.spark.authz.ranger.RangerSparkExtension
+    {{- end }}
     spark.kerberos.principal spark/{{ template "spark.spark-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     spark.kerberos.keytab /etc/security/spark.keytab
     spark.kubernetes.kerberos.krb5.path /etc/krb5.conf
