@@ -18,6 +18,6 @@ data:
     spark.driver.host {{ template "spark.spark-svc-0" . }}
     spark.driver.port 16780
     spark.sql.extensions org.apache.kyuubi.plugin.spark.authz.ranger.RangerSparkExtension
-    spark.kerberos.principal {{ template "spark-principal" . }}
+    spark.kerberos.principal spark/{{ template "spark.spark-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     spark.kerberos.keytab /etc/security/spark.keytab
     spark.kubernetes.kerberos.krb5.path /etc/krb5.conf
