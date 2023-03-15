@@ -35,6 +35,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
           args: ["-c","hive --service metastore"]
+          args: ["-c","sleep 10000000000"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: metastore
@@ -54,12 +55,12 @@ spec:
             - name: kerberos-keytabs
               mountPath: /etc/security/
               readOnly: true 
-          livenessProbe:
-            tcpSocket:
-              port: metastore
-          readinessProbe:
-            tcpSocket:
-              port: metastore
+#          livenessProbe:
+#            tcpSocket:
+#              port: metastore
+#          readinessProbe:
+#            tcpSocket:
+#              port: metastore
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
