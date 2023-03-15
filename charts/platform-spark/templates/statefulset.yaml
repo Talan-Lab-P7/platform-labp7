@@ -98,6 +98,6 @@ spec:
           projected:
             sources:
               - secret:
-                secretName: {{ template "spark-keytabs-secret" . }}
+                  secretName: {{ template "spark-keytabs-secret" . }}
               - secret:
-                secretName: {{ template "krb5-keytabs-secret" . }}
+                  secretName: {{ template "krb5-keytabs-secret" . }}
