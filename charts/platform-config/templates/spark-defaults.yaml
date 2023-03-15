@@ -15,7 +15,7 @@ data:
     spark.executor.cores 1
     spark.executor.instances 3
     spark.driver.memory 2g
-    spark.driver.host {{ template "spark.spark-svc" . }}
+    spark.driver.host {{ template "spark.spark-svc-0" . }}
     spark.driver.port 16780
     spark.sql.extensions org.apache.kyuubi.plugin.spark.authz.ranger.RangerSparkExtension
     spark.kerberos.principal {{ template "spark-principal" . }}

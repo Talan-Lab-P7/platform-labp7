@@ -97,3 +97,20 @@ Construct the full name of spark service.
 {{- $domain := include "spark.svc-domain" . -}}
 {{- printf "%s.%s" $pod $domain -}}
 {{- end -}}
+
+{{/*
+Construct the name of spark pod 0.
+*/}}
+{{- define "spark.spark-pod-0" -}}
+{{- template "spark.fullname" . -}}-0
+{{- end -}}
+
+{{/*
+Construct the full name of spark statefulset member 0.
+*/}}
+{{- define "spark.spark-svc-0" -}}
+{{- $pod := include "spark.spark-pod-0" . -}}
+{{- $service := include "spark.fullname" . -}}
+{{- $domain := include "spark.svc-domain" . -}}
+{{- printf "%s.%s.%s" $pod $service $domain -}}
+{{- end -}}
