@@ -95,5 +95,8 @@ spec:
           configMap:
             name: {{ template "krb5-configmap" . }}    
         - name: kerberos-keytabs
-          secret:
-            secretName: {{ template "spark-keytabs-secret" . }}
+          projected:
+            secret:
+              secretName: {{ template "spark-keytabs-secret" . }}
+            secret:
+              secretName: {{ template "krb5-keytabs-secret" . }}
