@@ -10,5 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       protocol: TCP
       name: thrift
+  clusterIP: None
   selector:
     {{- include "spark.selectorLabels" . | nindent 4 }}
