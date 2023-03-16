@@ -272,8 +272,8 @@ global:
   kubernetes: 
     kerberosRealm: LABP7.CNAM
     master:
-      port: "5.135.90.212"
-      host: "6443"
+      port: "6443"
+      host: "5.135.90.212"
   ranger:
     enabled: false
 
