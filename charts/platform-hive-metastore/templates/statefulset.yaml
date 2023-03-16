@@ -54,22 +54,22 @@ spec:
             - name: kerberos-keytabs
               mountPath: /etc/security/
               readOnly: true 
-          livenessProbe:
-            exec:
-              command:
-              - /bin/bash
-              - -c
-              - netstat -tunap | grep 9083 | grep -v grep
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            exec:
-              command:
-              - /bin/bash
-              - -c
-              - netstat -tunap | grep 9083 | grep -v grep3
-            initialDelaySeconds: 10
-            periodSeconds: 10
+#          livenessProbe:
+#            exec:
+#              command:
+#              - /bin/bash
+#              - -c
+#              - netstat -tunap | grep 9083 | grep -v grep
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
+#          readinessProbe:
+#            exec:
+""              command:
+#              - /bin/bash
+#              - -c
+#              - netstat -tunap | grep 9083 | grep -v grep3
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

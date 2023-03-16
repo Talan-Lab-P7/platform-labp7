@@ -39,7 +39,7 @@ spec:
           env:
           command: ['/bin/sh']
           args: ["-c","/opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
-          args: ["-c","sleep infinity"]
+#          args: ["-c","sleep infinity"]
           ports:
             - name: driver
               containerPort: 16780
