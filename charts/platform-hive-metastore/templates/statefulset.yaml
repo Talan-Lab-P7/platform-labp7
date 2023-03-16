@@ -64,7 +64,7 @@ spec:
 #            periodSeconds: 10
 #          readinessProbe:
 #            exec:
-""              command:
+#              command:
 #              - /bin/bash
 #              - -c
 #              - netstat -tunap | grep 9083 | grep -v grep3
