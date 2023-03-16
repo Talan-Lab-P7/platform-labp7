@@ -29,8 +29,9 @@ data:
     _SPARK_HOST={{ template "spark.spark-svc-0" . }}
     _HIVE_HOST={{ template "hive-meta-store.metastore-svc-0" . }}
     kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey hive/$_HIVE_HOST@" .Values.global.kerberosRealm | quote }}
-     kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey spark/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
-    kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hive.keytab hive/$_HIVE_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey hive/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey spark/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hive.keytab hive/$_HIVE_HOST@" .Values.global.kerberosRealm " hive/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ template "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/spark.keytab spark/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
     
     for _HOST in $_HOSTS; do
