@@ -55,11 +55,21 @@ spec:
               mountPath: /etc/security/
               readOnly: true 
           livenessProbe:
-            tcpSocket:
-              port: metastore
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - netstat -tunap | grep 9083 | grep -v grep
+            initialDelaySeconds: 10
+            periodSeconds: 10
           readinessProbe:
-            tcpSocket:
-              port: metastore
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - netstat -tunap | grep 9083 | grep -v grep3
+            initialDelaySeconds: 10
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
