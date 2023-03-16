@@ -100,4 +100,4 @@ spec:
               - secret:
                   name: {{ template "spark-keytabs-secret" . }}
               - secret:
-                  name: {{ template "krb5-keytabs-secret" . }}
+                  name: {{ template "hive-keytabs-secret" . }}
