@@ -35,7 +35,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
           args: ["-c","hive --service metastore"]
-          args: ["-c","sleep 10000000000"]
+#          args: ["-c","sleep 10000000000"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: POSTGRES_PASSWORD
@@ -99,4 +99,19 @@ spec:
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "hive-keytabs-secret" . }}
-        
+      initContainers:
+        - name: init-mydb
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ['sh', '-c', "schematool -dbType postgres -initSchema"]  
+          volumes:
+            - name: hive-config
+              projected:
+                sources:
+                  - configMap:
+                      name: {{ template "hive-meta-store.config.fullname" . }}
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "postgresql.secretName" . }}
+                  key: {{ template "postgresql.adminPasswordKey" . }}
