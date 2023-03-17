@@ -25,15 +25,15 @@ data:
       </property>
       <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://37.59.140.97:5432/hivemetastoredb</value>
+        <value>jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/postgres</value>
       </property>
       <property>
         <name>javax.jdo.option.ConnectionUserName</name>
-        <value>kube</value>
+        <value>postgres</value>
       </property>
       <property>
         <name>javax.jdo.option.ConnectionPassword</name>
-        <value>kubeadmin</value>
+        <value>${env:POSTGRES_PASSWORD}</value>
       </property>
       <property>
         <name>hive.server2.thrift.port</name>

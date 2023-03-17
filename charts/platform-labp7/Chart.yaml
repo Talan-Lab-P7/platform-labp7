@@ -115,4 +115,17 @@ dependencies:
       - ha
       - kerberos
       - simple
-
+  - name: common
+    version: 2.x.x
+    repository: "file://../platform-common"
+    tags:
+      - ha
+      - kerberos
+      - simple
+  - name: postgresql
+    version: 12.2.3
+    repository: "file://../platform-postgresql"
+    tags:
+      - ha
+      - kerberos
+      - simple

@@ -36,6 +36,12 @@ spec:
           command: ['/bin/sh']
           args: ["-c","hive --service metastore"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" . }}
           ports:
             - name: metastore
               containerPort: 9083
@@ -55,20 +61,14 @@ spec:
               mountPath: /etc/security/
               readOnly: true 
 #          livenessProbe:
-#            exec:
-#              command:
-#              - /bin/bash
-#              - -c
-#              - netstat -tunap | grep 9083 | grep -v grep
-#            initialDelaySeconds: 10
+#            tcpSocket:
+#              port: metastore
+#            initialDelaySeconds: 60
 #            periodSeconds: 10
 #          readinessProbe:
-#            exec:
-#              command:
-#              - /bin/bash
-#              - -c
-#              - netstat -tunap | grep 9083 | grep -v grep3
-#            initialDelaySeconds: 10
+#            tcpSocket:
+#              port: metastore
+#            initialDelaySeconds: 60
 #            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
