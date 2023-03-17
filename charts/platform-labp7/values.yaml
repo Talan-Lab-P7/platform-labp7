@@ -305,7 +305,7 @@ global:
     ##
     service:
       ports:
-        postgresql: ""
+        postgresql: 5432
 
   kubernetes: 
     kerberosRealm: LABP7.CNAM
