@@ -1,4 +1,4 @@
-{{- if .Values.postgresql.metrics.enabled }}
+{{- if .Values.metrics.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,27 +6,27 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: metrics
-    {{- if .Values.postgresql.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonLabels "context" $ ) | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-  {{- if or .Values.postgresql.commonAnnotations .Values.postgresql.metrics.service.annotations }}
+  {{- if or .Values.commonAnnotations .Values.metrics.service.annotations }}
   annotations:
-    {{- if .Values.postgresql.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
-    {{- if .Values.postgresql.metrics.service.annotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.metrics.service.annotations "context" $ ) | nindent 4 }}
+    {{- if .Values.metrics.service.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.metrics.service.annotations "context" $ ) | nindent 4 }}
     {{- end }}
   {{- end }}
 spec:
   type: ClusterIP
-  sessionAffinity: {{ .Values.postgresql.metrics.service.sessionAffinity }}
-  {{- if .Values.postgresql.metrics.service.clusterIP }}
-  clusterIP: {{ .Values.postgresql.metrics.service.clusterIP }}
+  sessionAffinity: {{ .Values.metrics.service.sessionAffinity }}
+  {{- if .Values.metrics.service.clusterIP }}
+  clusterIP: {{ .Values.metrics.service.clusterIP }}
   {{- end }}
   ports:
     - name: http-metrics
-      port: {{ .Values.postgresql.metrics.service.ports.metrics }}
+      port: {{ .Values.metrics.service.ports.metrics }}
       targetPort: http-metrics
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: primary

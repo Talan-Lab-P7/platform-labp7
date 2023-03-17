@@ -1,20 +1,20 @@
-{{- if .Values.postgresql.rbac.create }}
+{{- if .Values.rbac.create }}
 kind: Role
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 metadata:
   name: {{ include "common.names.fullname" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    {{- if .Values.postgresql.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonLabels "context" $ ) | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-  {{- if .Values.postgresql.commonAnnotations }}
-  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 # yamllint disable rule:indentation
 rules:
   {{- $pspAvailable := (semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)) -}}
-  {{- if and $pspAvailable .Values.postgresql.psp.create }}
+  {{- if and $pspAvailable .Values.psp.create }}
   - apiGroups:
       - 'policy'
     resources:
@@ -24,8 +24,8 @@ rules:
     resourceNames:
       - {{ include "common.names.fullname" . }}
   {{- end }}
-  {{- if .Values.postgresql.rbac.rules }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.rbac.rules "context" $ ) | nindent 2 }}
+  {{- if .Values.rbac.rules }}
+  {{- include "common.tplvalues.render" ( dict "value" .Values.rbac.rules "context" $ ) | nindent 2 }}
   {{- end }}
 # yamllint enable rule:indentation
 {{- end }}

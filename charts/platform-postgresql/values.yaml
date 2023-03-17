@@ -1317,7 +1317,7 @@ metrics:
     ##
     annotations:
       prometheus.io/scrape: "true"
-      prometheus.io/port: "{{ .Values.postgresql.metrics.service.ports.metrics }}"
+      prometheus.io/port: "{{ .Values.metrics.service.ports.metrics }}"
   ## Prometheus Operator ServiceMonitor configuration
   ##
   serviceMonitor:

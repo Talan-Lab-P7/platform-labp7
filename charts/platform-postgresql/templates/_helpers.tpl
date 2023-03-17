@@ -5,8 +5,8 @@ Create a default fully qualified app name for PostgreSQL Primary objects
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "postgresql.primary.fullname" -}}
-{{- if eq .Values.postgresql.architecture "replication" }}
-    {{- printf "%s-%s" (include "common.names.fullname" .) .Values.postgresql.primary.name | trunc 63 | trimSuffix "-" -}}
+{{- if eq .Values.architecture "replication" }}
+    {{- printf "%s-%s" (include "common.names.fullname" .) .Values.primary.name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
     {{- include "common.names.fullname" . -}}
 {{- end -}}
@@ -17,7 +17,7 @@ Create a default fully qualified app name for PostgreSQL read-only replicas obje
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "postgresql.readReplica.fullname" -}}
-{{- printf "%s-%s" (include "common.names.fullname" .) .Values.postgresql.readReplicas.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" (include "common.names.fullname" .) .Values.readReplicas.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -40,38 +40,38 @@ We truncate at 63 chars because of the DNS naming spec.
 Return the proper PostgreSQL image name
 */}}
 {{- define "postgresql.image" -}}
-{{ include "common.images.image" (dict "imageRoot" .Values.postgresql.image "global" .Values.postgresql.global) }}
+{{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper PostgreSQL metrics image name
 */}}
 {{- define "postgresql.metrics.image" -}}
-{{ include "common.images.image" (dict "imageRoot" .Values.postgresql.metrics.image "global" .Values.postgresql.global) }}
+{{ include "common.images.image" (dict "imageRoot" .Values.metrics.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper image name (for the init container volume-permissions image)
 */}}
 {{- define "postgresql.volumePermissions.image" -}}
-{{ include "common.images.image" (dict "imageRoot" .Values.postgresql.volumePermissions.image "global" .Values.postgresql.global) }}
+{{ include "common.images.image" (dict "imageRoot" .Values.volumePermissions.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "postgresql.imagePullSecrets" -}}
-{{ include "common.images.pullSecrets" (dict "images" (list .Values.postgresql.image .Values.postgresql.metrics.image .Values.postgresql.volumePermissions.image) "global" .Values.postgresql.global) }}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.metrics.image .Values.volumePermissions.image) "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the name for a custom user to create
 */}}
 {{- define "postgresql.username" -}}
-{{- if .Values.postgresql.global.postgresql.auth.username }}
-    {{- .Values.postgresql.global.postgresql.auth.username -}}
+{{- if .Values.global.postgresql.auth.username }}
+    {{- .Values.global.postgresql.auth.username -}}
 {{- else -}}
-    {{- .Values.postgresql.auth.username -}}
+    {{- .Values.auth.username -}}
 {{- end -}}
 {{- end -}}
 
@@ -79,10 +79,10 @@ Return the name for a custom user to create
 Return the name for a custom database to create
 */}}
 {{- define "postgresql.database" -}}
-{{- if .Values.postgresql.global.postgresql.auth.database }}
-    {{- printf "%s" (tpl .Values.postgresql.global.postgresql.auth.database $) -}}
-{{- else if .Values.postgresql.auth.database -}}
-    {{- printf "%s" (tpl .Values.postgresql.auth.database $) -}}
+{{- if .Values.global.postgresql.auth.database }}
+    {{- printf "%s" (tpl .Values.global.postgresql.auth.database $) -}}
+{{- else if .Values.auth.database -}}
+    {{- printf "%s" (tpl .Values.auth.database $) -}}
 {{- end -}}
 {{- end -}}
 
@@ -90,10 +90,10 @@ Return the name for a custom database to create
 Get the password secret.
 */}}
 {{- define "postgresql.secretName" -}}
-{{- if .Values.postgresql.global.postgresql.auth.existingSecret }}
-    {{- printf "%s" (tpl .Values.postgresql.global.postgresql.auth.existingSecret $) -}}
-{{- else if .Values.postgresql.auth.existingSecret -}}
-    {{- printf "%s" (tpl .Values.postgresql.auth.existingSecret $) -}}
+{{- if .Values.global.postgresql.auth.existingSecret }}
+    {{- printf "%s" (tpl .Values.global.postgresql.auth.existingSecret $) -}}
+{{- else if .Values.auth.existingSecret -}}
+    {{- printf "%s" (tpl .Values.auth.existingSecret $) -}}
 {{- else -}}
     {{- printf "%s" (include "common.names.fullname" .) -}}
 {{- end -}}
@@ -103,11 +103,11 @@ Get the password secret.
 Get the replication-password key.
 */}}
 {{- define "postgresql.replicationPasswordKey" -}}
-{{- if or .Values.postgresql.global.postgresql.auth.existingSecret .Values.postgresql.auth.existingSecret }}
-    {{- if .Values.postgresql.global.postgresql.auth.secretKeys.replicationPasswordKey }}
-        {{- printf "%s" (tpl .Values.postgresql.global.postgresql.auth.secretKeys.replicationPasswordKey $) -}}
-    {{- else if .Values.postgresql.auth.secretKeys.replicationPasswordKey -}}
-        {{- printf "%s" (tpl .Values.postgresql.auth.secretKeys.replicationPasswordKey $) -}}
+{{- if or .Values.global.postgresql.auth.existingSecret .Values.auth.existingSecret }}
+    {{- if .Values.global.postgresql.auth.secretKeys.replicationPasswordKey }}
+        {{- printf "%s" (tpl .Values.global.postgresql.auth.secretKeys.replicationPasswordKey $) -}}
+    {{- else if .Values.auth.secretKeys.replicationPasswordKey -}}
+        {{- printf "%s" (tpl .Values.auth.secretKeys.replicationPasswordKey $) -}}
     {{- else -}}
         {{- "replication-password" -}}
     {{- end -}}
@@ -120,11 +120,11 @@ Get the replication-password key.
 Get the admin-password key.
 */}}
 {{- define "postgresql.adminPasswordKey" -}}
-{{- if or .Values.postgresql.global.postgresql.auth.existingSecret .Values.postgresql.auth.existingSecret }}
-    {{- if .Values.postgresql.global.postgresql.auth.secretKeys.adminPasswordKey }}
-        {{- printf "%s" (tpl .Values.postgresql.global.postgresql.auth.secretKeys.adminPasswordKey $) -}}
-    {{- else if .Values.postgresql.auth.secretKeys.adminPasswordKey -}}
-        {{- printf "%s" (tpl .Values.postgresql.auth.secretKeys.adminPasswordKey $) -}}
+{{- if or .Values.global.postgresql.auth.existingSecret .Values.auth.existingSecret }}
+    {{- if .Values.global.postgresql.auth.secretKeys.adminPasswordKey }}
+        {{- printf "%s" (tpl .Values.global.postgresql.auth.secretKeys.adminPasswordKey $) -}}
+    {{- else if .Values.auth.secretKeys.adminPasswordKey -}}
+        {{- printf "%s" (tpl .Values.auth.secretKeys.adminPasswordKey $) -}}
     {{- end -}}
 {{- else -}}
     {{- "postgres-password" -}}
@@ -135,14 +135,14 @@ Get the admin-password key.
 Get the user-password key.
 */}}
 {{- define "postgresql.userPasswordKey" -}}
-{{- if or .Values.postgresql.global.postgresql.auth.existingSecret .Values.postgresql.auth.existingSecret }}
+{{- if or .Values.global.postgresql.auth.existingSecret .Values.auth.existingSecret }}
     {{- if or (empty (include "postgresql.username" .)) (eq (include "postgresql.username" .) "postgres") }}
         {{- printf "%s" (include "postgresql.adminPasswordKey" .) -}}
     {{- else -}}
-        {{- if .Values.postgresql.global.postgresql.auth.secretKeys.userPasswordKey }}
-            {{- printf "%s" (tpl .Values.postgresql.global.postgresql.auth.secretKeys.userPasswordKey $) -}}
-        {{- else if .Values.postgresql.auth.secretKeys.userPasswordKey -}}
-            {{- printf "%s" (tpl .Values.postgresql.auth.secretKeys.userPasswordKey $) -}}
+        {{- if .Values.global.postgresql.auth.secretKeys.userPasswordKey }}
+            {{- printf "%s" (tpl .Values.global.postgresql.auth.secretKeys.userPasswordKey $) -}}
+        {{- else if .Values.auth.secretKeys.userPasswordKey -}}
+            {{- printf "%s" (tpl .Values.auth.secretKeys.userPasswordKey $) -}}
         {{- end -}}
     {{- end -}}
 {{- else -}}
@@ -154,7 +154,7 @@ Get the user-password key.
 Return true if a secret object should be created
 */}}
 {{- define "postgresql.createSecret" -}}
-{{- if not (or .Values.postgresql.global.postgresql.auth.existingSecret .Values.postgresql.auth.existingSecret) -}}
+{{- if not (or .Values.global.postgresql.auth.existingSecret .Values.auth.existingSecret) -}}
     {{- true -}}
 {{- end -}}
 {{- end -}}
@@ -163,10 +163,10 @@ Return true if a secret object should be created
 Return PostgreSQL service port
 */}}
 {{- define "postgresql.service.port" -}}
-{{- if .Values.postgresql.global.postgresql.service.ports.postgresql }}
-    {{- .Values.postgresql.global.postgresql.service.ports.postgresql -}}
+{{- if .Values.global.postgresql.service.ports.postgresql }}
+    {{- .Values.global.postgresql.service.ports.postgresql -}}
 {{- else -}}
-    {{- .Values.postgresql.primary.service.ports.postgresql -}}
+    {{- .Values.primary.service.ports.postgresql -}}
 {{- end -}}
 {{- end -}}
 
@@ -174,10 +174,10 @@ Return PostgreSQL service port
 Return PostgreSQL service port
 */}}
 {{- define "postgresql.readReplica.service.port" -}}
-{{- if .Values.postgresql.global.postgresql.service.ports.postgresql }}
-    {{- .Values.postgresql.global.postgresql.service.ports.postgresql -}}
+{{- if .Values.global.postgresql.service.ports.postgresql }}
+    {{- .Values.global.postgresql.service.ports.postgresql -}}
 {{- else -}}
-    {{- .Values.postgresql.readReplicas.service.ports.postgresql -}}
+    {{- .Values.readReplicas.service.ports.postgresql -}}
 {{- end -}}
 {{- end -}}
 
@@ -185,8 +185,8 @@ Return PostgreSQL service port
 Get the PostgreSQL primary configuration ConfigMap name.
 */}}
 {{- define "postgresql.primary.configmapName" -}}
-{{- if .Values.postgresql.primary.existingConfigmap -}}
-    {{- printf "%s" (tpl .Values.postgresql.primary.existingConfigmap $) -}}
+{{- if .Values.primary.existingConfigmap -}}
+    {{- printf "%s" (tpl .Values.primary.existingConfigmap $) -}}
 {{- else -}}
     {{- printf "%s-configuration" (include "postgresql.primary.fullname" .) -}}
 {{- end -}}
@@ -196,7 +196,7 @@ Get the PostgreSQL primary configuration ConfigMap name.
 Return true if a configmap object should be created for PostgreSQL primary with the configuration
 */}}
 {{- define "postgresql.primary.createConfigmap" -}}
-{{- if and (or .Values.postgresql.primary.configuration .Values.postgresql.primary.pgHbaConfiguration) (not .Values.postgresql.primary.existingConfigmap) }}
+{{- if and (or .Values.primary.configuration .Values.primary.pgHbaConfiguration) (not .Values.primary.existingConfigmap) }}
     {{- true -}}
 {{- else -}}
 {{- end -}}
@@ -206,8 +206,8 @@ Return true if a configmap object should be created for PostgreSQL primary with 
 Get the PostgreSQL primary extended configuration ConfigMap name.
 */}}
 {{- define "postgresql.primary.extendedConfigmapName" -}}
-{{- if .Values.postgresql.primary.existingExtendedConfigmap -}}
-    {{- printf "%s" (tpl .Values.postgresql.primary.existingExtendedConfigmap $) -}}
+{{- if .Values.primary.existingExtendedConfigmap -}}
+    {{- printf "%s" (tpl .Values.primary.existingExtendedConfigmap $) -}}
 {{- else -}}
     {{- printf "%s-extended-configuration" (include "postgresql.primary.fullname" .) -}}
 {{- end -}}
@@ -224,7 +224,7 @@ Get the PostgreSQL read replica extended configuration ConfigMap name.
 Return true if a configmap object should be created for PostgreSQL primary with the extended configuration
 */}}
 {{- define "postgresql.primary.createExtendedConfigmap" -}}
-{{- if and .Values.postgresql.primary.extendedConfiguration (not .Values.postgresql.primary.existingExtendedConfigmap) }}
+{{- if and .Values.primary.extendedConfiguration (not .Values.primary.existingExtendedConfigmap) }}
     {{- true -}}
 {{- else -}}
 {{- end -}}
@@ -234,7 +234,7 @@ Return true if a configmap object should be created for PostgreSQL primary with 
 Return true if a configmap object should be created for PostgreSQL read replica with the extended configuration
 */}}
 {{- define "postgresql.readReplicas.createExtendedConfigmap" -}}
-{{- if .Values.postgresql.readReplicas.extendedConfiguration }}
+{{- if .Values.readReplicas.extendedConfiguration }}
     {{- true -}}
 {{- else -}}
 {{- end -}}
@@ -244,10 +244,10 @@ Return true if a configmap object should be created for PostgreSQL read replica 
  Create the name of the service account to use
  */}}
 {{- define "postgresql.serviceAccountName" -}}
-{{- if .Values.postgresql.serviceAccount.create -}}
-    {{ default (include "common.names.fullname" .) .Values.postgresql.serviceAccount.name }}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
-    {{ default "default" .Values.postgresql.serviceAccount.name }}
+    {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 
@@ -255,7 +255,7 @@ Return true if a configmap object should be created for PostgreSQL read replica 
 Return true if a configmap should be mounted with PostgreSQL configuration
 */}}
 {{- define "postgresql.mountConfigurationCM" -}}
-{{- if or .Values.postgresql.primary.configuration .Values.postgresql.primary.pgHbaConfiguration .Values.postgresql.primary.existingConfigmap }}
+{{- if or .Values.primary.configuration .Values.primary.pgHbaConfiguration .Values.primary.existingConfigmap }}
     {{- true -}}
 {{- end -}}
 {{- end -}}
@@ -264,8 +264,8 @@ Return true if a configmap should be mounted with PostgreSQL configuration
 Get the initialization scripts ConfigMap name.
 */}}
 {{- define "postgresql.initdb.scriptsCM" -}}
-{{- if .Values.postgresql.primary.initdb.scriptsConfigMap -}}
-    {{- printf "%s" (tpl .Values.postgresql.primary.initdb.scriptsConfigMap $) -}}
+{{- if .Values.primary.initdb.scriptsConfigMap -}}
+    {{- printf "%s" (tpl .Values.primary.initdb.scriptsConfigMap $) -}}
 {{- else -}}
     {{- printf "%s-init-scripts" (include "postgresql.primary.fullname" .) -}}
 {{- end -}}
@@ -275,9 +275,9 @@ Get the initialization scripts ConfigMap name.
 Return true if TLS is enabled for LDAP connection
 */}}
 {{- define "postgresql.ldap.tls.enabled" -}}
-{{- if and (kindIs "string" .Values.postgresql.ldap.tls) (not (empty .Values.postgresql.ldap.tls)) }}
+{{- if and (kindIs "string" .Values.ldap.tls) (not (empty .Values.ldap.tls)) }}
     {{- true -}}
-{{- else if and (kindIs "map" .Values.postgresql.ldap.tls) .Values.postgresql.ldap.tls.enabled }}
+{{- else if and (kindIs "map" .Values.ldap.tls) .Values.ldap.tls.enabled }}
     {{- true -}}
 {{- end -}}
 {{- end -}}
@@ -289,11 +289,11 @@ Get the readiness probe command
 {{- $customUser := include "postgresql.username" . }}
 - |
 {{- if (include "postgresql.database" .) }}
-  exec pg_isready -U {{ default "postgres" $customUser | quote }} -d "dbname={{ include "postgresql.database" . }} {{- if .Values.postgresql.tls.enabled }} sslcert={{ include "postgresql.tlsCert" . }} sslkey={{ include "postgresql.tlsCertKey" . }}{{- end }}" -h 127.0.0.1 -p {{ .Values.postgresql.containerPorts.postgresql }}
+  exec pg_isready -U {{ default "postgres" $customUser | quote }} -d "dbname={{ include "postgresql.database" . }} {{- if .Values.tls.enabled }} sslcert={{ include "postgresql.tlsCert" . }} sslkey={{ include "postgresql.tlsCertKey" . }}{{- end }}" -h 127.0.0.1 -p {{ .Values.containerPorts.postgresql }}
 {{- else }}
-  exec pg_isready -U {{ default "postgres" $customUser | quote }} {{- if .Values.postgresql.tls.enabled }} -d "sslcert={{ include "postgresql.tlsCert" . }} sslkey={{ include "postgresql.tlsCertKey" . }}"{{- end }} -h 127.0.0.1 -p {{ .Values.postgresql.containerPorts.postgresql }}
+  exec pg_isready -U {{ default "postgres" $customUser | quote }} {{- if .Values.tls.enabled }} -d "sslcert={{ include "postgresql.tlsCert" . }} sslkey={{ include "postgresql.tlsCertKey" . }}"{{- end }} -h 127.0.0.1 -p {{ .Values.containerPorts.postgresql }}
 {{- end }}
-{{- if contains "bitnami/" .Values.postgresql.image.repository }}
+{{- if contains "bitnami/" .Values.image.repository }}
   [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
 {{- end -}}
 {{- end -}}
@@ -317,7 +317,7 @@ Compile all warnings into a single message, and call fail.
 Validate values of Postgresql - If ldap.url is used then you don't need the other settings for ldap
 */}}
 {{- define "postgresql.validateValues.ldapConfigurationMethod" -}}
-{{- if and .Values.postgresql.ldap.enabled (and (not (empty .Values.postgresql.ldap.url)) (not (empty .Values.postgresql.ldap.server))) }}
+{{- if and .Values.ldap.enabled (and (not (empty .Values.ldap.url)) (not (empty .Values.ldap.server))) }}
 postgresql: ldap.url, ldap.server
     You cannot set both `ldap.url` and `ldap.server` at the same time.
     Please provide a unique way to configure LDAP.
@@ -329,7 +329,7 @@ postgresql: ldap.url, ldap.server
 Validate values of Postgresql - If PSP is enabled RBAC should be enabled too
 */}}
 {{- define "postgresql.validateValues.psp" -}}
-{{- if and .Values.postgresql.psp.create (not .Values.postgresql.rbac.create) }}
+{{- if and .Values.psp.create (not .Values.rbac.create) }}
 postgresql: psp.create, rbac.create
     RBAC should be enabled if PSP is enabled in order for PSP to work.
     More info at https://kubernetes.io/docs/concepts/policy/pod-security-policy/#authorizing-policies
@@ -340,10 +340,10 @@ postgresql: psp.create, rbac.create
 Return the path to the cert file.
 */}}
 {{- define "postgresql.tlsCert" -}}
-{{- if .Values.postgresql.tls.autoGenerated }}
+{{- if .Values.tls.autoGenerated }}
     {{- printf "/opt/bitnami/postgresql/certs/tls.crt" -}}
 {{- else -}}
-    {{- required "Certificate filename is required when TLS in enabled" .Values.postgresql.tls.certFilename | printf "/opt/bitnami/postgresql/certs/%s" -}}
+    {{- required "Certificate filename is required when TLS in enabled" .Values.tls.certFilename | printf "/opt/bitnami/postgresql/certs/%s" -}}
 {{- end -}}
 {{- end -}}
 
@@ -351,10 +351,10 @@ Return the path to the cert file.
 Return the path to the cert key file.
 */}}
 {{- define "postgresql.tlsCertKey" -}}
-{{- if .Values.postgresql.tls.autoGenerated }}
+{{- if .Values.tls.autoGenerated }}
     {{- printf "/opt/bitnami/postgresql/certs/tls.key" -}}
 {{- else -}}
-{{- required "Certificate Key filename is required when TLS in enabled" .Values.postgresql.tls.certKeyFilename | printf "/opt/bitnami/postgresql/certs/%s" -}}
+{{- required "Certificate Key filename is required when TLS in enabled" .Values.tls.certKeyFilename | printf "/opt/bitnami/postgresql/certs/%s" -}}
 {{- end -}}
 {{- end -}}
 
@@ -362,10 +362,10 @@ Return the path to the cert key file.
 Return the path to the CA cert file.
 */}}
 {{- define "postgresql.tlsCACert" -}}
-{{- if .Values.postgresql.tls.autoGenerated }}
+{{- if .Values.tls.autoGenerated }}
     {{- printf "/opt/bitnami/postgresql/certs/ca.crt" -}}
 {{- else -}}
-    {{- printf "/opt/bitnami/postgresql/certs/%s" .Values.postgresql.tls.certCAFilename -}}
+    {{- printf "/opt/bitnami/postgresql/certs/%s" .Values.tls.certCAFilename -}}
 {{- end -}}
 {{- end -}}
 
@@ -373,8 +373,8 @@ Return the path to the CA cert file.
 Return the path to the CRL file.
 */}}
 {{- define "postgresql.tlsCRL" -}}
-{{- if .Values.postgresql.tls.crlFilename -}}
-{{- printf "/opt/bitnami/postgresql/certs/%s" .Values.postgresql.tls.crlFilename -}}
+{{- if .Values.tls.crlFilename -}}
+{{- printf "/opt/bitnami/postgresql/certs/%s" .Values.tls.crlFilename -}}
 {{- end -}}
 {{- end -}}
 
@@ -382,7 +382,7 @@ Return the path to the CRL file.
 Return true if a TLS credentials secret object should be created
 */}}
 {{- define "postgresql.createTlsSecret" -}}
-{{- if and .Values.postgresql.tls.autoGenerated (not .Values.postgresql.tls.certificatesSecret) }}
+{{- if and .Values.tls.autoGenerated (not .Values.tls.certificatesSecret) }}
     {{- true -}}
 {{- end -}}
 {{- end -}}
@@ -391,9 +391,9 @@ Return true if a TLS credentials secret object should be created
 Return the path to the CA cert file.
 */}}
 {{- define "postgresql.tlsSecretName" -}}
-{{- if .Values.postgresql.tls.autoGenerated }}
+{{- if .Values.tls.autoGenerated }}
     {{- printf "%s-crt" (include "common.names.fullname" .) -}}
 {{- else -}}
-    {{ required "A secret containing TLS certificates is required when TLS is enabled" .Values.postgresql.tls.certificatesSecret }}
+    {{ required "A secret containing TLS certificates is required when TLS is enabled" .Values.tls.certificatesSecret }}
 {{- end -}}
 {{- end -}}
