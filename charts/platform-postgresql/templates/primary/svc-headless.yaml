@@ -4,17 +4,17 @@ metadata:
   name: {{ include "postgresql.primary.svc.headless" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- if .Values.postgresql.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
     app.kubernetes.io/component: primary
-  {{- if or .Values.primary.service.headless.annotations .Values.commonAnnotations }}
+  {{- if or .Values.postgresql.primary.service.headless.annotations .Values.postgresql.commonAnnotations }}
   annotations:
-    {{- if .Values.primary.service.headless.annotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.primary.service.headless.annotations "context" $ ) | nindent 4 }}
+    {{- if .Values.postgresql.primary.service.headless.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.primary.service.headless.annotations "context" $ ) | nindent 4 }}
     {{- end }}
-    {{- if .Values.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- if .Values.postgresql.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
   {{- end }}
     # Use this annotation in addition to the actual publishNotReadyAddresses

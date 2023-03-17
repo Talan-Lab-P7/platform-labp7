@@ -1,4 +1,4 @@
-{{- if and .Values.networkPolicy.enabled (or .Values.networkPolicy.metrics.enabled .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.enabled) }}
+{{- if and .Values.postgresql.networkPolicy.enabled (or .Values.postgresql.networkPolicy.metrics.enabled .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.enabled) }}
 apiVersion: {{ include "common.capabilities.networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
@@ -6,52 +6,52 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: primary
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- if .Values.postgresql.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-  {{- if .Values.commonAnnotations }}
-  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- if .Values.postgresql.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.postgresql.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
   podSelector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: primary
   ingress:
-    {{- if and .Values.metrics.enabled .Values.networkPolicy.metrics.enabled (or .Values.networkPolicy.metrics.namespaceSelector .Values.networkPolicy.metrics.podSelector) }}
+    {{- if and .Values.postgresql.metrics.enabled .Values.postgresql.networkPolicy.metrics.enabled (or .Values.postgresql.networkPolicy.metrics.namespaceSelector .Values.postgresql.networkPolicy.metrics.podSelector) }}
     - from:
-        {{- if .Values.networkPolicy.metrics.namespaceSelector }}
+        {{- if .Values.postgresql.networkPolicy.metrics.namespaceSelector }}
         - namespaceSelector:
-            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.metrics.namespaceSelector "context" $) | nindent 14 }}
+            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.networkPolicy.metrics.namespaceSelector "context" $) | nindent 14 }}
         {{- end }}
-        {{- if .Values.networkPolicy.metrics.podSelector }}
+        {{- if .Values.postgresql.networkPolicy.metrics.podSelector }}
         - podSelector:
-            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.metrics.podSelector "context" $) | nindent 14 }}
+            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.networkPolicy.metrics.podSelector "context" $) | nindent 14 }}
         {{- end }}
       ports:
-        - port: {{ .Values.metrics.containerPorts.metrics }}
+        - port: {{ .Values.postgresql.metrics.containerPorts.metrics }}
     {{- end }}
-    {{- if and .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.enabled (or .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.namespaceSelector .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.podSelector) }}
+    {{- if and .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.enabled (or .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.namespaceSelector .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.podSelector) }}
     - from:
-        {{- if .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.namespaceSelector }}
+        {{- if .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.namespaceSelector }}
         - namespaceSelector:
-            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.namespaceSelector "context" $) | nindent 14 }}
+            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.namespaceSelector "context" $) | nindent 14 }}
         {{- end }}
-        {{- if .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.podSelector }}
+        {{- if .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.podSelector }}
         - podSelector:
-            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.podSelector "context" $) | nindent 14 }}
+            matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.podSelector "context" $) | nindent 14 }}
         {{- end }}
       ports:
-        - port: {{ .Values.containerPorts.postgresql }}
+        - port: {{ .Values.postgresql.containerPorts.postgresql }}
     {{- end }}
-    {{- if and .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.enabled (eq .Values.architecture "replication") }}
+    {{- if and .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.enabled (eq .Values.postgresql.architecture "replication") }}
     - from:
         - podSelector:
             matchLabels: {{- include "common.labels.matchLabels" . | nindent 14 }}
               app.kubernetes.io/component: read
       ports:
-        - port: {{ .Values.containerPorts.postgresql }}
+        - port: {{ .Values.postgresql.containerPorts.postgresql }}
     {{- end }}
-    {{- if .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.customRules }}
-    {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.ingressRules.primaryAccessOnlyFrom.customRules "context" $) | nindent 4 }}
+    {{- if .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.customRules }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.networkPolicy.ingressRules.primaryAccessOnlyFrom.customRules "context" $) | nindent 4 }}
     {{- end }}
 {{- end }}

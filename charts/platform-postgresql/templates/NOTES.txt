@@ -4,11 +4,11 @@ APP VERSION: {{ .Chart.AppVersion }}
 
 ** Please be patient while the chart is being deployed **
 
-{{- if .Values.diagnosticMode.enabled }}
+{{- if .Values.postgresql.diagnosticMode.enabled }}
 The chart has been deployed in diagnostic mode. All probes have been disabled and the command has been overwritten with:
 
-  command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 4 }}
-  args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 4 }}
+  command: {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.diagnosticMode.command "context" $) | nindent 4 }}
+  args: {{- include "common.tplvalues.render" (dict "value" .Values.postgresql.diagnosticMode.args "context" $) | nindent 4 }}
 
 Get the list of pods by executing:
 
@@ -28,14 +28,14 @@ PostgreSQL can be accessed via port {{ include "postgresql.service.port" . }} on
 
     {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local - Read/Write connection
 
-{{- if eq .Values.architecture "replication" }}
+{{- if eq .Values.postgresql.architecture "replication" }}
 
     {{ include "postgresql.readReplica.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local - Read only connection
 
 {{- end }}
 
 {{- $customUser := include "postgresql.username" . }}
-{{- if and (not (empty $customUser)) (ne $customUser "postgres") .Values.auth.enablePostgresUser }}
+{{- if and (not (empty $customUser)) (ne $customUser "postgres") .Values.postgresql.auth.enablePostgresUser }}
 
 To get the password for "postgres" run:
 
@@ -58,17 +58,17 @@ To connect to your database run the following command:
     kubectl run {{ include "common.names.fullname" . }}-client --rm --tty -i --restart='Never' --namespace {{ .Release.Namespace }} --image {{ include "postgresql.image" . }} --env="PGPASSWORD=$POSTGRES_PASSWORD" \
       --command -- psql --host {{ include "postgresql.primary.fullname" . }} -U {{ default "postgres" $customUser }} -d {{- if include "postgresql.database" . }} {{ include "postgresql.database" . }}{{- else }} postgres{{- end }} -p {{ include "postgresql.service.port" . }}
 
-    > NOTE: If you access the container using bash, make sure that you execute "/opt/bitnami/scripts/postgresql/entrypoint.sh /bin/bash" in order to avoid the error "psql: local user with ID {{ .Values.primary.containerSecurityContext.runAsUser }}} does not exist"
+    > NOTE: If you access the container using bash, make sure that you execute "/opt/bitnami/scripts/postgresql/entrypoint.sh /bin/bash" in order to avoid the error "psql: local user with ID {{ .Values.postgresql.primary.containerSecurityContext.runAsUser }}} does not exist"
 
 To connect to your database from outside the cluster execute the following commands:
 
-{{- if contains "NodePort" .Values.primary.service.type }}
+{{- if contains "NodePort" .Values.postgresql.primary.service.type }}
 
     export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
     export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "postgresql.primary.fullname" . }})
     PGPASSWORD="$POSTGRES_PASSWORD" psql --host $NODE_IP --port $NODE_PORT -U {{ default "postgres" $customUser }} -d {{- if include "postgresql.database" . }} {{ include "postgresql.database" . }}{{- else }} postgres{{- end }}
 
-{{- else if contains "LoadBalancer" .Values.primary.service.type }}
+{{- else if contains "LoadBalancer" .Values.postgresql.primary.service.type }}
 
   NOTE: It may take a few minutes for the LoadBalancer IP to be available.
         Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "postgresql.primary.fullname" . }}'
@@ -76,7 +76,7 @@ To connect to your database from outside the cluster execute the following comma
     export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "postgresql.primary.fullname" . }} --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
     PGPASSWORD="$POSTGRES_PASSWORD" psql --host $SERVICE_IP --port {{ include "postgresql.service.port" . }} -U {{ default "postgres" $customUser }} -d {{- if include "postgresql.database" . }} {{ include "postgresql.database" . }}{{- else }} postgres{{- end }}
 
-{{- else if contains "ClusterIP" .Values.primary.service.type }}
+{{- else if contains "ClusterIP" .Values.postgresql.primary.service.type }}
 
     kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "postgresql.primary.fullname" . }} {{ include "postgresql.service.port" . }}:{{ include "postgresql.service.port" . }} &
     PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U {{ default "postgres" $customUser }} -d {{- if include "postgresql.database" . }} {{ include "postgresql.database" . }}{{- else }} postgres{{- end }} -p {{ include "postgresql.service.port" . }}
@@ -87,5 +87,5 @@ To connect to your database from outside the cluster execute the following comma
 WARNING: The configured password will be ignored on new installation in case when previous Posgresql release was deleted through the helm command. In that case, old PVC will have an old password, and setting it through helm won't take effect. Deleting persistent volumes (PVs) will solve the issue.
 
 {{- include "postgresql.validateValues" . -}}
-{{- include "common.warnings.rollingTag" .Values.image -}}
-{{- include "common.warnings.rollingTag" .Values.volumePermissions.image }}
+{{- include "common.warnings.rollingTag" .Values.postgresql.image -}}
+{{- include "common.warnings.rollingTag" .Values.postgresql.volumePermissions.image }}
