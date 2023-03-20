@@ -193,7 +193,7 @@ Create the kerberos principal suffix for core HDFS services
 Create the kerberos principal for HTTP services
 */}}
 {{- define "http-principal" -}}
-{{- printf "HTTP@%s" .Values.global.kerberosRealm -}}
+{{- printf "HTTP/_HOST@%s" .Values.global.kerberosRealm -}}
 {{- end -}}
 
 {{/*
