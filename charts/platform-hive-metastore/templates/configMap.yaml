@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "hive-meta-store.fullname" . }}
+  labels:
+    app: {{ template "hive-meta-store.client.name" . }}
+    chart: {{ template "hive-meta-store.subchart" . }}
+    release: {{ .Release.Name }}
+data:
+  init-mydb.sh: |
+    #! /bin/bash
+    _nb=$(beeline -n "postgres" -p ${POSTGRES_PASSWORD} -u jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/template1 --silent=true --showWarnings=false --showHeader=false --outputformat=vertical -e "select count(*) from pg_catalog.pg_tables where schemaname='public';" | grep "count" | awk '{print $2}')
+    if [ $_nb -eq 0 ]
+    then
+     schematool -dbType postgres -initSchema
+    fi

@@ -88,11 +88,14 @@ spec:
       initContainers:
         - name: init-mydb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: ['sh', '-c', "schematool -dbType postgres -initSchema -ifNotExists"]  
+          command: ['sh', '-c', "/init-mydb.sh"]  
           volumeMounts:
             - name: hive-config
               mountPath: /opt/hive/conf/
-              readOnly: true  
+              readOnly: true
+            - name: init-mydb
+              mountPath: /
+              readOnly: true
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -109,7 +112,10 @@ spec:
               - configMap:
                   name: {{ template "hive-meta-store.config.fullname" . }}
               - configMap:
-                  name: {{ template "hdfs-k8s.config.fullname" . }}    
+                  name: {{ template "hdfs-k8s.config.fullname" . }}   
+        - name: init-mydb
+          configMap:
+            name: {{ template "hive-meta-store.fullname" . }}
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "hive-keytabs-secret" . }}
