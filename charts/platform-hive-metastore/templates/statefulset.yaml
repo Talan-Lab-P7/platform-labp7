@@ -96,7 +96,6 @@ spec:
             - name: init-mydb
               mountPath: /
               readOnly: true
-              defaultMode: 0744
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -117,6 +116,7 @@ spec:
         - name: init-mydb
           configMap:
             name: {{ template "hive-meta-store.fullname" . }}
+            defaultMode: 0744
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "hive-keytabs-secret" . }}
