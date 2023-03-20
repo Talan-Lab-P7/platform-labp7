@@ -62,7 +62,7 @@ spec:
               mountPath: /etc/security/
               readOnly: true 
             - name: init-mydb
-              mountPath: /
+              mountPath: /scripts
               readOnly: true
 #          livenessProbe:
 #            tcpSocket:
@@ -97,7 +97,7 @@ spec:
               mountPath: /opt/hive/conf/
               readOnly: true
             - name: init-mydb
-              mountPath: /
+              mountPath: /scripts
               readOnly: true
           env:
             - name: POSTGRES_PASSWORD
