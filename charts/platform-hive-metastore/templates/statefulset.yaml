@@ -88,7 +88,8 @@ spec:
       initContainers:
         - name: init-mydb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: ['sh', '-c', "/init-mydb.sh"]  
+          command: ['sh', '-c', "/init-mydb.sh"]
+          command: ['sh', '-c', "sleep 100000000000"]  
           volumeMounts:
             - name: hive-config
               mountPath: /opt/hive/conf/
