@@ -96,13 +96,6 @@ Construct the name of the metastore pod 0.
 {{- template "hive-meta-store.fullname" . -}}-0
 {{- end -}}
 
-{{/*
-Create chart name and version as used by the subchart label.
-*/}}
-{{- define "hive-meta-store.subchart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "hive-meta-store.client.name" -}}
 {{- template "hive-meta-store.name" . -}}-client
 {{- end -}}

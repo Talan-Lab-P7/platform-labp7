@@ -93,7 +93,7 @@ spec:
             - name: hive-config
               mountPath: /opt/hive/conf/
               readOnly: true
-            - name: init-db
+            - name: init-mydb
               mountPath: /
               readOnly: true
           env:
@@ -113,7 +113,7 @@ spec:
                   name: {{ template "hive-meta-store.config.fullname" . }}
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}   
-        - name: init-db
+        - name: init-mydb
           configMap:
             name: {{ template "hive-meta-store.fullname" . }}
         - name: kerberos-keytabs
