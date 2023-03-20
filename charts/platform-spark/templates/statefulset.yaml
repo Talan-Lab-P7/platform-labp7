@@ -44,6 +44,12 @@ spec:
             - name: driver
               containerPort: 16780
               protocol: TCP
+            - name: thrift
+              containerPort: 10000
+              protocol: TCP
+            - name: http
+              containerPort: 4040
+              protocol: TCP
 #          livenessProbe:
 #            tcpSocket:
 #              port: driver
