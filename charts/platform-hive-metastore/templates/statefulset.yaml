@@ -88,7 +88,7 @@ spec:
       initContainers:
         - name: init-mydb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: ['sh', '-c', "schematool -dbType postgres -initSchema"]  
+          command: ['sh', '-c', "schematool -dbType postgres -initSchema -ifNotExists"]  
           volumeMounts:
             - name: hive-config
               mountPath: /opt/hive/conf/
