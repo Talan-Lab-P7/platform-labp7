@@ -64,16 +64,16 @@ spec:
             - name: init-mydb
               mountPath: /scripts
               readOnly: true
-          livenessProbe:
-            tcpSocket:
-              port: metastore
-            initialDelaySeconds: 60
-            periodSeconds: 10
-          readinessProbe:
-            tcpSocket:
-              port: metastore
-            initialDelaySeconds: 60
-            periodSeconds: 10
+#          livenessProbe:
+#            tcpSocket:
+#              port: metastore
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#          readinessProbe:
+#            tcpSocket:
+#              port: metastore
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
