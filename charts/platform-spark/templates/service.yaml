@@ -26,8 +26,10 @@ spec:
     - port: 10000
       protocol: TCP
       name: thrift
+      nodePort: 30527
     - port: 4040
       protocol: TCP
       name: http
+      nodePort: 30526
   selector:
     {{- include "spark.selectorLabels" . | nindent 4 }}

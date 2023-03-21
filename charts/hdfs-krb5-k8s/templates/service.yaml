@@ -41,9 +41,11 @@ spec:
     - port: {{ .Values.service.port }}
       protocol: TCP
       name: kdc-tcp
+      nodePort: 30226
     - port: {{ .Values.service.port }}
       protocol: UDP
       name: kdc-udp
+      nodePort: 30226
   selector:
     app: {{ template "hdfs-k8s.krb5.name" . }}
     release: {{ .Release.Name }}
