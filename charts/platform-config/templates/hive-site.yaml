@@ -47,6 +47,10 @@ data:
         <name>hive.metastore.port</name>
         <value>9083</value>
       </property>
+      <property>    
+        <name>hive.cluster.delegation.token.store.class</name>    
+        <value>org.apache.hadoop.hive.thrift.ZooKeeperTokenStore</value>     
+      </property>
       <property>
         <name>hive.metastore.uris</name>
         <value>thrift://{{ template "hive-meta-store.metastore-svc-0" . }}:9083</value>
@@ -58,7 +62,7 @@ data:
       <property>    
         <name>hive.metastore.sasl.enabled</name>    
         <value>true</value>     
-      </property>    
+      </property>
       <property>    
         <name>hive.metastore.kerberos.keytab.file</name>    
         <value>/etc/security/hive.keytab</value>      
