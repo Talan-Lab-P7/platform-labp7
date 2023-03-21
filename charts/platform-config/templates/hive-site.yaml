@@ -49,7 +49,7 @@ data:
       </property>
       <property>    
         <name>hive.cluster.delegation.token.store.class</name>    
-        <value>org.apache.hadoop.hive.thrift.ZooKeeperTokenStore</value>     
+        <value>org.apache.hadoop.hive.thrift.DBTokenStore</value>     
       </property>
       <property>
         <name>hive.metastore.uris</name>
