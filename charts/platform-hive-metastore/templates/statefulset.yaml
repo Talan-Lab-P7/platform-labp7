@@ -34,7 +34,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
-          args: ["-c","hive --service metastore"]
+          args: ["-c","hive --hiveconf hive.root.logger=DEBUG,console --service metastore"]
 #          args: ["-c","sleep 10000000000"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
@@ -64,16 +64,16 @@ spec:
             - name: init-mydb
               mountPath: /scripts
               readOnly: true
-          livenessProbe:
-            tcpSocket:
-              port: metastore
-            initialDelaySeconds: 60
-            periodSeconds: 10
-          readinessProbe:
-            tcpSocket:
-              port: metastore
-            initialDelaySeconds: 60
-            periodSeconds: 10
+#          livenessProbe:
+#            tcpSocket:
+#              port: metastore
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#          readinessProbe:
+#            tcpSocket:
+#              port: metastore
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
