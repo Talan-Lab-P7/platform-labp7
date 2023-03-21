@@ -30,6 +30,10 @@ spec:
       serviceAccountName: {{ include "spark.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - nameOverride:
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv thrift://{{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;'] 
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -39,7 +43,6 @@ spec:
           env:
           command: ['/bin/sh']
           args: ["-c","/opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
-#          args: ["-c","sleep infinity"]
           ports:
             - name: driver
               containerPort: 16780
@@ -50,12 +53,12 @@ spec:
             - name: http
               containerPort: 4040
               protocol: TCP
-#          livenessProbe:
-#            tcpSocket:
-#              port: driver
-#          readinessProbe:
-#            tcpSocket:
-#              port: driver
+          livenessProbe:
+            tcpSocket:
+              port: driver
+          readinessProbe:
+            tcpSocket:
+              port: driver
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

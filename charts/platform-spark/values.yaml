@@ -8,7 +8,7 @@ image:
   repository: adel1992/spark-3.2.2
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "postgresql_kyuubi"
+  tag: "kyuubi_root"
 
 imagePullSecrets: []
 nameOverride: ""
