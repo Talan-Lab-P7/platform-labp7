@@ -16,10 +16,6 @@ data:
         <value>true</value>    
       </property>
       <property>
-        <name>hive.metastore.warehouse.dir</name>
-        <value>hdfs://{{ template "namenode-svc-0" . }}:8020/hive/warehouse</value>
-      </property>
-      <property>
         <name>javax.jdo.option.ConnectionDriverName</name>
         <value>org.postgresql.Driver</value>
       </property>
