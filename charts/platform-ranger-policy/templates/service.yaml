@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "platform-labp7.fullname" . }}
+  name: {{ include "ranger-admin.fullname" . }}
   labels:
-    {{- include "platform-labp7.labels" . | nindent 4 }}
+    {{- include "ranger-admin.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "platform-labp7.selectorLabels" . | nindent 4 }}
+    {{- include "ranger-admin.selectorLabels" . | nindent 4 }}

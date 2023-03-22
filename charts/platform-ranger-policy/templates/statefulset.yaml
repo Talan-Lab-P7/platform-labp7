@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ranger-admin.fullname" . }}
+  labels:
+    {{- include "ranger-admin.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "ranger-admin.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ranger-admin.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ranger-admin.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: wait-for-postgresql
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
+        - name: create-base
+          image: "{{ .Values.metastore.image.repository }}:{{ .Values.metastore.image.tag | default .Chart.AppVersion }}"
+          command: ['sh', '-c', './scripts/create-db.sh'] 
+          volumeMounts:
+            - name: create-base
+              mountPath: /scripts
+              readOnly: true
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ['/bin/sh']
+          args: ["-c","/opt/ranger-2.1.0-admin/setup.sh && /opt/ranger-2.1.0-admin/opt/ranger-2.1.0-admin"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 6080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /login.jsp
+              port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /login.jsp
+              port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: hdfs-kms-config
+              mountPath: /etc/hadoop/conf
+              readOnly: true
+            - name: install-properties
+              mountPath: /opt/ranger-2.1.0-admin/
+              readOnly: true
+            - name: kerberos-config
+              mountPath: /etc/krb5.conf
+              subPath: krb5.conf
+              readOnly: true
+            - name: kerberos-keytabs
+              mountPath: /etc/security
+              readOnly: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: kerberos-config
+          configMap:
+            name: {{ template "krb5-configmap" . }}
+        - name: hdfs-kms-config
+           projected:
+            sources:
+              - configMap:
+                  name: {{ template "hdfs-k8s.config.fullname" . }}  
+              - configMap:
+                  name: {{ template "ranger-admin.config.kms.site" . }}
+        - name: install-properties
+          configMap:
+            name: {{ template "ranger-admin.config.install.properties" . }}
+        - name: create-base
+          configMap:
+            name: {{ template "ranger-admin.fullname" . }}
+            defaultMode: 0744
+        - name: kerberos-keytabs
+          secret:
+            secretName: {{ template "hive-keytabs-secret" . }}

@@ -5,10 +5,15 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: ranger-admin
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "ranger-admin"
+  metastore:
+    repository: bringg/hive
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "3.1.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -38,7 +43,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 6080
 
 ingress:
   enabled: false

@@ -30,6 +30,7 @@ dependencies:
     tags:
       - ranger
       - simple
+      - ranger
   - name: spark
     version: "0.1.0"
     repository: "file://../platform-spark"
@@ -37,6 +38,7 @@ dependencies:
     tags:
       - ranger
       - simple
+      - ranger
   - name: hive-meta-store
     version: "0.1.0"
     repository: "file://../platform-hive-metastore"
@@ -50,10 +52,10 @@ dependencies:
     condition: condition.subchart.ranger-kms
     tags:
       - ranger
-  - name: ranger-policy
+  - name: ranger-admin
     version: "0.1.0"
-    repository: "file://../platform-ranger-policy"
-    condition: condition.subchart.ranger-policy
+    repository: "file://../platform-ranger-admin"
+    condition: condition.subchart.ranger-admin
     tags:
       - ranger
   - name: zookeeper
@@ -71,6 +73,7 @@ dependencies:
       - ha
       - kerberos
       - simple
+      - ranger
   - name: hdfs-krb5-k8s
     version: "0.1.0"
     repository: "file://../hdfs-krb5-k8s"
@@ -78,6 +81,7 @@ dependencies:
     tags:
       - kerberos
       - simple
+      - ranger
   - name: hdfs-journalnode-k8s
     version: "0.1.0"
     repository: "file://../hdfs-journalnode-k8s"
@@ -99,6 +103,7 @@ dependencies:
     condition: condition.subchart.simple-namenode
     tags:
       - simple
+      - ranger
   - name: hdfs-datanode-k8s
     version: "0.1.0"
     repository: "file://../hdfs-datanode-k8s"
@@ -107,6 +112,7 @@ dependencies:
       - ha
       - kerberos
       - simple
+      - ranger
   - name: hdfs-client-k8s
     version: "0.1.0"
     repository: "file://../hdfs-client-k8s"
@@ -115,6 +121,7 @@ dependencies:
       - ha
       - kerberos
       - simple
+      - ranger
   - name: common
     version: 2.x.x
     repository: "file://../platform-common"
@@ -122,6 +129,7 @@ dependencies:
       - ha
       - kerberos
       - simple
+      - ranger
   - name: postgresql
     version: 12.2.3
     repository: "file://../platform-postgresql"
@@ -129,3 +137,4 @@ dependencies:
       - ha
       - kerberos
       - simple
+      - ranger

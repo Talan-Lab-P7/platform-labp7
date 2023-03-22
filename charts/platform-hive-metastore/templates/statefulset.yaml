@@ -35,7 +35,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
           args: ["-c","hive --hiveconf hive.root.logger=DEBUG,console --service metastore"]
-#          args: ["-c","sleep 10000000000"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: POSTGRES_PASSWORD
