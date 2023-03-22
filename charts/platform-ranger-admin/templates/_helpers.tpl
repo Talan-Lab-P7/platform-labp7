@@ -90,3 +90,14 @@ Construct the full name of the hive meta store statefulset member 0.
 {{- printf "%s-kms-config" $fullname | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "ranger-admin.client.name" -}}
+{{- template "ranger-admin.name" . -}}-client
+{{- end -}}
+
+{{/*
+Create chart name and version as used by the subchart label.
+*/}}
+{{- define "ranger-admin.subchart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
