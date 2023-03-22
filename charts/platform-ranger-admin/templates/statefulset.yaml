@@ -21,7 +21,8 @@ spec:
         {{- include "ranger-admin.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
-      imagePullSecrets: {{- toYaml . | nindent 8 }}
+      imagePullSecrets: 
+      {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "ranger-admin.serviceAccountName" . }}
       securityContext:
@@ -106,7 +107,7 @@ spec:
           configMap:
             name: {{ template "krb5-configmap" . }}
         - name: hdfs-kms-config
-           projected:
+          projected:
             sources:
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}  
