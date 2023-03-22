@@ -90,36 +90,3 @@ spec:
               readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      volumes:
-        - name: kerberos-config
-          configMap:
-            name: {{ template "krb5-configmap" . }}
-        - name: hdfs-kms-config
-           projected:
-            sources:
-              - configMap:
-                  name: {{ template "hdfs-k8s.config.fullname" . }}  
-              - configMap:
-                  name: {{ template "ranger-admin.config.kms.site" . }}
-        - name: install-properties
-          configMap:
-            name: {{ template "ranger-admin.config.install.properties" . }}
-        - name: create-base
-          configMap:
-            name: {{ template "ranger-admin.fullname" . }}
-            defaultMode: 0744
-        - name: kerberos-keytabs
-          secret:
-            secretName: {{ template "hive-keytabs-secret" . }}
