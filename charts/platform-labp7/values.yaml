@@ -11,7 +11,7 @@ condition:
     spark: true
     hive-meta-store: true
     ranger-kms: false
-    ranger-admin: false
+    ranger-admin: true
 
 
 image:
