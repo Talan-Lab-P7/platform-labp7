@@ -8,6 +8,7 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  serviceName: {{ include "ranger-admin.fullname" . }}
   selector:
     matchLabels:
       {{- include "ranger-admin.selectorLabels" . | nindent 6 }}
