@@ -52,6 +52,12 @@ spec:
           command: ['/bin/sh']
           args: ["-c","/opt/ranger-2.1.0-admin/setup.sh && /opt/ranger-2.1.0-admin/opt/ranger-2.1.0-admin"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" }}
           ports:
             - name: http
               containerPort: 6080
@@ -60,22 +66,16 @@ spec:
             httpGet:
               path: /login.jsp
               port: http
-          initialDelaySeconds: 60
-          periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /login.jsp
               port: http
-          initialDelaySeconds: 60
-          periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "postgresql.secretName" . }}
-                key: {{ template "postgresql.adminPasswordKey" . }}
           volumeMounts:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
