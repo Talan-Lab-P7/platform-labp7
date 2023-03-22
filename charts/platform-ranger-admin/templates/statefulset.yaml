@@ -32,7 +32,7 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
         - name: create-base
-          image: "{{ .Values.metastore.image.repository }}:{{ .Values.metastore.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.metastore.repository }}:{{ .Values.image.metastore.tag | default .Chart.AppVersion }}"
           command: ['sh', '-c', './scripts/create-db.sh'] 
           volumeMounts:
             - name: create-base
