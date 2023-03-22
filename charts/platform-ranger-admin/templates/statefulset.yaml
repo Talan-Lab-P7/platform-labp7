@@ -38,12 +38,12 @@ spec:
             - name: create-base
               mountPath: /scripts
               readOnly: true
-              env:
-              - name: POSTGRES_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: {{ template "postgresql.secretName" . }}
-                    key: {{ template "postgresql.adminPasswordKey" . }}
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" . }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
