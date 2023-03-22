@@ -74,8 +74,6 @@ spec:
               port: http
             initialDelaySeconds: 60
             periodSeconds: 10
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
@@ -90,6 +88,20 @@ spec:
             - name: kerberos-keytabs
               mountPath: /etc/security
               readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: kerberos-config
           configMap:
