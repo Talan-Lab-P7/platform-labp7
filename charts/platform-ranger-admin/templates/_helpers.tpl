@@ -101,3 +101,7 @@ Create chart name and version as used by the subchart label.
 {{- define "ranger-admin.subchart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "ranger-admin.app.name" -}}
+{{- template "ranger-admin.name" . -}}-app
+{{- end -}}
