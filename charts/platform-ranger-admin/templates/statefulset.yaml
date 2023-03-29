@@ -32,19 +32,6 @@ spec:
         - name: wait-for-postgresql
           image: busybox
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
-        - name: create-base
-          image: "{{ .Values.image.metastore.repository }}:{{ .Values.image.metastore.tag | default .Chart.AppVersion }}"
-          command: ['sh', '-c', '/scripts/create-db.sh'] 
-          volumeMounts:
-            - name: create-base
-              mountPath: /scripts
-              readOnly: true
-          env:
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "postgresql.secretName" . }}
-                key: {{ template "postgresql.adminPasswordKey" . }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -117,10 +104,6 @@ spec:
         - name: install-properties
           configMap:
             name: {{ template "ranger-admin.config.install.properties" . }}
-        - name: create-base
-          configMap:
-            name: {{ template "ranger-admin.fullname" . }}
-            defaultMode: 0744
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "ranger-admin-keytabs-secret" . }}
