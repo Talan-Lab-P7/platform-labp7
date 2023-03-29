@@ -235,14 +235,14 @@ data:
 
     #------------ Kerberos Config -----------------
     spnego_principal=HTTP/{{ template "ranger-admin.ranger-svc-0" . }}@LABP7.CNAM
-    spnego_keytab=/etc/security/hdfs.keytab
+    spnego_keytab=/etc/security/ranger-admin.keytab
     token_valid=30
     cookie_domain={{ template "ranger-admin.ranger-svc-0" . }}
     cookie_path=/
-    admin_principal=hive/{{ template "ranger-admin.ranger-svc-0" . }}@LABP7.CNAM
-    admin_keytab=/etc/security/hdfs.keytab
-    lookup_principal=hive/{{ template "ranger-admin.ranger-svc-0" . }}@LABP7.CNAM
-    lookup_keytab=/etc/security/hdfs.keytab
+    admin_principal=ranger-admin/{{ template "ranger-admin.ranger-svc-0" . }}@LABP7.CNAM
+    admin_keytab=/etc/security/ranger-admin.keytab
+    lookup_principal=ranger-admin/{{ template "ranger-admin.ranger-svc-0" . }}@LABP7.CNAM
+    lookup_keytab=/etc/security/ranger-admin.keytab
     hadoop_conf=/etc/hadoop/conf
     #
     #-------- SSO CONFIG - Start ------------------

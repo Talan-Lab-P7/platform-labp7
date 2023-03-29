@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ranger-admin.config.spark.security" . }}
+  labels:
+    app: {{ template "ranger-admin.app.name" . }}
+    chart: {{ template "ranger-admin.subchart" . }}
+    release: {{ .Release.Name }}
+data:
+  ranger-spark-audit.xml: |
+    <configuration>
+      <property>
+          <name>ranger.plugin.spark.policy.rest.url</name>
+          <value>http://{{ template "ranger-admin.ranger-svc-0" . }}:6080</value>
+      </property>
+      <property>
+          <name>ranger.plugin.spark.service.name</name>
+          <value>ranger-admin</value>
+      </property>
+
+      <property>
+          <name>ranger.plugin.spark.policy.cache.dir</name>
+          <value>/ranger/policycache</value>
+      </property>
+
+      <property>
+          <name>ranger.plugin.spark.policy.pollIntervalMs</name>
+          <value>5000</value>
+      </property>
+
+      <property>
+          <name>ranger.plugin.spark.policy.source.impl</name>
+          <value>org.apache.ranger.admin.client.RangerAdminRESTClient</value>
+      </property>
+
+      <property>
+          <name>ranger.plugin.spark.enable.implicit.userstore.enricher</name>
+          <value>true</value>
+          <description>Enable UserStoreEnricher for fetching user and group attributes if using macros or scripts in row-filters since Ranger 2.3</description>
+      </property>
+
+      <property>
+          <name>ranger.plugin.hive.policy.cache.dir</name>
+          <value>/ranger/policycache</value>
+          <description>As Authz plugin reuses hive service def, a policy cache path is required for caching UserStore and Tags for "hive" service def, while "ranger.plugin.spark.policy.cache.dir config" is the path for caching policies in service. </description>
+      </property>
+
+      <property>
+          <name>ranger.plugin.spark.authorize.in.single.call</name>
+          <value>true</value>
+          <description>Enable access checks in single call with all disallowed privileges thrown in exception. Default value is false.</description>
+      </property>
+    </configuration>

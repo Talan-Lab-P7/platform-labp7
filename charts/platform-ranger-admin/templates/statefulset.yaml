@@ -123,4 +123,4 @@ spec:
             defaultMode: 0744
         - name: kerberos-keytabs
           secret:
-            secretName: {{ template "hive-keytabs-secret" . }}
+            secretName: {{ template "ranger-admin-keytabs-secret" . }}

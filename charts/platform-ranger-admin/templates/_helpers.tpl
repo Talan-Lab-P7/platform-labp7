@@ -64,7 +64,7 @@ Construct the name of the ranger policy pod 0.
 {{- end -}}
 
 {{/*
-Construct the full name of the hive meta store statefulset member 0.
+Construct the full name of the ranger admin statefulset member 0.
 */}}
 {{- define "ranger-admin.ranger-svc-0" -}}
 {{- $pod := include "ranger-admin.ranger-pod-0" . -}}
@@ -91,6 +91,24 @@ Construct the full name of the hive meta store statefulset member 0.
 {{- end -}}
 {{- end -}}
 
+{{- define "ranger-admin.config.spark.security" -}}
+{{- $fullname := include "ranger-admin.fullname" . -}}
+{{- if contains "spark-security" $fullname -}}
+{{- printf "%s" $fullname -}}
+{{- else -}}
+{{- printf "%s-spark-security" $fullname | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "ranger-admin.config.spark.audit" -}}
+{{- $fullname := include "ranger-admin.fullname" . -}}
+{{- if contains "spark-audit" $fullname -}}
+{{- printf "%s" $fullname -}}
+{{- else -}}
+{{- printf "%s-spark-audit" $fullname | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "ranger-admin.client.name" -}}
 {{- template "ranger-admin.name" . -}}-client
 {{- end -}}
@@ -104,4 +122,17 @@ Create chart name and version as used by the subchart label.
 
 {{- define "ranger-admin.app.name" -}}
 {{- template "ranger-admin.name" . -}}-app
+{{- end -}}
+
+
+{{/*
+Create the name for a ranger admin Secret containing Kerberos keytabs.
+*/}}
+{{- define "ranger-admin-keytabs-secret" -}}
+{{- if .Values.global.kerberosKeytabsSecretOverride -}}
+{{- .Values.global.kerberosKeytabsSecretOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := include "ranger-admin.fullname" . -}}
+{{- printf "%s-keytabs" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
 {{- end -}}

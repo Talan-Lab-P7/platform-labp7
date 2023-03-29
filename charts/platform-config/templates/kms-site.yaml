@@ -7,7 +7,7 @@ metadata:
     chart: {{ template "ranger-admin.subchart" . }}
     release: {{ .Release.Name }}
 data:
-  kms-site.xml: |
+  ranger-spark-security.xml: |
     <?xml version="1.0" encoding="UTF-8"?>
     <!--
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -98,7 +98,7 @@ data:
 
       <property>
         <name>hadoop.kms.authentication.kerberos.keytab</name>
-        <value>/etc/security/hdfs.keytab</value>
+        <value>/etc/security/ranger-admin.keytab</value>
         <description>
           Path to the keytab with credentials for the configured Kerberos principal.
         </description>
@@ -106,7 +106,7 @@ data:
 
       <property>
         <name>hadoop.kms.authentication.kerberos.principal</name>
-        <value>HTTP/{{ template "ranger-admin.ranger-svc-0" . }}@MYCOMPANY.COM</value>
+        <value>HTTP/{{ template "ranger-admin.ranger-svc-0" . }}@LABP7.CNAM</value>
         <description>
           The Kerberos principal to use for the HTTP endpoint.
           The principal must start with 'HTTP/' as per the Kerberos HTTP SPNEGO specification.

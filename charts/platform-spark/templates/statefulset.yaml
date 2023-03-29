@@ -71,7 +71,9 @@ spec:
               readOnly: true
             - name: kerberos-keytabs
               mountPath: /etc/security/
-              readOnly: true  
+              readOnly: true
+            - name: policycache
+              mountPath: /ranger/policycache
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -96,9 +98,9 @@ spec:
                   name: {{ template "hdfs-k8s.config.fullname" . }}
               {{- if .Values.global.ranger.enabled }}
               - configMap:
-                  name: ranger-spark-security-config-map
+                  name: {{ template "ranger-admin.config.spark.security" . }}
               - configMap:
-                  name: ranger-spark-audit-config-map
+                  name: {{ include "ranger-admin.config.spark.audit" . }}
               {{- end }}
         - name: kerberos-config
           configMap:
@@ -110,3 +112,5 @@ spec:
                   name: {{ template "spark-keytabs-secret" . }}
               - secret:
                   name: {{ template "hive-keytabs-secret" . }}
+        - name: policycache
+          emptyDir: {}
