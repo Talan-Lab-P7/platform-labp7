@@ -39,5 +39,5 @@ data:
           <name>xasecure.audit.destination.db.user</name>
           <value>postgres</value>
       </property>
-
-  </configuration>
+      
+    </configuration>
