@@ -9,4 +9,4 @@ metadata:
 data:
   create-db.sh: |
     #! /bin/bash
-    beeline -n "postgres" -p ${POSTGRES_PASSWORD} -u jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/template1 --silent=true --showWarnings=false --showHeader=false --outputformat=vertical -e "CREATE DATABASE ranger_admin;CREATE DATABASE ranger_audit;CREATE DATABASE postgres;" > /dev/null
+    beeline -n "postgres" -p ${POSTGRES_PASSWORD} -u jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/postgres --silent=true --showWarnings=false --showHeader=false --outputformat=vertical -e "CREATE DATABASE ranger_admin;CREATE DATABASE ranger_audit;CREATE DATABASE postgres;" > /dev/null
