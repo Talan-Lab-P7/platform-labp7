@@ -33,7 +33,12 @@ spec:
       initContainers:
         - name: wait-for-metastore
           image: busybox
-          command: ['sh', '-c', 'until nc -zv {{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;'] 
+          command: ['sh', '-c', 'until nc -zv {{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;']
+        {{- if .Values.global.ranger.enabled }}
+        - name: wait-for-ranger-admin
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']   
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
