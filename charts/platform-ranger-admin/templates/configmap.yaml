@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "ranger-admin.fullname" . }}-create-db
+  name: {{ template "ranger-admin.fullname" . }}
   labels:
     app: {{ template "ranger-admin.client.name" . }}
     chart: {{ template "ranger-admin.subchart" . }}

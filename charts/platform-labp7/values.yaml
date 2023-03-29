@@ -313,7 +313,7 @@ global:
       port: "6443"
       host: "5.135.90.212"
   ranger:
-    enabled: false
+    enabled: true
 
   ## A list of the local disk directories on cluster nodes that will contain the datanode
   ## blocks. These paths will be mounted to the datanode as K8s HostPath volumes.
