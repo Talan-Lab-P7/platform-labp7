@@ -8,10 +8,10 @@ auth:
   existingSecret: ""
 
 image:
-  repository: ranger-admin
+  repository: EGDSANDARU/APACHE-RANGER-ADMIN
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "ranger-admin"
+  tag: "1.0.0"
   metastore:
     repository: bringg/hive
     pullPolicy: IfNotPresent
