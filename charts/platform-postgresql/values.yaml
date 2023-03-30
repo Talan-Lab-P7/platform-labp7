@@ -296,7 +296,6 @@ primary:
     scripts:
       my_init_script.sh: |
          #!/bin/sh
-         psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE postgres;' &> /dev/null
          psql --host 127.0.0.1 -U postgres -d postgres -p 5432 -c 'CREATE DATABASE ranger_admin;'
          psql --host 127.0.0.1 -U postgres -d postgres -p 5432 -c 'CREATE DATABASE ranger_audit;'
 
