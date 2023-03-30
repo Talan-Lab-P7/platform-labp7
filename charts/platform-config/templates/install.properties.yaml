@@ -60,7 +60,7 @@ data:
     #db_host=host:port:SID          # for DB_FLAVOR=ORACLE                          #for SID example: db_host=localhost:1521:ORCL
     #db_host=host:port/ServiceName  # for DB_FLAVOR=ORACLE                          #for Service example: db_host=localhost:1521/XE
     db_root_user=postgres
-    db_root_password=${POSTGRES_PASSWORD}
+    db_root_password=$POSTGRES_PASSWORD
     db_host={{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/ranger_admin
     #SSL config
     db_ssl_enabled=false
