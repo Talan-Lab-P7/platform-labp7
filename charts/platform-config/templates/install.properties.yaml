@@ -160,9 +160,9 @@ data:
     #
     # ------- UNIX User CONFIG ----------------
     #
-    unix_user=ranger
-    unix_user_pwd=rangeradmin
-    unix_group=ranger
+    unix_user=root
+    unix_user_pwd=
+    unix_group=root
 
     #
     # ------- UNIX User CONFIG  - END ----------------
