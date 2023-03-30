@@ -9,7 +9,7 @@ metadata:
 data:
   init-mydb.sh: |
     #! /bin/bash
-    _nb=$(beeline -n "postgres" -p ${POSTGRES_PASSWORD} -u jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/ranger_admin --silent=true --showWarnings=false --showHeader=false --outputformat=vertical -e "select count(*) from pg_catalog.pg_tables where schemaname='public';" | grep "count" | awk '{print $2}')
+    _nb=$(beeline -n "postgres" -p ${POSTGRES_PASSWORD} -u jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/postgres --silent=true --showWarnings=false --showHeader=false --outputformat=vertical -e "select count(*) from pg_catalog.pg_tables where schemaname='public';" | grep "count" | awk '{print $2}')
     if [ $_nb -eq 0 ]
     then
      schematool -dbType postgres -initSchema
