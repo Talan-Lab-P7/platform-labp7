@@ -38,8 +38,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
-          args: ["-c","mv /tmp/install/install.properties /opt/ranger-2.1.0-admin && /opt/ranger-2.1.0-admin/setup.sh && /opt/ranger-2.1.0-admin/opt/ranger-2.1.0-admin"]
-          args: ["-c","sleep infinity"]
+          args: ["-c","rm /opt/ranger-2.1.0-admin/install.properties && cp /tmp/install/install.properties /opt/ranger-2.1.0-admin/ && /opt/ranger-2.1.0-admin/setup.sh && /usr/bin/ranger-admin start"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: POSTGRES_PASSWORD
@@ -51,18 +50,18 @@ spec:
             - name: http
               containerPort: 6080
               protocol: TCP
-#          livenessProbe:
-#            httpGet:
-#              path: /login.jsp
-#              port: http
-#            initialDelaySeconds: 60
-#            periodSeconds: 10
-#          readinessProbe:
-#            httpGet:
-#              path: /login.jsp
-#              port: http
-#            initialDelaySeconds: 60
-#            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /login.jsp
+              port: http
+            initialDelaySeconds: 600
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /login.jsp
+              port: http
+            initialDelaySeconds: 600
+            periodSeconds: 30
           volumeMounts:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
