@@ -68,7 +68,6 @@ spec:
               readOnly: true
             - name: install-properties
               mountPath: /tmp/install
-              readOnly: true
             - name: kerberos-config
               mountPath: /etc/krb5.conf
               subPath: krb5.conf
