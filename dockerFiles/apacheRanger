@@ -1,0 +1,6 @@
+FROM egdsandaru/apache-ranger-admin:1.0.0
+RUN apt update -y
+RUN apt install python3 nano -y
+RUN mkdir /usr/share/java/
+RUN wget https://repo1.maven.org/maven2/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar -O /usr/share/java/postgresql.jar
+WORKDIR "/opt/ranger-2.1.0-admin/"
