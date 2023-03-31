@@ -54,13 +54,13 @@ spec:
             httpGet:
               path: /login.jsp
               port: http
-            initialDelaySeconds: 600
+            initialDelaySeconds: 1200
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /login.jsp
               port: http
-            initialDelaySeconds: 600
+            initialDelaySeconds: 1200
             periodSeconds: 30
           volumeMounts:
             - name: hdfs-kms-config
