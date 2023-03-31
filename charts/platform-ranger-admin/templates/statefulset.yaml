@@ -50,18 +50,18 @@ spec:
             - name: http
               containerPort: 6080
               protocol: TCP
-#          livenessProbe:
-#            httpGet:
-#              path: /login.jsp
-#              port: http
-#            initialDelaySeconds: 600
-#            periodSeconds: 30
-#          readinessProbe:
-#            httpGet:
-#              path: /login.jsp
-#              port: http
-#            initialDelaySeconds: 600
-#            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /login.jsp
+              port: http
+            initialDelaySeconds: 600
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /login.jsp
+              port: http
+            initialDelaySeconds: 600
+            periodSeconds: 30
           volumeMounts:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
