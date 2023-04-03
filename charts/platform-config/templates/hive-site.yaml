@@ -89,16 +89,4 @@ data:
         <name>hive.cluster.delegation.token.store.class</name>    
         <value>org.apache.hadoop.hive.thrift.DBTokenStore</value>     
       </property>
-      <property>
-        <name>hive.cluster.delegation.token.store.jdbc.url</name>
-        <value>jdbc:postgresql://{{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ include "postgresql.service.port" . }}/tokenstore</value>
-      </property>
-      <property>
-        <name>hive.cluster.delegation.token.store.password</name>
-        <value>${env:POSTGRES_PASSWORD}</value>
-      </property>
-      <property>
-        <name>hive.cluster.delegation.token.store.username</name>
-        <value>postgres</value>
-      </property>
     </configuration>
