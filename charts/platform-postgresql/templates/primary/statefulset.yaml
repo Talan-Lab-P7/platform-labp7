@@ -561,7 +561,7 @@ spec:
       volumes:
         - name: init-tokenstore
           configMap:
-            name: {{ printf "%s-configuration" (include "postgresql.primary.fullname" .) }}-db_tokens
+            name: {{ printf "%s-configuration" (include "postgresql.primary.fullname" .) }}-db-tokens
         {{- if or .Values.primary.configuration .Values.primary.pgHbaConfiguration .Values.primary.existingConfigmap }}
         - name: postgresql-config
           configMap:
