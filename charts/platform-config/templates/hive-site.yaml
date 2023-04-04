@@ -47,6 +47,18 @@ data:
         <name>hive.metastore.uris</name>
         <value>thrift://{{ template "hive-meta-store.metastore-svc-0" . }}:9083</value>
       </property>
+      <property>    
+        <name>hive.metastore.sasl.enabled</name>    
+        <value>true</value>     
+      </property>
+      <property>    
+        <name>hive.metastore.kerberos.keytab.file</name>    
+        <value>/etc/security/hive.keytab</value>      
+      </property>    
+      <property>    
+        <name>hive.metastore.kerberos.principal</name>    
+        <value>{{ template "hive-principal" . }}</value>      
+      </property>
       <property>
         <name>mapreduce.input.fileinputformat.input.dir.recursive</name>
         <value>true</value>
@@ -80,21 +92,5 @@ data:
         <name>hive.server2.thrift.sasl.qop</name>
         <value>auth-conf</value>
         <description></description>
-      </property>
-      <property>    
-        <name>hive.metastore.sasl.enabled</name>    
-        <value>true</value>     
-      </property>
-      <property>    
-        <name>hive.metastore.kerberos.keytab.file</name>    
-        <value>/etc/security/hive.keytab</value>      
-      </property>    
-      <property>    
-        <name>hive.metastore.kerberos.principal</name>    
-        <value>{{ template "hive-principal" . }}</value>      
-      </property>
-      <property>
-        <name>hive.cluster.delegation.token.store.class</name>
-        <value>org.apache.hadoop.hive.thrift.DBTokenStore</value>
       </property>
     </configuration>
