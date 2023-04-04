@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "hive-meta-store.config.fullname" . }}
+  name: {{ include "hive-meta-store.config.fullname" . }}-meta-store
   labels:
     app: {{ template "hive-meta-store.app.name" . }}
     chart: {{ template "hive-meta-store.subchart" . }}
@@ -84,5 +84,9 @@ data:
       <property>    
         <name>hive.metastore.kerberos.principal</name>    
         <value>{{ template "hive-principal" . }}</value>      
+      </property>
+      <property>
+        <name>hive.cluster.delegation.token.store.class</name>
+        <value>org.apache.hadoop.hive.thrift.DBTokenStore</value>
       </property>
     </configuration>

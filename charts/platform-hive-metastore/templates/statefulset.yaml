@@ -115,7 +115,7 @@ spec:
           projected:
             sources:
               - configMap:
-                  name: {{ template "hive-meta-store.config.fullname" . }}
+                  name: {{ template "hive-meta-store.config.fullname" . }}-meta-store
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}   
         - name: init-mydb
