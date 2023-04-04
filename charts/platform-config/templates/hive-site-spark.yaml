@@ -85,4 +85,8 @@ data:
         <name>hive.metastore.kerberos.principal</name>    
         <value>{{ template "hive-principal" . }}</value>      
       </property>
+      <property>
+        <name>hive.cluster.delegation.token.store.class</name>
+        <value>org.apache.hadoop.hive.thrift.DBTokenStore</value>
+      </property>
     </configuration>
