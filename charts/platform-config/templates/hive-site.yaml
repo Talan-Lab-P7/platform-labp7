@@ -39,14 +39,6 @@ data:
         <name>hive.execution.engine</name>
         <value>mr</value>
       </property>
-      <property>
-        <name>hive.metastore.port</name>
-        <value>9083</value>
-      </property>
-      <property>
-        <name>hive.metastore.uris</name>
-        <value>thrift://{{ template "hive-meta-store.metastore-svc-0" . }}:9083</value>
-      </property>
       <property>    
         <name>hive.metastore.sasl.enabled</name>    
         <value>true</value>     
