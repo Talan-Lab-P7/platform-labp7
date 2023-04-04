@@ -12,6 +12,10 @@ data:
     <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
     <configuration>    
       <property>
+        <name>hive.metastore.local</name>
+        <value>true</value>    
+      </property>
+      <property>
         <name>javax.jdo.option.ConnectionDriverName</name>
         <value>org.postgresql.Driver</value>
       </property>
@@ -68,5 +72,17 @@ data:
         <name>hive.server2.thrift.sasl.qop</name>
         <value>auth-conf</value>
         <description></description>
+      </property>
+      <property>    
+        <name>hive.metastore.sasl.enabled</name>    
+        <value>true</value>     
+      </property>
+      <property>    
+        <name>hive.metastore.kerberos.keytab.file</name>    
+        <value>/etc/security/hive.keytab</value>      
+      </property>    
+      <property>    
+        <name>hive.metastore.kerberos.principal</name>    
+        <value>{{ template "hive-principal" . }}</value>      
       </property>
     </configuration>
