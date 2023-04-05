@@ -9,7 +9,7 @@ condition:
     config: true
     hdfs: true
     spark: true
-    hive-meta-store: true
+    hive-meta-store: false
     ranger-kms: false
     ranger-admin: true
 

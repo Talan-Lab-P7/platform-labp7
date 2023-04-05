@@ -31,9 +31,15 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
+        {{- if .Values.conditions.subchart.hive-meta-store }}
         - name: wait-for-metastore
           image: busybox
           command: ['sh', '-c', 'until nc -zv {{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;']
+        {{- else}}
+        - name: wait-for-postgresql
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
+        {{- end }}
         {{- if .Values.global.ranger.enabled }}
         - name: wait-for-ranger-admin
           image: busybox
@@ -48,7 +54,6 @@ spec:
           env:
           command: ['/bin/sh']
           args: ["-c","/opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
-          args: ["-c","sleep infinity"]          
           ports:
             - name: driver
               containerPort: 16780

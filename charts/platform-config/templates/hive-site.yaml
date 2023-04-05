@@ -32,6 +32,10 @@ data:
         <value>${env:POSTGRES_PASSWORD}</value>
       </property>
       <property>
+        <name>datanucleus.autoStartMechanism</name>
+        <value>SchemaTable</value>
+      </property>
+      <property>
         <name>hive.server2.thrift.port</name>
         <value>10000</value>
       </property>
