@@ -85,4 +85,3 @@ tolerations: []
 affinity: {}
 
 architecture: standalone
-replicaCount: 1
