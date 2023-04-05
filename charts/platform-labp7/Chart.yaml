@@ -44,8 +44,7 @@ dependencies:
     repository: "file://../platform-hive-metastore"
     condition: condition.subchart.hive-meta-store
     tags:
-      - ranger
-      - simple
+      - external
   - name: ranger-kms
     version: "0.1.0"
     repository: "file://../platform-ranger-kms"
