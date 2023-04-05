@@ -1,3 +1,4 @@
+{{- if .Values.global.metastore.external.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -125,3 +126,4 @@ spec:
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "hive-keytabs-secret" . }}
+{{- end }}
