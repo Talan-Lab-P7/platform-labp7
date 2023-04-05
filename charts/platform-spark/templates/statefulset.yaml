@@ -39,6 +39,16 @@ spec:
         - name: wait-for-postgresql
           image: busybox
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
+        - name: init-mydb
+          image: "bringg/hive:3.1.2"
+          command: ['sh', '-c', "/scripts/init-mydb.sh"]  
+          volumeMounts:
+            - name: spark-config
+              mountPath: /opt/hive/conf/
+              readOnly: true
+            - name: init-mydb
+              mountPath: /scripts
+              readOnly: true
         {{- end }}
         {{- if .Values.global.ranger.enabled }}
         - name: wait-for-ranger-admin
@@ -125,3 +135,7 @@ spec:
                   name: {{ template "hive-keytabs-secret" . }}
         - name: policycache
           emptyDir: {}
+        - name: init-mydb
+          configMap:
+            name: {{ template "hive-meta-store.fullname" . }}
+            defaultMode: 0744
