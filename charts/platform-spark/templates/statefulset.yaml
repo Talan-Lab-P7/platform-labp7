@@ -41,7 +41,13 @@ spec:
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
         - name: init-mydb
           image: "bringg/hive:3.1.2"
-          command: ['sh', '-c', "/scripts/init-mydb.sh"]  
+          command: ['sh', '-c', "/scripts/init-mydb.sh"]
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" . }}
           volumeMounts:
             - name: spark-config
               mountPath: /opt/hive/conf/
@@ -61,12 +67,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "postgresql.secretName" . }}
-                key: {{ template "postgresql.adminPasswordKey" . }}
           command: ['/bin/sh']
           args: ["-c","/opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
           ports:
