@@ -269,6 +269,9 @@ hdfs-krb5-k8s:
 ## Global values affecting all sub-charts:
 ## ------------------------------------------------------------------------------
 global:
+  metastore:
+    external:
+      enabled: false
   ## @param global.imageRegistry Global Docker image registry
   ##
   imageRegistry: ""

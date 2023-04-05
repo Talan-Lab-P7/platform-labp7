@@ -31,7 +31,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
-        {{- if .Values.conditions.subchart.hive-meta-store }}
+        {{- if .Values.global.metastore.external.enabled }}
         - name: wait-for-metastore
           image: busybox
           command: ['sh', '-c', 'until nc -zv {{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;']
