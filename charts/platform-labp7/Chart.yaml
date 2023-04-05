@@ -38,7 +38,6 @@ dependencies:
     tags:
       - ranger
       - simple
-      - ranger
   - name: hive-meta-store
     version: "0.1.0"
     repository: "file://../platform-hive-metastore"
