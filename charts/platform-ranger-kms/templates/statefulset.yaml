@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ranger-kms.fullname" . }}
+  labels:
+    {{- include "ranger-kms.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  serviceName: {{ include "ranger-kms.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "ranger-kms.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ranger-kms.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: 
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ranger-kms.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: wait-for-postgresql
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;']
+        - name: wait-for-ranger-admin
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']   
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ['/bin/sh']
+          args: ["-c","rm /opt/ranger-2.3.0-kms/install.properties && cp /tmp/install/install.properties /opt/ranger-2.3.0-kms/ && /opt/ranger-2.3.0-kms/setup.sh && ranger-kms start && sleep infinity"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" }}
+          ports:
+            - name: http
+              containerPort: 6080
+              protocol: TCP
+#          livenessProbe:
+#            tcpSocket:
+#              port: http
+#            initialDelaySeconds: 500
+#            periodSeconds: 30
+#          readinessProbe:
+#            tcpSocket:
+#              port: http
+#            initialDelaySeconds: 500
+#            periodSeconds: 30
+          volumeMounts:
+            - name: hdfs-kms-config
+              mountPath: /etc/hadoop/conf
+              readOnly: true
+            - name: install-properties
+              mountPath: /tmp/install
+            - name: kerberos-config
+              mountPath: /etc/krb5.conf
+              subPath: krb5.conf
+              readOnly: true
+            - name: kerberos-keytabs
+              mountPath: /etc/security
+              readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: kerberos-config
+          configMap:
+            name: {{ template "krb5-configmap" . }}
+        - name: hdfs-kms-config
+          projected:
+            sources:
+              - configMap:
+                  name: {{ template "hdfs-k8s.config.fullname" . }}  
+              - configMap:
+                  name: {{ template "ranger-kms.config.kms.site" . }}
+        - name: install-properties
+          configMap:
+            name: {{ template "ranger-kms.config.install.properties" . }}
+        - name: kerberos-keytabs
+          secret:
+            secretName: {{ template "ranger-kms-keytabs-secret" . }}

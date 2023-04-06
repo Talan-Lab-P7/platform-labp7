@@ -1,0 +1,7 @@
+FROM openjdk:21-slim-buster
+RUN apt update -y && apt install python3 nano -y && apt install wget nano -y 
+RUN mkdir /usr/share/java/
+RUN wget https://repo1.maven.org/maven2/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar -O /usr/share/java/postgresql.jar
+COPY ranger-2.3.0-kms.tar.gz /opt/
+RUN tar xzvf /opt/ranger-2.3.0-kms.tar.gz -C /opt/
+ENTRYPOINT [ "/bin/bash" ] 

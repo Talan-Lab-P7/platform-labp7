@@ -1,14 +1,22 @@
-# Default values for platform-labp7.
+# Default values for ranger-kms.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
+architecture: standalone
+auth:
+  existingSecret: ""
 
 image:
-  repository: nginx
+  repository: adel1992/ranger-kms
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.0.1"
+  metastore:
+    repository: bringg/hive
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "3.1.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -38,7 +46,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 6080
 
 ingress:
   enabled: false

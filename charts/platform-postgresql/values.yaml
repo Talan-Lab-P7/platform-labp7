@@ -300,8 +300,9 @@ primary:
          psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE meta_store;'
          psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_admin;'
          psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_audit;'
-         psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE tokenstore;'
-         psql --host 127.0.0.1 -U postgres -d tokenstore -p 5432 -f /scripts/db_tokens.sql
+         psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_kms;'
+         psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_kms_audit;'
+
 
 
     ## @param primary.initdb.scriptsConfigMap ConfigMap with scripts to be run at first boot
