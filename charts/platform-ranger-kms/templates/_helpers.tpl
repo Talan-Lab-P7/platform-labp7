@@ -104,3 +104,14 @@ Create the name for a ranger kms Secret containing Kerberos keytabs.
 {{- printf "%s-keytabs" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "ranger-kms.app.name" -}}
+{{- template "ranger-kms.name" . -}}-app
+{{- end -}}
+
+{{/*
+Create chart name and version as used by the subchart label.
+*/}}
+{{- define "ranger-kms.subchart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
