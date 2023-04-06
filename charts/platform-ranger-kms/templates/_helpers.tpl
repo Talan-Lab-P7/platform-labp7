@@ -92,3 +92,15 @@ Construct the full name of the ranger kms statefulset member 0.
 {{- $domain := include "ranger-kms.svc-domain" . -}}
 {{- printf "%s.%s.%s" $pod $service $domain -}}
 {{- end -}}
+
+{{/*
+Create the name for a ranger kms Secret containing Kerberos keytabs.
+*/}}
+{{- define "ranger-kms-keytabs-secret" -}}
+{{- if .Values.global.kerberosKeytabsSecretOverride -}}
+{{- .Values.global.kerberosKeytabsSecretOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := include "ranger-kms.fullname" . -}}
+{{- printf "%s-keytabs" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
