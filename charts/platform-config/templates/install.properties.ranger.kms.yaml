@@ -111,7 +111,7 @@ data:
     KMS_MASTER_KEY_PASSWD=labp7kmsadmin
 
     #------------------------- Ranger KMS Kerberos Configuration ---------------------------
-    kms_principal=ranger-kms/{{ template "ranger-kms.ranger-svc-0" . }}@LABP7.CNAM
+    kms_principal=ranger-kms/_HOST@LABP7.CNAM
     kms_keytab=/etc/security/ranger-kms.keytab
     hadoop_conf=/etc/hadoop/conf
 
