@@ -11,7 +11,7 @@ image:
   repository: adel1992/ranger-kms
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.1"
+  tag: "0.0.2"
   metastore:
     repository: bringg/hive
     pullPolicy: IfNotPresent
