@@ -101,7 +101,7 @@ spec:
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}  
               - configMap:
-                  name: {{ template "ranger-admin.config.kms.site" . }}
+                  name: {{ include "ranger-admin.config.kms.site" . }}
         - name: install-properties
           configMap:
             name: {{ include "ranger-kms.config.install.properties" . }}
