@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "ranger-kms.selectorLabels" . | nindent 6 }}
-  include:
+  template:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
@@ -34,7 +34,7 @@ spec:
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;']
         - name: wait-for-ranger-admin
           image: busybox
-          command: ['sh', '-c', 'until nc -zv {{ include "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']   
+          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']   
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -47,8 +47,8 @@ spec:
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ include "postgresql.secretName" . }}
-                key: {{ include "postgresql.adminPasswordKey" }}
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" }}
           ports:
             - name: http
               containerPort: 6080
@@ -93,14 +93,14 @@ spec:
       volumes:
         - name: kerberos-config
           configMap:
-            name: {{ include "krb5-configmap" . }}
+            name: {{ template "krb5-configmap" . }}
         - name: hdfs-kms-config
           projected:
             sources:
               - configMap:
-                  name: {{ include "hdfs-k8s.config.fullname" . }}  
+                  name: {{ template "hdfs-k8s.config.fullname" . }}  
               - configMap:
-                  name: {{ include "ranger-admin.config.kms.site" . }}
+                  name: {{ template "ranger-admin.config.kms.site" . }}
         - name: install-properties
           configMap:
             name: {{ include "ranger-kms.config.install.properties" . }}
