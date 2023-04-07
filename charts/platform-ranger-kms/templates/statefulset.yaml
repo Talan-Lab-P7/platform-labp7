@@ -42,7 +42,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
           args: ["-c","rm /opt/ranger-2.3.0-kms/install.properties && cp /tmp/install/install.properties /opt/ranger-2.3.0-kms/ && /opt/ranger-2.3.0-kms/setup.sh && ranger-kms start && sleep infinity"]
-          args: ["-c","sleep infinity"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: POSTGRES_PASSWORD
@@ -52,7 +51,7 @@ spec:
                 key: {{ template "postgresql.adminPasswordKey" }}
           ports:
             - name: http
-              containerPort: 6080
+              containerPort: 9292
               protocol: TCP
 #          livenessProbe:
 #            tcpSocket:
