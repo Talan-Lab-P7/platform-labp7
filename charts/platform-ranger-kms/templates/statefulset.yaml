@@ -64,9 +64,9 @@ spec:
 #            initialDelaySeconds: 500
 #            periodSeconds: 30
           volumeMounts:
-            - name: hdfs-kms-config
-              mountPath: /etc/hadoop/conf
-              readOnly: true
+#            - name: hdfs-kms-config
+#              mountPath: /etc/hadoop/conf
+#              readOnly: true
             - name: install-properties
               mountPath: /tmp/install
             - name: kerberos-config
