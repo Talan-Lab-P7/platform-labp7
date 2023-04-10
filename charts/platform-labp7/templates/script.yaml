@@ -38,6 +38,8 @@ data:
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey ranger-admin/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey ranger-kms/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey HTTP/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey HTTP/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm | quote }}
+
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hive.keytab hive/$_HIVE_HOST@" .Values.global.kerberosRealm " hive/$_SPARK_HOST@" .Values.global.kerberosRealm " HTTP/$_SPARK_HOST@" .Values.global.kerberosRealm " HTTP/$_HIVE_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/spark.keytab spark/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/ranger-admin.keytab ranger-admin/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm " HTTP/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm | quote }}
