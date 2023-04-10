@@ -98,7 +98,7 @@ data:
 
       <property>
         <name>hadoop.kms.authentication.kerberos.keytab</name>
-        <value>/etc/security/ranger-admin.keytab</value>
+        <value>/etc/security/ranger-kms.keytab</value>
         <description>
           Path to the keytab with credentials for the configured Kerberos principal.
         </description>
@@ -106,7 +106,7 @@ data:
 
       <property>
         <name>hadoop.kms.authentication.kerberos.principal</name>
-        <value>HTTP/_HOST@LABP7.CNAM</value>
+        <value>*</value>
         <description>
           The Kerberos principal to use for the HTTP endpoint.
           The principal must start with 'HTTP/' as per the Kerberos HTTP SPNEGO specification.
