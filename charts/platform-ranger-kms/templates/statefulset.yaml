@@ -66,6 +66,8 @@ spec:
           volumeMounts:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
+            - name: kms-config
+              mountPath: /etc/hadoop
               readOnly: true
             - name: install-properties
               mountPath: /tmp/install
@@ -101,6 +103,9 @@ spec:
                   name: {{ template "hdfs-k8s.config.fullname" . }}  
               - configMap:
                   name: {{ include "ranger-admin.config.kms.site" . }}
+        - name: kms-config
+          configMap:
+            name: {{ include "ranger-admin.config.kms.site" . }}
         - name: install-properties
           configMap:
             name: {{ include "ranger-kms.config.install.properties" . }}
