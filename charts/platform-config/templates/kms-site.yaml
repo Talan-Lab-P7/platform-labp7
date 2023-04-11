@@ -97,6 +97,21 @@ data:
       </property>
 
       <property>
+        <name>hadoop.security.authentication</name>
+        <value>kerberos</value>
+      </property>
+
+      <property>
+        <name>ranger.kms.service.principal</name>
+        <value>ranger-kms/_HOST@LABP7.CNAM</value>
+      </property>
+
+      <property>
+        <name>ranger.kms.keytab</name>
+        <value>/etc/security/ranger-kms.keytab</value>
+      </property>
+
+      <property>
         <name>hadoop.kms.authentication.kerberos.keytab</name>
         <value>/etc/security/ranger-kms.keytab</value>
         <description>

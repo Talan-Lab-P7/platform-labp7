@@ -67,7 +67,7 @@ spec:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
             - name: kms-config
-              mountPath: /etc/hadoop
+              mountPath: /etc/ranger/kms/conf
               readOnly: true
             - name: install-properties
               mountPath: /tmp/install
