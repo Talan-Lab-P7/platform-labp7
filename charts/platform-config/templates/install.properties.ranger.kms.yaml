@@ -113,7 +113,7 @@ data:
     #------------------------- Ranger KMS Kerberos Configuration ---------------------------
     kms_principal=ranger-kms/_HOST@LABP7.CNAM
     kms_keytab=/etc/security/ranger-kms.keytab
-    hadoop_conf=/etc/hadoop/conf
+    hadoop_conf=/etc/hadoop/conf/core-site.xml
 
     #------------------------- Ranger KMS HSM CONFIG ------------------------------
     HSM_TYPE=LunaProvider
