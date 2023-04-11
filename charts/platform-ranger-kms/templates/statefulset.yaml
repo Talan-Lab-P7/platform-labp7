@@ -97,8 +97,8 @@ spec:
         - name: hdfs-kms-config
           projected:
             sources:
-#              - configMap:
-#                  name: {{ template "hdfs-k8s.config.fullname" . }}  
+              - configMap:
+                  name: {{ template "hdfs-k8s.config.fullname" . }}  
               - configMap:
                   name: {{ include "ranger-admin.config.kms.site" . }}
         - name: install-properties
