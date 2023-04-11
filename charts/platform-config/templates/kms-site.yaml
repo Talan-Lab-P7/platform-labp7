@@ -108,7 +108,7 @@ data:
 
       <property>
         <name>hadoop.kms.authentication.kerberos.principal</name>
-        <value>*</value>
+        <value>HTTP/_HOST@LABP7.CNAM</value>
         <description>
           The Kerberos principal to use for the HTTP endpoint.
           The principal must start with 'HTTP/' as per the Kerberos HTTP SPNEGO specification.
