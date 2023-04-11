@@ -108,7 +108,7 @@ data:
 
       <property>
         <name>hadoop.kms.authentication.kerberos.principal</name>
-        <value>ranger-kms/_HOST@LABP7.CNAM</value>
+        <value>HTTP/_HOST@LABP7.CNAM</value>
         <description>
           The Kerberos principal to use for the HTTP endpoint.
           The principal must start with 'HTTP/' as per the Kerberos HTTP SPNEGO specification.
@@ -186,17 +186,17 @@ data:
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.ranger-kms.groups</name>
+            <name>hadoop.kms.proxyuser.HTTP.groups</name>
             <value>*</value>
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.ranger-kms.hosts</name>
+            <name>hadoop.kms.proxyuser.HTTP.hosts</name>
             <value>*</value>
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.ranger-kms.users</name>
+            <name>hadoop.kms.proxyuser.HTTP.users</name>
             <value>*</value>
       </property>
     </configuration>
