@@ -186,17 +186,17 @@ data:
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.HTTP.groups</name>
+            <name>hadoop.kms.proxyuser.ranger-admin.groups</name>
             <value>*</value>
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.HTTP.hosts</name>
+            <name>hadoop.kms.proxyuser.ranger-admin.hosts</name>
             <value>*</value>
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.HTTP.users</name>
+            <name>hadoop.kms.proxyuser.ranger-admin.users</name>
             <value>*</value>
       </property>
     </configuration>
