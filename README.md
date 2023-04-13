@@ -15,8 +15,11 @@ la plateforme repose sur ces techniques pour réaliser ces tâches:
  - postgresql: stockage physique des metadonnées de hive
  - ldap: toDo 
 
+ ### Architecture
+ Markup : ![picture alt](http://via.placeholder.com/200x150 "Title is optional")
 
-## Prerequisites
+
+## Conditions préalables
 
 - il faut un cluster kube pour installer la plateforme avec un master et un worker (minimum)
 - Helm version 3.0.0 ou plus
@@ -25,39 +28,26 @@ la plateforme repose sur ces techniques pour réaliser ces tâches:
     - ubuntu: `apt install krb5-user` 
 
 
-## Installing the Chart
+## Installation du Chart
 
 Pour installer la chart, utilisez la commande suivante:
 `charts\platform-labp7\start.sh ns-name`
 l'installation peut prendre un peu de temps finalement il faut avoir une liste de pod comme celle-ci:
 
-NAME                                            |READY   |STATUS    |RESTARTS          |AGE
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-hdfs-client-557d579b95-jhp7f     |1/1     |Running   |0                 |2d3h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-hdfs-datanode-rmg8p              |1/1     |Running   |0                 |2d3h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-hdfs-datanode-znnrm              |1/1     |Running   |4 (5m44s ago)     |2d3h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-hdfs-krb5-0                      |1/1     |Running   |0                 |2d3h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-hdfs-namenode-0                  |1/1     |Running   v4 (2d2h ago)      |2d3h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-postgresql-0                     |1/1     |Running   |1 (2d3h ago)      |2d3h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-ranger-admin-0                   |1/1     |Running   |0                 |2d2h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-ranger-kms-0                     |1/1     |Running   |0                 |26h
-------------------------------------------------|--------|----------|------------------|----
-platform-labp7-spark-0                          |1/1     |Running   |0                 |2d2h
-------------------------------------------------|--------|----------|------------------|----
-sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-1   |1/1     |Running   |0                 |2d2h
-------------------------------------------------|--------|----------|------------------|----
-sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-2   |1/1     |Running   |0                 |2d2h
-------------------------------------------------|--------|----------|------------------|----
-sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-3   |1/1     |Running   |0                 |2d2h
-------------------------------------------------|--------|----------|------------------|----
-
+|NAME                                            |READY   |STATUS    |RESTARTS          |AGE |
+|------------------------------------------------|--------|----------|------------------|----|
+|platform-labp7-hdfs-client-557d579b95-jhp7f     |1/1     |Running   |0                 |2d3h|
+|platform-labp7-hdfs-datanode-rmg8p              |1/1     |Running   |0                 |2d3h|
+|platform-labp7-hdfs-datanode-znnrm              |1/1     |Running   |4 (5m44s ago)     |2d3h|
+|platform-labp7-hdfs-krb5-0                      |1/1     |Running   |0                 |2d3h|
+|platform-labp7-hdfs-namenode-0                  |1/1     |Running   |4 (2d2h ago)      |2d3h|
+|platform-labp7-postgresql-0                     |1/1     |Running   |1 (2d3h ago)      |2d3h|
+|platform-labp7-ranger-admin-0                   |1/1     |Running   |0                 |2d2h|
+|platform-labp7-ranger-kms-0                     |1/1     |Running   |0                 |26h |
+|platform-labp7-spark-0                          |1/1     |Running   |0                 |2d2h|
+|sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-1   |1/1     |Running   |0                 |2d2h|
+|sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-2   |1/1     |Running   |0                 |2d2h|
+|sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-3   |1/1     |Running   |0                 |2d2h|
 
 ## Configuration
 
@@ -116,7 +106,7 @@ The following table lists the configurable parameters of the chart and their def
 - url ranger admin: <http://ip_adresse_kube:30523/login.jsp>
 
 
-## Uninstalling the Chart
+## Désinstaller la Chart
 
 Pour désinstaller/supprimer la chart, utilisez la commande suivante :
 `charts\platform-labp7\start.sh ns-name`
@@ -131,10 +121,10 @@ La commande supprime tous les composants Kubernetes associés a la chart et supp
 - `kubectl logs po_name -n ns_name` : cette commande permet de récupérer les logs du pod en problème.
 - `kubectl exec -it po_name -n ns_name --/bin/sh (ou /bin/bash)` : cette commande permet de se connecter sur le pod pour des opérations de débuggage plus poussées
 
-## Contributing
+## Contribuer
 
 git url: <https://github.com/Talan-Lab-P7/platform-labp7.git>
 
-## License
+## Licence
 
 CNAM
