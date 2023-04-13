@@ -44,12 +44,12 @@ The following table lists the configurable parameters of the chart and their def
 ## Usage
 ### Configuration de la machine client
 
-1- Installation MIT Kerberos Ticket Manager: https://web.mit.edu/kerberos/dist/
-2- Rucuperation d'un ticket Kerberos en utilisant les login/password de l'utilisateur
-3- En utilisant un ide de base données (ex: dbeaver) on ca configurer la connection avec spark thrift 
+1. Installation MIT Kerberos Ticket Manager: https://web.mit.edu/kerberos/dist/
+2. Rucuperation d'un ticket Kerberos en utilisant les login/password de l'utilisateur
+3. En utilisant un ide de base données (ex: dbeaver) on ca configurer la connection avec spark thrift 
     - type de connection: URL
     - url: jdbc:hive2://(nom ou ip machine kube):30527/default;principal=hive/platform-labp7-spark-0.platform-labp7-spark.test.svc. cluster.local@LABP7.CNAM
-4- C:\ProgramData\MIT\Kerberos5\krb5.ini
+4. C:\ProgramData\MIT\Kerberos5\krb5.ini
 ```
    [libdefaults]
    dns_lookup_realm = false
@@ -66,7 +66,7 @@ The following table lists the configurable parameters of the chart and their def
     }
     
 ```
-5- C:\Users\user\AppData\Local\DBeaver\jaas.conf
+5. C:\Users\user\AppData\Local\DBeaver\jaas.conf
 ```
    com.sun.security.jgss.initiate {
    com.sun.security.auth.module.Krb5LoginModule required
@@ -82,9 +82,9 @@ The following table lists the configurable parameters of the chart and their def
 
 ### urls des interfaces web
 
-url spark ui: http://ip_adresse_kube:30526/
-url hdfs ui: http://ip_adresse_namenode:9870/dfshealth.html#tab-datanode
-url ranger admin: http://ip_adresse_kube:30523/login.jsp
+- url spark ui: <http://ip_adresse_kube:30526/>
+- url hdfs ui: <http://ip_adresse_namenode:9870/dfshealth.html#tab-datanode>
+- url ranger admin: <http://ip_adresse_kube:30523/login.jsp>
 
 
 ## Uninstalling the Chart
