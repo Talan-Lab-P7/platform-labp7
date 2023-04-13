@@ -1,8 +1,8 @@
 #! /bin/bash
-helm uninstall platform-labp7 -n test
-kubectl delete pvc --all -n test
-kubectl delete cm --all -n test
-kubectl delete secrets --all -n test
+helm uninstall platform-labp7 -n $1
+kubectl delete pvc --all -n $1
+kubectl delete cm --all -n $1
+kubectl delete secrets --all -n $1
 rm /tmp/hive.keytab
 rm /tmp/spark.keytab
 rm /tmp/hdfs.keytab
