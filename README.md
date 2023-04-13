@@ -1,4 +1,4 @@
-# Helm Chart for platform-labp7
+# Helm Chart pour platform-labp7
 
 platform-labp7 est une plateforme big data performante et sécurisée.
 
