@@ -21,8 +21,8 @@ la plateforme repose sur ces technologies pour realiser ces taches:
 - il faut un cluster kube pour installer la plateforme avec un master et un worker en minimum
 - Helm version 3.0.0 ou plus
 - la platforme a besoin du kerberos client avant de commencer l'installation:
-    - centos: yum install krb5-workstation krb5-libs
-    - ubuntu: apt install krb5-user 
+    - centos: `yum install krb5-workstation krb5-libs`
+    - ubuntu: `apt install krb5-user` 
 
 
 ## Installing the Chart
