@@ -31,18 +31,32 @@ Pour installer la chart, utilisez la commande suivante:
 `charts\platform-labp7\start.sh ns-name`
 l'installation peut prendre un peu de temps finalement il faut avoir une liste de pod comme celle-ci:
 
-platform-labp7-hdfs-client-557d579b95-jhp7f     1/1     Running   0                 2d3h
-platform-labp7-hdfs-datanode-rmg8p              1/1     Running   0                 2d3h
-platform-labp7-hdfs-datanode-znnrm              1/1     Running   4 (5m44s ago)     2d3h
-platform-labp7-hdfs-krb5-0                      1/1     Running   0                 2d3h
-platform-labp7-hdfs-namenode-0                  1/1     Running   4 (2d2h ago)      2d3h
-platform-labp7-postgresql-0                     1/1     Running   1 (2d3h ago)      2d3h
-platform-labp7-ranger-admin-0                   1/1     Running   0                 2d2h
-platform-labp7-ranger-kms-0                     1/1     Running   0                 26h
-platform-labp7-spark-0                          1/1     Running   0                 2d2h
-sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-1   1/1     Running   0                 2d2h
-sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-2   1/1     Running   0                 2d2h
-sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-3   1/1     Running   0                 2d2h
+NAME                                            |READY   |STATUS    |RESTARTS          |AGE
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-hdfs-client-557d579b95-jhp7f     |1/1     |Running   |0                 |2d3h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-hdfs-datanode-rmg8p              |1/1     |Running   |0                 |2d3h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-hdfs-datanode-znnrm              |1/1     |Running   |4 (5m44s ago)     |2d3h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-hdfs-krb5-0                      |1/1     |Running   |0                 |2d3h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-hdfs-namenode-0                  |1/1     |Running   v4 (2d2h ago)      |2d3h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-postgresql-0                     |1/1     |Running   |1 (2d3h ago)      |2d3h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-ranger-admin-0                   |1/1     |Running   |0                 |2d2h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-ranger-kms-0                     |1/1     |Running   |0                 |26h
+------------------------------------------------|--------|----------|------------------|----
+platform-labp7-spark-0                          |1/1     |Running   |0                 |2d2h
+------------------------------------------------|--------|----------|------------------|----
+sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-1   |1/1     |Running   |0                 |2d2h
+------------------------------------------------|--------|----------|------------------|----
+sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-2   |1/1     |Running   |0                 |2d2h
+------------------------------------------------|--------|----------|------------------|----
+sparksql-10-244-1-149-f3e4ef876f92a9ca-exec-3   |1/1     |Running   |0                 |2d2h
+------------------------------------------------|--------|----------|------------------|----
 
 
 ## Configuration
