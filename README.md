@@ -16,7 +16,7 @@ la plateforme repose sur ces techniques pour réaliser ces tâches:
  - ldap: toDo 
 
  ### Architecture
- Markup : ![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+ ![picture alt](img/infra.png "infra")
 
 
 ## Conditions préalables
@@ -30,7 +30,7 @@ la plateforme repose sur ces techniques pour réaliser ces tâches:
 
 ## Installation du Chart
 
-Pour installer la chart, utilisez la commande suivante:
+Pour installer le chart, utilisez la commande suivante:
 `charts\platform-labp7\start.sh ns-name`
 l'installation peut prendre un peu de temps finalement il faut avoir une liste de pod comme celle-ci:
 
@@ -106,12 +106,12 @@ The following table lists the configurable parameters of the chart and their def
 - url ranger admin: <http://ip_adresse_kube:30523/login.jsp>
 
 
-## Désinstaller la Chart
+## Désinstaller le chart
 
-Pour désinstaller/supprimer la chart, utilisez la commande suivante :
+Pour désinstaller/supprimer le chart, utilisez la commande suivante :
 `charts\platform-labp7\start.sh ns-name`
 
-La commande supprime tous les composants Kubernetes associés a la chart et supprime la version.
+La commande supprime tous les composants Kubernetes associés a le chart et supprime la version.
 
 ## Troubleshooting
 
