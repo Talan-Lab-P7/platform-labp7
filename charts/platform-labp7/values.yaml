@@ -311,7 +311,6 @@ global:
         postgresql: 5432
 
   kubernetes: 
-    kerberosRealm: LABP7.CNAM
     master:
       port: "6443"
       host: "5.135.90.212"

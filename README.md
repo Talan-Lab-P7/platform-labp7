@@ -55,8 +55,14 @@ The following table lists the configurable parameters of the chart and their def
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `parameter1` | Description of parameter1 | `default_value1` |
-| `parameter2` | Description of parameter2 | `default_value2` |
+| `Values.global.kubernetes.master.host` | kube cluster master host | `5.135.90.212` |
+| `Values.global.kubernetes.master.port` | kube cluster master port  | `6443` |
+| `Values.global.metastore.external.enabeled` | true: Meta store serveur sera dans un pod indépendant / false : Meta store serveur sera intégrée dans spark  | `false` |
+| `Values.global.kerberosRealm` | Realm de kerberos  | `LABP7.CNAM` |
+| `Values.global.dataNodeHostPath` | le chemin du répertoire sous lequel les données d'hdfs seront sauvegardées  | `/hdfs-data` |
+| `Values.global.kerberosConfigFileName` | nom fichier conf kerberos  | `krb5.conf` |
+| `Values.global.namenodeHAEnabled` | activation du mode HA  | `true` |
+| `Values.global.kerberosEnabled` | activation du kerberos  | `true` |
 
 [Include any additional configuration instructions, such as how to override default values or use custom configuration files.]
 
@@ -128,3 +134,8 @@ git url: <https://github.com/Talan-Lab-P7/platform-labp7.git>
 ## Licence
 
 CNAM
+
+## Lien Utiles
+
+HDFS Readme : [link text](charts\platform-hdfs\README.md)
+Postgresql Readme : [link text](charts\platform-postgresql\README.md)
