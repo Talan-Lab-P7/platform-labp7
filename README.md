@@ -21,6 +21,7 @@ la plateforme repose sur ces techniques pour réaliser ces tâches:
 
 ## Conditions préalables
 
+- Kubernetes 1.6 ou plus
 - il faut un cluster kube pour installer la plateforme avec un master et un worker (minimum)
 - Helm version 3.0.0 ou plus
 - la platforme a besoin du kerberos client avant de commencer l'installation:
