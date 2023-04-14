@@ -64,7 +64,6 @@ The following table lists the configurable parameters of the chart and their def
 | `Values.global.namenodeHAEnabled` | activation du mode HA  | `true` |
 | `Values.global.kerberosEnabled` | activation du kerberos  | `true` |
 
-[Include any additional configuration instructions, such as how to override default values or use custom configuration files.]
 
 ## Usage
 ### Configuration de la machine client
@@ -137,5 +136,5 @@ CNAM
 
 ## Lien Utiles
 
-HDFS Readme : [link text](charts\platform-hdfs\README.md)
-Postgresql Readme : [link text](charts\platform-postgresql\README.md)
+- HDFS Readme [README](charts/platform-hdfs/README.md)
+- Postgresql [README](charts/platform-postgresql/README.md)
