@@ -39,12 +39,12 @@ spec:
           ports:
             - name: ldap
               containerPort: 10389
-          livenessProbe:
-            tcpSocket:
-              port: ldap
-          readinessProbe:
-            tcpSocket:
-              port: ldap
+#          livenessProbe:
+#            tcpSocket:
+#              port: ldap
+#          readinessProbe:
+#            tcpSocket:
+#              port: ldap
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
