@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openldap.fullname" . }}-node-port
+  labels:
+    {{- include "openldap.labels" . | nindent 4 }}
+spec:
+  type: NodePort
+  ports:
+    - port: 10389
+      protocol: TCP
+      name: ldap
+      nodePort: 30566
+  selector:
+    {{- include "openldap.selectorLabels" . | nindent 4 }}
