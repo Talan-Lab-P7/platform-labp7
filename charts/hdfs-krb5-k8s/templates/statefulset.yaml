@@ -34,6 +34,8 @@ spec:
               value: {{ .Values.global.kerberosRealm }}
             - name: KRB5_KDC
               value: {{ template "krb5-svc-0" . }}
+            - name: LDAP_URI
+              value: {{ .Values.global.ldapuri }} 
           ports:
             - name: kdc-tcp
               containerPort: 88
@@ -55,12 +57,19 @@ spec:
             - mountPath: /var/lib/krb5kdc
               name: datadir
               readOnly: false
+            - mountPath: /etc/krb5kdc
+              name: secret-file
+              readOnly: false
       restartPolicy: Always
       {{- if .Values.global.podSecurityContext.enabled }}
       securityContext:
         runAsUser: {{ .Values.global.podSecurityContext.runAsUser }}
         fsGroup: {{ .Values.global.podSecurityContext.fsGroup }}
       {{- end }}
+      volumes:  
+        - name: secret-file
+          secret:
+            name: {{ template "hdfs-k8s.krb5.fullname" . }}
   volumeClaimTemplates:
     - metadata:
         name: datadir

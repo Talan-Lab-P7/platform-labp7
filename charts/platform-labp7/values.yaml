@@ -255,9 +255,10 @@ hdfs-krb5-k8s:
   ## TODO: Using latest tag is not desirable. The current image does not have specific tags.
   ## Find a way to fix it.
   image:
-    repository: gcavalcante8808/krb5-server
+#    repository: gcavalcante8808/krb5-server
+    repository: adel1992/openldap
 
-    tag: latest
+    tag: 0.0.2 #latest
 
     pullPolicy: IfNotPresent
 
@@ -269,6 +270,7 @@ hdfs-krb5-k8s:
 ## Global values affecting all sub-charts:
 ## ------------------------------------------------------------------------------
 global:
+  ldapuri: ip97.ip-37-59-140.eu:30566
   metastore:
     external:
       enabled: false

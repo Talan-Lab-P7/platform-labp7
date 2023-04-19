@@ -1,4 +1,5 @@
 #! /bin/bash
+if [[ -v $1 ]]; then echo "Merci d'introduire le nom du namespace"; exit 1; fi
 helm uninstall platform-labp7 -n $1
 kubectl delete pvc --all -n $1
 kubectl delete cm --all -n $1
