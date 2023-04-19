@@ -71,7 +71,7 @@ spec:
       volumes:  
         - name: secret-file
           secret:
-            name: {{ template "hdfs-k8s.krb5.fullname" . }}
+            secretName: {{ template "hdfs-k8s.krb5.fullname" . }}
   volumeClaimTemplates:
     - metadata:
         name: datadir
