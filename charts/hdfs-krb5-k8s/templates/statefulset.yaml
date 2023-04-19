@@ -29,6 +29,8 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ['/bin/sh']
+          args: ["-c","sleep infinity"]
           env:
             - name: KRB5_REALM
               value: {{ .Values.global.kerberosRealm }}
