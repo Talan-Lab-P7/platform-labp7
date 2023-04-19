@@ -255,10 +255,11 @@ hdfs-krb5-k8s:
   ## TODO: Using latest tag is not desirable. The current image does not have specific tags.
   ## Find a way to fix it.
   image:
-#    repository: gcavalcante8808/krb5-server
-    repository: adel1992/openldap
+    repository: gcavalcante8808/krb5-server
+#    repository: adel1992/openldap
 
-    tag: 0.0.3 #latest
+    #tag: 0.0.3
+    tag: latest
 
     pullPolicy: IfNotPresent
 
