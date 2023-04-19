@@ -47,7 +47,7 @@ openldap_ldapconf = {
     # this object needs to have read and write rights on
     # the realm container, principal container and realm sub-trees
     ldap_service_password_file = /etc/krb5kdc/service.keyfile
-    ldap_servers = ldaps://${LDAP_URI}
+    ldap_servers = ldap://${LDAP_URI}
     ldap_conns_per_server = 5
 }
 EOT
