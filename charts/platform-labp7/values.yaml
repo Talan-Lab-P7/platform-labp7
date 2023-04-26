@@ -271,7 +271,7 @@ hdfs-krb5-k8s:
 ## Global values affecting all sub-charts:
 ## ------------------------------------------------------------------------------
 global:
-  ldapuri: ip97.ip-37-59-140.eu:30566
+  ldapuri: 37.59.140.104
   metastore:
     external:
       enabled: false
