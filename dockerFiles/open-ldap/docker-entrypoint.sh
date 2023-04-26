@@ -34,15 +34,15 @@ ${KRB5_REALM} = {
     database_module = openldap_ldapconf
 }
 [dbdefaults]
-    ldap_kerberos_container_dn = uid=admin,ou=system
+    ldap_kerberos_container_dn = cn=krbContainer,dc=centos,dc=com
 [dbmodules]
 openldap_ldapconf = {
     db_library = kldap
-    ldap_kdc_dn = "uid=admin,ou=system"
+    ldap_kdc_dn = "uid=admin,dc=centos,dc=com"
 
     # this object needs to have read rights on
     # the realm container, principal container and realm sub-trees
-    ldap_kadmind_dn = "uid=admin,ou=system"
+    ldap_kadmind_dn = "uid=admin,dc=centos,dc=com"
 
     # this object needs to have read and write rights on
     # the realm container, principal container and realm sub-trees
