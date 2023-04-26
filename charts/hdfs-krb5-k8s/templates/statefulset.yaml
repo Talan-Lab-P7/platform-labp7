@@ -29,8 +29,8 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-#          command: ['/bin/sh']
-#          args: ["-c","sleep infinity"]
+          command: ['/bin/sh']
+          args: ["-c","sleep infinity"]
           env:
             - name: KRB5_REALM
               value: {{ .Values.global.kerberosRealm }}
@@ -45,16 +45,16 @@ spec:
             - name: kdc-udp
               containerPort: 88
               protocol: UDP
-          livenessProbe:
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            tcpSocket:
-              port: kdc-tcp
-          readinessProbe:
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            tcpSocket:
-              port: kdc-tcp
+#          livenessProbe:
+#            initialDelaySeconds: 60
+#            periodSeconds: 30
+#            tcpSocket:
+#              port: kdc-tcp
+#          readinessProbe:
+#            initialDelaySeconds: 60
+#            periodSeconds: 30
+#            tcpSocket:
+#              port: kdc-tcp
           volumeMounts:
             - mountPath: /var/lib/krb5kdc
               name: datadir
