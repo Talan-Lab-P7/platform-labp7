@@ -38,11 +38,11 @@ ${KRB5_REALM} = {
 [dbmodules]
 openldap_ldapconf = {
     db_library = kldap
-    ldap_kdc_dn = "uid=admin,dc=centos,dc=com"
+    ldap_kdc_dn = "cn=admin,dc=centos,dc=com"
 
     # this object needs to have read rights on
     # the realm container, principal container and realm sub-trees
-    ldap_kadmind_dn = "uid=admin,dc=centos,dc=com"
+    ldap_kadmind_dn = "cn=admin,dc=centos,dc=com"
 
     # this object needs to have read and write rights on
     # the realm container, principal container and realm sub-trees
@@ -102,5 +102,5 @@ EOT
     kadmin.local -q "addprinc -pw ${KRB5_PASS} admin/admin@${KRB5_REALM}"
 
 fi
-#kdb5_ldap_util -D uid=admin,ou=system create -subtrees \ ou=system -r ${KRB5_REALM} -s -H ldap://${LDAP_URI}
+#kdb5_ldap_util -D cn=admin,ou=system create -subtrees \ ou=system -r ${KRB5_REALM} -s -H ldap://${LDAP_URI}
 /usr/bin/supervisord -c /etc/supervisord.conf

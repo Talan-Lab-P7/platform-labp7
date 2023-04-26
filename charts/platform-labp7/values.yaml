@@ -258,7 +258,7 @@ hdfs-krb5-k8s:
     #repository: gcavalcante8808/krb5-server
     repository: adel1992/openldap
 
-    tag: 0.0.6
+    tag: 0.0.7
     #tag: latest
 
     pullPolicy: IfNotPresent
