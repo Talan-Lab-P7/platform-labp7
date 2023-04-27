@@ -59,7 +59,14 @@ spec:
         {{- if .Values.global.ranger.enabled }}
         - name: wait-for-ranger-admin
           image: busybox
-          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']   
+          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']
+        - name: init-ranger-admin
+          image: curlimages/curl
+          command: ['sh', '-c', '/scripts/init-ranger-admin.sh'] 
+          volumeMounts:
+            - name: init-ranger-admin
+              mountPath: /scripts
+              readOnly: true
         {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -130,7 +137,10 @@ spec:
               {{- end }}
         - name: kerberos-config
           configMap:
-            name: {{ template "krb5-configmap" . }}    
+            name: {{ template "krb5-configmap" . }}
+        - name: init-ranger-admin
+          configMap:
+            name: init-ranger-admin    
         - name: kerberos-keytabs
           projected:
             sources:

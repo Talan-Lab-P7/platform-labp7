@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-ranger-admin
+  labels:
+    app: init-ranger-admin
+    chart: init-ranger-admin-chart
+    release: {{ .Release.Name }}
+data:
+  init-ranger-admin.sh: |
+    #! /bin/bash
+    curl -X 'POST' \
+      'http://{{ .Values.global.kubernetes.master.host }}:30523/service/public/v2/api/service' \
+      -H 'accept: application/json' \
+      -H 'Content-Type: application/json' \
+      -H 'X-XSRF-HEADER: kceqhSS0KfLGgxVJEz3l' \
+      -d '  {
+        "id": 1,
+        "guid": "1bd6df43-ce74-47db-9c25-a8101a4826f9",
+        "isEnabled": true,
+        "createdBy": "Admin",
+        "updatedBy": "Admin",
+        "createTime": 1682598079926,
+        "updateTime": 1682598079929,
+        "version": 1,
+        "type": "hive",
+        "name": "ranger-admin",
+        "displayName": "ranger-admin",
+        "description": "",
+        "configs": {
+          "password": "admin",
+          "ranger.plugin.audit.filters": "[{'\''accessResult'\'':'\''DENIED'\'','\''isAudited'\'':true},{'\''actions'\'':['\''METADATA OPERATION'\''],'\''isAudited'\'':false},{'\''users'\'':['\''hive'\'','\''hue'\''],'\''actions'\'':['\''SHOW_ROLES'\''],'\''isAudited'\'':false}]",
+          "jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver",
+          "jdbc.url": "jdbc:hive2://{{ .Values.global.kubernetes.master.host }}:30527/default;principal=hive/{{ include "spark.spark-svc-0" }}@LABP7.CNAM",
+          "username": "admin"
+        },
+        "policyVersion": 9,
+        "policyUpdateTime": 1682598081340,
+        "tagVersion": 1,
+        "tagUpdateTime": 1682598079935
+      }
+    '
