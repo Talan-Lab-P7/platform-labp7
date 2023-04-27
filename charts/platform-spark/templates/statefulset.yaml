@@ -140,7 +140,8 @@ spec:
             name: {{ template "krb5-configmap" . }}
         - name: init-ranger-admin
           configMap:
-            name: init-ranger-admin    
+            name: init-ranger-admin
+            defaultMode: 0744  
         - name: kerberos-keytabs
           projected:
             sources:
