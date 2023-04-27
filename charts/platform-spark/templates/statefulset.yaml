@@ -61,7 +61,7 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']
         - name: init-ranger-admin
-          image: curlimages/curl
+          image: centos
           command: ['sh', '-c', '/scripts/init-ranger-admin.sh'] 
           volumeMounts:
             - name: init-ranger-admin
@@ -141,7 +141,7 @@ spec:
         - name: init-ranger-admin
           configMap:
             name: init-ranger-admin
-            defaultMode: 0747  
+            defaultMode: 0744  
         - name: kerberos-keytabs
           projected:
             sources:
