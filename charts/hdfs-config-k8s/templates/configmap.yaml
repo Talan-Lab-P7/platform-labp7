@@ -70,7 +70,7 @@ data:
         <name>hadoop.proxyuser.hive.hosts</name>
         <value>*</value>
       </property>
-      <property>
+      <!--<property>
         <name>hadoop.security.key.provider.path</name>
         <value>kms://http@{{ template "ranger-kms.ranger-svc-0" . }}:9292/kms</value>
       </property>
@@ -89,16 +89,16 @@ data:
       <property>
         <name>hadoop.security.crypto.buffer.size</name>
         <value>8192</value>
-      </property>
+      </property>-->
     </configuration>
   hdfs-site.xml: |
     <?xml version="1.0"?>
     <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
     <configuration>
-      <property>
+      <!--<property>
         <name>dfs.encryption.key.provider.uri</name>
         <value>kms://http@{{ template "ranger-kms.ranger-svc-0" . }}:9292/kms</value>
-      </property>
+      </property>-->
     {{- if .Values.global.kerberosEnabled }}
       <property>
         <name>dfs.block.access.token.enable</name>
