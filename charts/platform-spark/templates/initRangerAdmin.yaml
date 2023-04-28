@@ -35,7 +35,7 @@ data:
         "displayName": "ranger-admin",
         "description": "",
         "configs": {
-          "password": "admin",
+          "password": "ranger-admin",
           "ranger.plugin.audit.filters": "[{'\''accessResult'\'':'\''DENIED'\'','\''isAudited'\'':true},{'\''actions'\'':['\''METADATA OPERATION'\''],'\''isAudited'\'':false},{'\''users'\'':['\''hive'\'','\''hue'\''],'\''actions'\'':['\''SHOW_ROLES'\''],'\''isAudited'\'':false}]",
           "jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver",
           "jdbc.url": "jdbc:hive2://{{ .Values.global.kubernetes.master.host }}:30527/default;principal=hive/{{ include "spark.spark-svc-0" . }}@LABP7.CNAM",
