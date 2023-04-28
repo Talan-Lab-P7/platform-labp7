@@ -14,7 +14,7 @@ data:
     users="hdfs spark hive ranger-admin ranger-kms"
     
     curl -X 'POST' \
-      'http://admin:admin@$master:30523/service/public/v2/api/service' \
+      "http://admin:admin@$master:30523/service/public/v2/api/service" \
       -H 'accept: application/json' \
       -H 'Content-Type: application/json' \
       -d '  {
