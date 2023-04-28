@@ -9,8 +9,12 @@ metadata:
 data:
   init-ranger-admin.sh: |
     #! /bin/bash
+
+    master={{ .Values.global.kubernetes.master.host }}
+    users_array="hdfs spark hive ranger-admin ranger-kms"
+    
     curl -X 'POST' \
-      'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/public/v2/api/service' \
+      'http://admin:admin@$master:30523/service/public/v2/api/service' \
       -H 'accept: application/json' \
       -H 'Content-Type: application/json' \
       -d '  {
@@ -30,7 +34,7 @@ data:
           "password": "admin",
           "ranger.plugin.audit.filters": "[{'\''accessResult'\'':'\''DENIED'\'','\''isAudited'\'':true},{'\''actions'\'':['\''METADATA OPERATION'\''],'\''isAudited'\'':false},{'\''users'\'':['\''hive'\'','\''hue'\''],'\''actions'\'':['\''SHOW_ROLES'\''],'\''isAudited'\'':false}]",
           "jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver",
-          "jdbc.url": "jdbc:hive2://{{ .Values.global.kubernetes.master.host }}:30527/default;principal=hive/{{ include "spark.spark-svc-0" . }}@LABP7.CNAM",
+          "jdbc.url": "jdbc:hive2://$master:30527/default;principal=hive/{{ include "spark.spark-svc-0" . }}@LABP7.CNAM",
           "username": "admin"
         },
         "policyVersion": 9,
@@ -39,10 +43,9 @@ data:
         "tagUpdateTime": 1682598079935
       }
     '
-      users_array=("hdfs","spark","hive","ranger-admin","ranger-kms")
 
       for str in ${users_array[@]}; do
-        curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users/$str?forceDelete=true' \
+        curl 'http://admin:admin@$master:30523/service/xusers/secure/users/$str?forceDelete=true' \
         -X 'DELETE' \
         -H 'Accept: application/json, text/javascript, */*; q=0.01' \
         -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
@@ -53,12 +56,12 @@ data:
       done
 
       for str in ${users_array[@]}; do
-        curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
+        curl 'http://admin:admin@$master:30523/service/xusers/secure/users' \
         -H 'Accept: application/json, text/javascript, */*; q=0.01' \
         -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
         -H 'Connection: keep-alive' \
         -H 'Content-Type: application/json' \
-        --data '{"name":"hdfs","password":"Admin-$str-123","firstName":"$str","lastName":"$str","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
+        --data '{"name":"hdfs password":"Admin-$str-123 firstName":"$str lastName":"$str emailAddress":"adel.mejri@talan.com userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
         --compressed \
         --insecure
       done
