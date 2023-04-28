@@ -13,7 +13,7 @@ data:
     master={{ .Values.global.kubernetes.master.host | quote }}
     users="hdfs spark hive ranger-admin ranger-kms"
 
-    status_code=$(curl -X 'GET' "http://admin:admin@$master:30523/service/plugins/policies/service/name/ranger-admin" -H 'accept: application/json')
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" -X  'GET' "http://admin:admin@$master:30523/service/plugins/policies/service/name/ranger-admin" -H 'accept: application/json')
 
     if [[ "$status_code" -eq 200 ]] ; then
       exit 0
