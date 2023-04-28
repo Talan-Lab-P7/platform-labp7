@@ -13,7 +13,6 @@ data:
       'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/public/v2/api/service' \
       -H 'accept: application/json' \
       -H 'Content-Type: application/json' \
-      -H 'X-XSRF-HEADER: kceqhSS0KfLGgxVJEz3l' \
       -d '  {
         "id": 1,
         "guid": "1bd6df43-ce74-47db-9c25-a8101a4826f9",
@@ -40,6 +39,19 @@ data:
         "tagUpdateTime": 1682598079935
       }
     '
+      users_array = ("hdfs","spark","hive","ranger-admin","ranger-kms")
+
+      for str in ${users_array[@]}; do
+        curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users/$str?forceDelete=true' \
+        -X 'DELETE' \
+        -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+        -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
+        -H 'Connection: keep-alive' \
+        -H 'Content-Type: application/json' \
+        --compressed \
+        --insecure
+      done
+
       curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
       -H 'Accept: application/json, text/javascript, */*; q=0.01' \
       -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
