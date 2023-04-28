@@ -39,7 +39,7 @@ data:
         "tagUpdateTime": 1682598079935
       }
     '
-      users_array = ("hdfs","spark","hive","ranger-admin","ranger-kms")
+      users_array=("hdfs","spark","hive","ranger-admin","ranger-kms")
 
       for str in ${users_array[@]}; do
         curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users/$str?forceDelete=true' \
@@ -52,47 +52,13 @@ data:
         --insecure
       done
 
-      curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
-      -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-      -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \
-      --data '{"name":"hdfs","password":"Hdfs-123","firstName":"hdfs","lastName":"hdfs","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
-      --compressed \
-      --insecure
-
-      curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
-      -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-      -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \
-      --data '{"name":"spark","password":"Spark-123","firstName":"spark","lastName":"spark","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
-      --compressed \
-      --insecure
-
-      curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
-      -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-      -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \
-      --data '{"name":"ranger-admin","password":"Ranger-admin-123","firstName":"ranger-admin","lastName":"ranger-admin","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
-      --compressed \
-      --insecure
-
-      curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
-      -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-      -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \
-      --data '{"name":"ranger-kms","password":"Ranger-kms-123","firstName":"ranger-kms","lastName":"ranger-admin","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
-      --compressed \
-      --insecure
-
-      curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
-      -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-      -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \
-      --data '{"name":"hive","password":"Hive-123","firstName":"hive","lastName":"hive","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
-      --compressed \
-      --insecure
+      for str in ${users_array[@]}; do
+        curl 'http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/xusers/secure/users' \
+        -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+        -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
+        -H 'Connection: keep-alive' \
+        -H 'Content-Type: application/json' \
+        --data '{"name":"hdfs","password":"Admin-$str-123","firstName":"$str","lastName":"$str","emailAddress":"adel.mejri@talan.com","userRoleList":["ROLE_SYS_ADMIN"],"groupIdList":null,"status":1}' \
+        --compressed \
+        --insecure
+      done
