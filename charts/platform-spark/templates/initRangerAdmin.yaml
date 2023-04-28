@@ -12,8 +12,13 @@ data:
 
     master={{ .Values.global.kubernetes.master.host }}
     users="hdfs spark hive ranger-admin ranger-kms"
-    
-    curl -X 'POST' \
+
+    status_code=$(curl -X 'GET' "http://admin:admin@$master:30523/service/plugins/policies/service/name/ranger-admin" -H 'accept: application/json')
+
+    if [[ "$status_code" -eq 200 ]] ; then
+      exit 0
+    else
+      curl -X 'POST' \
       "http://admin:admin@$master:30523/service/public/v2/api/service" \
       -H 'accept: application/json' \
       -H 'Content-Type: application/json' \
@@ -64,3 +69,4 @@ data:
         --insecure
 
       done
+    fi
