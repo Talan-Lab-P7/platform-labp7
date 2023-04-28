@@ -10,7 +10,7 @@ data:
   init-ranger-admin.sh: |
     #! /bin/bash
 
-    master={{ .Values.global.kubernetes.master.host }}
+    master={{ .Values.global.kubernetes.master.host | quote }}
     users="hdfs spark hive ranger-admin ranger-kms"
 
     status_code=$(curl -X 'GET' "http://admin:admin@$master:30523/service/plugins/policies/service/name/ranger-admin" -H 'accept: application/json')
