@@ -9,6 +9,7 @@ metadata:
 data:
   init-users.sh: |
     #! /bin/bash
+    groupadd supergroup
     useradd -m -g supergroup -s /bin/bash hdfs
     useradd -m -g supergroup -s /bin/bash hive
     useradd -m -g supergroup -s /bin/bash spark
