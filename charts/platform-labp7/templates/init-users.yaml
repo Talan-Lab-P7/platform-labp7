@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-users
+  labels:
+    app: init-users
+    chart: init-users-chart
+    release: {{ .Release.Name }}
+data:
+  init-users.sh: |
+    #! /bin/bash
+    useradd -m -g supergroup -s /bin/bash hdfs
+    useradd -m -g supergroup -s /bin/bash hive
+    useradd -m -g supergroup -s /bin/bash spark
+    useradd -m -g supergroup -s /bin/bash ranger-admin
+    useradd -m -g supergroup -s /bin/bash ranger-kms
+    
