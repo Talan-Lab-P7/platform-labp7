@@ -75,7 +75,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
-          args: ["-c","/script/init-users.sh && /opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
+          args: ["-c","/scripts/init-users.sh && /opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
           ports:
             - name: driver
               containerPort: 16780
