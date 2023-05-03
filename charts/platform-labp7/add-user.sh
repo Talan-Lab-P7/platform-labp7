@@ -7,4 +7,4 @@ username=$2
 password=$3
 realm=$4
 
-kubectl exec platform-labp7-hdfs-krb5-0 -n $namespace -- kadmin.local -q "addprinc $username@$realm -needchange -pw $password"
+kubectl exec platform-labp7-hdfs-krb5-0 -n $namespace -- kadmin.local -q "addprinc +needchange -pw $password $username@$realm"
