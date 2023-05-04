@@ -54,6 +54,14 @@ spec:
       protocol: UDP
       name: kpasswd-udp
       nodePort: 30227
+    - port: 464
+      protocol: TCP
+      name: admin-tcp
+      nodePort: 30228
+    - port: 464
+      protocol: UDP
+      name: admin-udp
+      nodePort: 30228
   selector:
     app: {{ template "hdfs-k8s.krb5.name" . }}
     release: {{ .Release.Name }}
