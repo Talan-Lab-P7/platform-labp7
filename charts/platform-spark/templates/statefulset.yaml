@@ -146,7 +146,6 @@ spec:
             defaultMode: 0744  
         - name: kerberos-keytabs
           projected:
-          defaultMode: 0400
             sources:
               - secret:
                   name: {{ template "spark-keytabs-secret" . }}
