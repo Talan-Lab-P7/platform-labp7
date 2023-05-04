@@ -45,12 +45,6 @@ spec:
             - name: kdc-udp
               containerPort: 88
               protocol: UDP
-            - name: kpasswd-tcp
-              containerPort: {{ .Values.service.kpasswdPort }}
-              protocol: TCP
-            - name: kpasswd-udp
-              containerPort: {{ .Values.service.kpasswdPort }}
-              protocol: UDP
           livenessProbe:
             initialDelaySeconds: 60
             periodSeconds: 30
