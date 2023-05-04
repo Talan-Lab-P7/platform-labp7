@@ -49,7 +49,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
-  kpasswd_port: 749
+  kpasswdPort: 749
 
 ingress:
   enabled: false

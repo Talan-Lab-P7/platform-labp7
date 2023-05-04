@@ -46,11 +46,11 @@ spec:
       protocol: UDP
       name: kdc-udp
       nodePort: 30226
-    - port: {{ .Values.service.kpasswd_port }}
+    - port: {{ .Values.service.kpasswdPort }}
       protocol: TCP
       name: kpasswd-tcp
       nodePort: 30227
-    - port: {{ .Values.service.kpasswd_port }}
+    - port: {{ .Values.service.kpasswdPort }}
       protocol: UDP
       name: kpasswd-udp
       nodePort: 30227
