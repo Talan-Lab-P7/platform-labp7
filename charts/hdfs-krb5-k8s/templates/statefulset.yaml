@@ -45,12 +45,6 @@ spec:
             - name: kdc-udp
               containerPort: 88
               protocol: UDP
-            - name: kpasswd-tcp
-              containerPort: 749
-              protocol: TCP
-            - name: kpasswd-udp
-              containerPort: 749
-              protocol: UDP
             - name: admin-tcp
               containerPort: 464
               protocol: TCP

@@ -46,22 +46,14 @@ spec:
       protocol: UDP
       name: kdc-udp
       nodePort: 30226
-    - port: 749
-      protocol: TCP
-      name: kpasswd-tcp
-      nodePort: 30227
-    - port: 749
-      protocol: UDP
-      name: kpasswd-udp
-      nodePort: 30227
     - port: 464
       protocol: TCP
       name: admin-tcp
-      nodePort: 30228
+      nodePort: 30227
     - port: 464
       protocol: UDP
       name: admin-udp
-      nodePort: 30228
+      nodePort: 30227
   selector:
     app: {{ template "hdfs-k8s.krb5.name" . }}
     release: {{ .Release.Name }}
