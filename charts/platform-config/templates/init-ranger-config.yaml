@@ -10,8 +10,8 @@ data:
   init-ranger.sh: |
     #! /bin/bash
     groupadd hadoop
-    adduser --group hadoop hadoop
+    useradd -g hadoop hadoop
     mkdir /opt/hadoop-3.1.1/hadoop
     ln -s /opt/hadoop-3.1.1/etc /opt/hadoop-3.1.1/hadoop/etc
-    mv -f /conf/install.properties /opt/hadoop-3.1.1/ranger-2.3.0-hdfs-plugin
+    cat  /conf/install.properties > /opt/hadoop-3.1.1/ranger-2.3.0-hdfs-plugin/install.properties
     /opt/hadoop-3.1.1/ranger-2.3.0-hdfs-plugin/enable-hdfs-plugin.sh
