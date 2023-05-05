@@ -69,7 +69,8 @@ spec:
           command: ['/bin/sh', '-c']
           # The start script is provided by a config map.
           args:
-            - /scripts/init-ranger.sh && /entrypoint.sh && /run.sh   
+            #- /scripts/init-ranger.sh && /entrypoint.sh && /run.sh
+            - sleep infinity
           ports:
           - containerPort: 8020
             name: fs
