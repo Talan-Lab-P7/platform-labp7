@@ -83,7 +83,8 @@ spec:
             - name: init-ranger
               mountPath: /scripts
             - name: install-properties
-              mountPath: /conf  
+              mountPath: /conf 
+              readOnly: false 
             {{- if .Values.global.kerberosEnabled }}
             - name: kerberos-config
               mountPath: /etc/krb5.conf
