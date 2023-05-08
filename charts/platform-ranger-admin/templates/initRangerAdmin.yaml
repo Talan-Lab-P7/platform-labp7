@@ -76,7 +76,7 @@ data:
                   "dfs.secondary.namenode.kerberos.principal":"",
                   "hadoop.rpc.protection":"privacy",
                   "commonNameForCertificate":"",
-                  "ranger.plugin.audit.filters":"[{'accessResult':'DENIED','isAudited':true},{'actions':['delete','rename'],'isAudited':true},{'users':['hdfs'],'actions':['listStatus','getfileinfo','listCachePools','listCacheDirectives','listCorruptFileBlocks','monitorHealth','rollEditLog','open'],'isAudited':false},{'users':['oozie'],'resources':{'path':{'values':['/user/oozie/share/lib'],'isRecursive':true}},'isAudited':false},{'users':['spark'],'resources':{'path':{'values':['/user/spark/applicationHistory'],'isRecursive':true}},'isAudited':false},{'users':['hue'],'resources':{'path':{'values':['/user/hue'],'isRecursive':true}},'isAudited':false},{'users':['hbase'],'resources':{'path':{'values':['/hbase'],'isRecursive':true}},'isAudited':false},{'users':['mapred'],'resources':{'path':{'values':['/user/history'],'isRecursive':true}},'isAudited':false},{'actions':['getfileinfo'],'isAudited':false}]"
+                  "ranger.plugin.audit.filters":"[]"
               },
               "policyVersion":9,
               "policyUpdateTime":1683278824637,
