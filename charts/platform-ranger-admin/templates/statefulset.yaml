@@ -38,7 +38,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
-          args: ["-c","rm /opt/ranger-2.1.0-admin/install.properties && cp /tmp/install/install.properties /opt/ranger-2.1.0-admin/ && /opt/ranger-2.1.0-admin/setup.sh && /opt/ranger-2.1.0-admin/ews/start-ranger-admin.sh && sleep infinity"]
+          args: ["-c","rm /opt/ranger-2.1.0-admin/install.properties && cp /tmp/install/install.properties /opt/ranger-2.1.0-admin/ && /opt/ranger-2.1.0-admin/setup.sh && /opt/ranger-2.1.0-admin/ews/start-ranger-admin.sh && /scripts/init-users.sh && sleep infinity"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: POSTGRES_PASSWORD
@@ -73,6 +73,8 @@ spec:
             - name: kerberos-keytabs
               mountPath: /etc/security
               readOnly: true
+            - name: init-users
+              mountPath: /scripts/
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -104,3 +106,7 @@ spec:
         - name: kerberos-keytabs
           secret:
             secretName: {{ template "ranger-admin-keytabs-secret" . }}
+        - name: init-users
+          configMap:
+            name: init-users
+            defaultMode: 0744

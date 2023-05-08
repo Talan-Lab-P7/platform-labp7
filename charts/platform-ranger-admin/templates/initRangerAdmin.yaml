@@ -47,6 +47,44 @@ data:
         "tagUpdateTime": 1682598079935
       }
     '
+    curl -X 'POST' \
+      "http://admin:admin@{{ .Values.global.kubernetes.master.host }}:30523/service/public/v2/api/service" \
+      -H 'accept: application/json' \
+      -H 'Content-Type: application/json' \
+      -d '  {
+              "id":2,
+              "guid":"262a649a-405a-4027-8e6b-84f4c03228aa",
+              "isEnabled":true,
+              "createdBy":"Admin",
+              "updatedBy":"Admin",
+              "createTime":1683273519056,
+              "updateTime":1683273519058,
+              "version":1,
+              "type":"hdfs",
+              "name":"ranger-admin-hdfs",
+              "displayName":"ranger-admin-hdfs",
+              "description":"",
+              "configs":{
+                  "username":"hdfs",
+                  "password":"hdfs",
+                  "fs.default.name":"hdfs://{{ template "namenode-svc-0" . }}:8020",
+                  "hadoop.security.authorization":false,
+                  "hadoop.security.authentication":"kerberos",
+                  "hadoop.security.auth_to_local":"",
+                  "dfs.datanode.kerberos.principal":"hdfs/{{ template "namenode-svc-0" . }}@LABP7.CNAM",
+                  "dfs.namenode.kerberos.principal":"hdfs/{{ template "namenode-svc-0" . }}@LABP7.CNAM",
+                  "dfs.secondary.namenode.kerberos.principal":"",
+                  "hadoop.rpc.protection":"privacy",
+                  "commonNameForCertificate":"",
+                  "ranger.plugin.audit.filters":"[{'accessResult':'DENIED','isAudited':true},{'actions':['delete','rename'],'isAudited':true},{'users':['hdfs'],'actions':['listStatus','getfileinfo','listCachePools','listCacheDirectives','listCorruptFileBlocks','monitorHealth','rollEditLog','open'],'isAudited':false},{'users':['oozie'],'resources':{'path':{'values':['/user/oozie/share/lib'],'isRecursive':true}},'isAudited':false},{'users':['spark'],'resources':{'path':{'values':['/user/spark/applicationHistory'],'isRecursive':true}},'isAudited':false},{'users':['hue'],'resources':{'path':{'values':['/user/hue'],'isRecursive':true}},'isAudited':false},{'users':['hbase'],'resources':{'path':{'values':['/hbase'],'isRecursive':true}},'isAudited':false},{'users':['mapred'],'resources':{'path':{'values':['/user/history'],'isRecursive':true}},'isAudited':false},{'actions':['getfileinfo'],'isAudited':false}]"
+              },
+              "policyVersion":9,
+              "policyUpdateTime":1683278824637,
+              "tagVersion":1,
+              "tagUpdateTime":1683273519070,
+              "tagService":""
+            }
+    '
 
       for str in $users; do
 

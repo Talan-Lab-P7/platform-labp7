@@ -95,6 +95,9 @@ spec:
             {{- end }}
       {{- if .Values.global.kerberosEnabled }}
       initContainers:
+        - name: wait-for-ranger-admin
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']
         - name: copy-kerberos-keytab
           image: busybox:1.27.1
           command: ['sh', '-c']

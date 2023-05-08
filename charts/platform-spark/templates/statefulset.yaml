@@ -75,7 +75,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
-          args: ["-c","/scripts/init-users.sh && /opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
+          args: ["-c","/opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]
           ports:
             - name: driver
               containerPort: 16780
@@ -107,8 +107,6 @@ spec:
               readOnly: true
             - name: policycache
               mountPath: /ranger/policycache
-            - name: init-users
-              mountPath: /scripts/
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -156,8 +154,4 @@ spec:
         - name: init-mydb
           configMap:
             name: {{ template "hive-meta-store.fullname" . }}
-            defaultMode: 0744
-        - name: init-users
-          configMap:
-            name: init-users
             defaultMode: 0744
