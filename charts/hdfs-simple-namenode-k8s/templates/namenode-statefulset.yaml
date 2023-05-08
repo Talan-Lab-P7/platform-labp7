@@ -79,7 +79,7 @@ spec:
               mountPath: /hadoop/dfs/name
             - name: hdfs-config
               mountPath: /etc/hadoop-custom-conf
-              readOnly: true
+              readOnly: false
             - name: init-ranger
               mountPath: /scripts
             - name: install-properties
