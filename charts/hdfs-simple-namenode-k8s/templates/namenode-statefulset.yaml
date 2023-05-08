@@ -69,8 +69,7 @@ spec:
           command: ['/bin/sh', '-c']
           # The start script is provided by a config map.
           args:
-            #- /scripts/init-ranger.sh && /entrypoint.sh && /run.sh
-            - sleep infinity
+            - /entrypoint.sh && /scripts/init-ranger.sh && /run.sh
           ports:
           - containerPort: 8020
             name: fs
@@ -79,7 +78,7 @@ spec:
               mountPath: /hadoop/dfs/name
             - name: hdfs-config
               mountPath: /etc/hadoop-custom-conf
-              readOnly: false
+              readOnly: true
             - name: init-ranger
               mountPath: /scripts
             - name: install-properties
