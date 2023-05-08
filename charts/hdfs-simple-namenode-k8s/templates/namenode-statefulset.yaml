@@ -70,7 +70,7 @@ spec:
           # The start script is provided by a config map.
           args:
             #- /scripts/init-ranger.sh && /entrypoint.sh && /run.sh
-            - /scripts/init-ranger.sh && sleep infinity
+            - sleep infinity
           ports:
           - containerPort: 8020
             name: fs
