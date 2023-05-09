@@ -5,8 +5,8 @@ image:
 hue:
   replicas: 1
   database:
-    create: true
-    persist: true
+    create: false
+    persist: false
     engine: "postgresql_psycopg2"
     host: "postgres-hue"
     port: 5432
@@ -16,23 +16,12 @@ hue:
     name: "hue"
     storageName: "microk8s-hostpath"
   interpreters: |
-    [[[postgresql]]]
-      name = postgresql
-      interface=sqlalchemy
-      options='{"url": "postgresql://hue:hue@postgres-hue:5432/hue"}'
-  ini: |
-    [desktop]
-    secret_key=hue123
-    app_blacklist=filebrowser,search,hbase,security,jobbrowser,oozie
-    django_debug_mode=false
-    gunicorn_work_class=sync
-    enable_prometheus=true
-
-    [[task_server]]
-    enabled=false
-    broker_url=redis://redis:6379/0
-    result_cache='{"BACKEND": "django_redis.cache.RedisCache", "LOCATION": "redis://redis:6379/0", "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},"KEY_PREFIX": "queries"}'
-    celery_result_backend=redis://redis:6379/0
+    [[[hive]]]
+      # The name of the snippet.
+      name=Hive
+      # The backend connection to use to communicate with the server.
+      interface=hiveserver2
+  ini: "" 
 balancer:
   enabled: true
 api:
@@ -74,13 +63,7 @@ aws:
   region: "us-east-1"
 hive:
   site: |
-    <!--
-    <property>
-      <name>hive.support.concurrency</name>
-      <value>false</value>
-      <description>Whether hive supports concurrency or not. A zookeeper instance must be up and running for the default hive lock manager to support read-write locks.</description>
-    </property>
-    -->
+    <!---->
 architecture: standalone
 
 ## Pod Annotations

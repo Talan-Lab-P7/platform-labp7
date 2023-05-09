@@ -5,25 +5,37 @@ metadata:
 data:
   hue-ini: |
     [desktop]
+    secret_key=hue123
+    app_blacklist=filebrowser,search,hbase,security,jobbrowser,oozie
+    django_debug_mode=false
+    gunicorn_work_class=sync
+    enable_prometheus=true
+    enable_connectors=true
+    enable_hue_5=true
 
-    [[database]]
-    engine={{ .Values.hue.database.engine }}
-    host={{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
-    port={{ include "postgresql.service.port" . }}
-    user={{ .Values.hue.database.user }}
-{{- if .Values.hue.database.password_script }}
-    password_script={{ .Values.hue.database.password_script }}
-{{- else }}
-    password={{ .Values.hue.database.password }}
-{{- end }}
-    name={{ .Values.hue.database.name }}
+    [[kerberos]]
+    # Path to Hue's Kerberos keytab file
+    hue_keytab=/etc/security/hue.keytab
+    # Kerberos principal name for Hue
+    hue_principal=hue/{{ template "hue-svc-0" . }}@{{ .Values.global.kerberosRealm }}
+    # add kinit path for non root users
+    kinit_path=/usr/bin/kinit
 
-    [aws]
-    [[aws_accounts]]
+    [beeswax]
+    # Host where HiveServer2 is running.
+    # If Kerberos security is enabled, use fully-qualified domain name (FQDN).
+    hive_server_host={{ template "spark-svc-0" . }}
+    # Port where HiveServer2 Thrift server runs on.
+    hive_server_port=10000
+
+    [hadoop]
+    [[hdfs_clusters]]
     [[[default]]]
-    access_key_id={{ .Values.aws.accessKeyId }}
-    secret_access_key={{ .Values.aws.secretAccessKey }}
-    region={{ .Values.aws.region }}
+    # Enter the host and port on which you are running the Hadoop NameNode
+    namenode_host={{ template "namenode-svc-0" . }}
+    hdfs_port=8020
+    http_port=9870
+    security_enabled=true
 
     [notebook]
     [[interpreters]]

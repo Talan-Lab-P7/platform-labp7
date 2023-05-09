@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hue
+  name: {{ include "hue.fullname" . }}
   labels:
-    pod: hue
+    {{- include "hue.labels" . | nindent 4 }}
 spec:
   selector:
-    pod: hue
+    {{- include "hue.selectorLabels" . | nindent 4 }}
   ports:
   - name: hue
     port: 8888

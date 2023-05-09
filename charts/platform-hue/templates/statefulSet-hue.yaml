@@ -1,9 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: hue
+  name: {{ include "hue.fullname" . }}
   labels:
-    deployment: hue
+    statefulSet: hue
 {{ if .Values.monitoring.enabled }}
   annotations:
     "sidecar.jaegertracing.io/inject": "true"
@@ -11,12 +11,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      pod: hue
+      {{- include "hue.selectorLabels" . | nindent 6 }}
   replicas: {{ .Values.hue.replicas }}
+  serviceName: {{ include "hue.fullname" . }}
   template:
     metadata:
       labels:
-        pod: hue
+        {{- include "hue.selectorLabels" . | nindent 8 }}
 {{- with .Values.podLabels }}
 {{ toYaml . | indent 8 }}
 {{- end }}
@@ -60,9 +61,10 @@ spec:
         - name: config-volume-extra
           mountPath: /usr/share/hue/desktop/conf/zz-hue.ini
           subPath: hue-ini
-        - name: hive-config-volume
-          mountPath: /etc/hive/conf/hive-site.xml
-          subPath: hive-site
+        - name: hadoop-config
+          mountPath: /etc/hadoop/conf/
+        - name: kerberos-keytabs
+          mountPath: /etc/security/
         readinessProbe:
           httpGet:
             path: /desktop/debug/is_alive
@@ -92,9 +94,24 @@ spec:
         - name: config-volume-extra
           configMap:
             name: hue-config-extra
-        - name: hive-config-volume
-          configMap:
-            name: {{ include "hive-meta-store.config.fullname" . }}
+
+        - name: kerberos-keytabs
+          projected:
+            sources:
+              - secret:
+                  name: {{ template "hue-keytabs-secret" . }}
+              - secret:
+                  name: {{ template "hive-keytabs-secret" . }}
+        - name: hadoop-config
+          projected:
+            sources:
+              - configMap:
+                  name: {{ template "hive-meta-store.config.fullname" . }}
+              - configMap:
+                  name: {{ template "hdfs-k8s.config.fullname" . }}
+#        - name: hive-config-volume
+#          configMap:
+#            name: {{ include "hive-meta-store.config.fullname" . }}
 {{ if .Values.balancer.enabled }}
         - name: nginx-config
           configMap:
