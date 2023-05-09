@@ -17,10 +17,10 @@ hue:
     storageName: "microk8s-hostpath"
   interpreters: |
     [[[hive]]]
-      # The name of the snippet.
-      name=Hive
-      # The backend connection to use to communicate with the server.
-      interface=hiveserver2
+    # The name of the snippet.
+    name=Hive
+    # The backend connection to use to communicate with the server.
+    interface=hiveserver2
   ini: "" 
 balancer:
   enabled: true
