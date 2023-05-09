@@ -35,62 +35,6 @@ data:
     kinit_path=/usr/bin/kinit
     ccache_path=/tmp/hue_krb5_ccache
 
-    #[spark]
-    # The Livy Server URL.
-    ## livy_server_url=http://localhost:8998
-
-    # Whether Livy requires client to perform Kerberos authentication.
-    ## security_enabled=false
-
-    # Whether Livy requires client to use csrf protection.
-    ## csrf_enabled=false
-
-    # Host of the Spark Thrift Server
-    # https://spark.apache.org/docs/latest/sql-distributed-sql-engine.html
-    #sql_server_host={{ template "spark.spark-svc-0" . }}
-
-    # Port of the Spark Thrift Server
-    #sql_server_port=10000
-
-    # Choose whether Hue should validate certificates received from the server.
-    ## ssl_cert_ca_verify=true
-
-    # Use SASL framework to establish connection to host.
-    #use_sasl=true
-
-
-    [[hdfs_clusters]]
-    # HA support by using HttpFs
-      [[[default]]]
-      # Enter the filesystem uri
-      fs_defaultfs=hdfs://{{ template "namenode-svc-0" . }}:8020
-
-      # NameNode logical name.
-      ## logical_name=
-
-      # Use WebHdfs/HttpFs as the communication mechanism.
-      # Domain should be the NameNode or HttpFs host.
-      # Default port is 14000 for HttpFs.
-      webhdfs_url=http://{{ template "namenode-svc-0" . }}:9870/webhdfs/v1
-
-      # Change this if your HDFS cluster is Kerberos-secured
-      ## security_enabled=false
-
-      # In secure mode (HTTPS), if SSL certificates from YARN Rest APIs
-      # have to be verified against certificate authority
-      ## ssl_cert_ca_verify=True
-
-      # Directory of the Hadoop configuration
-      hadoop_conf_dir=/etc/hadoop/conf
-
-      # Whether Hue should list this HDFS cluster. For historical reason there is no way to disable HDFS.
-      ## is_enabled=true
-
-      # Size, in bytes, of the chunks Django should store into memory and feed into the handler. Default is 64MB.
-      ## upload_chunk_size=64*1024*1024
-
-
-
     [beeswax]
     # Host where HiveServer2 is running.
     # If Kerberos security is enabled, use fully-qualified domain name (FQDN).
@@ -99,15 +43,39 @@ data:
     hive_server_port=10000
     hive_conf_dir=/etc/hadoop/conf
 
-    #[hadoop]
-    #[[hdfs_clusters]]
-    #[[[default]]]
-    # Enter the host and port on which you are running the Hadoop NameNode
-    #namenode_host={{ template "namenode-svc-0" . }}
-    #hdfs_port=8020
-    #http_port=9870
-    #security_enabled=true
+    [hadoop]
+      [[hdfs_clusters]]
+        # HA support by using HttpFs
+        [[[default]]]
+        # Enter the filesystem uri
+        fs_defaultfs=hdfs://{{ template "namenode-svc-0" . }}:8020
+
+        # NameNode logical name.
+        ## logical_name=
+
+        # Use WebHdfs/HttpFs as the communication mechanism.
+        # Domain should be the NameNode or HttpFs host.
+        # Default port is 14000 for HttpFs.
+        webhdfs_url=http://{{ template "namenode-svc-0" . }}:9870/webhdfs/v1
+
+        # Change this if your HDFS cluster is Kerberos-secured
+        ## security_enabled=false
+
+        # In secure mode (HTTPS), if SSL certificates from YARN Rest APIs
+        # have to be verified against certificate authority
+        ## ssl_cert_ca_verify=True
+
+        # Directory of the Hadoop configuration
+        hadoop_conf_dir=/etc/hadoop/conf
+
+        # Whether Hue should list this HDFS cluster. For historical reason there is no way to disable HDFS.
+        ## is_enabled=true
+
+        # Size, in bytes, of the chunks Django should store into memory and feed into the handler. Default is 64MB.
+        ## upload_chunk_size=64*1024*1024
 
     [notebook]
       [[interpreters]]
-      {{ .Values.hue.interpreters | indent 4 }}
+        [[[hive]]]
+        name=Hive
+        interface=hiveserver2
