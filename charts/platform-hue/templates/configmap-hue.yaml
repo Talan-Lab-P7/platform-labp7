@@ -61,33 +61,33 @@ data:
 
     [[hdfs_clusters]]
     # HA support by using HttpFs
-     [[[default]]]
-     # Enter the filesystem uri
-     fs_defaultfs=hdfs://{{ template "namenode-svc-0" . }}:8020
+      [[[default]]]
+      # Enter the filesystem uri
+      fs_defaultfs=hdfs://{{ template "namenode-svc-0" . }}:8020
 
-     # NameNode logical name.
-     ## logical_name=
+      # NameNode logical name.
+      ## logical_name=
 
-     # Use WebHdfs/HttpFs as the communication mechanism.
-     # Domain should be the NameNode or HttpFs host.
-     # Default port is 14000 for HttpFs.
-     webhdfs_url=http://{{ template "namenode-svc-0" . }}:9870/webhdfs/v1
+      # Use WebHdfs/HttpFs as the communication mechanism.
+      # Domain should be the NameNode or HttpFs host.
+      # Default port is 14000 for HttpFs.
+      webhdfs_url=http://{{ template "namenode-svc-0" . }}:9870/webhdfs/v1
 
-     # Change this if your HDFS cluster is Kerberos-secured
-     ## security_enabled=false
+      # Change this if your HDFS cluster is Kerberos-secured
+      ## security_enabled=false
 
-     # In secure mode (HTTPS), if SSL certificates from YARN Rest APIs
-     # have to be verified against certificate authority
-     ## ssl_cert_ca_verify=True
+      # In secure mode (HTTPS), if SSL certificates from YARN Rest APIs
+      # have to be verified against certificate authority
+      ## ssl_cert_ca_verify=True
 
-     # Directory of the Hadoop configuration
-     hadoop_conf_dir=/etc/hadoop/conf
+      # Directory of the Hadoop configuration
+      hadoop_conf_dir=/etc/hadoop/conf
 
-     # Whether Hue should list this HDFS cluster. For historical reason there is no way to disable HDFS.
-     ## is_enabled=true
+      # Whether Hue should list this HDFS cluster. For historical reason there is no way to disable HDFS.
+      ## is_enabled=true
 
-     # Size, in bytes, of the chunks Django should store into memory and feed into the handler. Default is 64MB.
-     ## upload_chunk_size=64*1024*1024
+      # Size, in bytes, of the chunks Django should store into memory and feed into the handler. Default is 64MB.
+      ## upload_chunk_size=64*1024*1024
 
 
 
@@ -109,5 +109,5 @@ data:
     #security_enabled=true
 
     [notebook]
-    [[interpreters]]
-    {{ .Values.hue.interpreters | indent 4 }}
+      [[interpreters]]
+      {{ .Values.hue.interpreters | indent 4 }}
