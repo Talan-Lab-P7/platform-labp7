@@ -81,7 +81,7 @@ data:
      ## ssl_cert_ca_verify=True
 
      # Directory of the Hadoop configuration
-     ## hadoop_conf_dir=$HADOOP_CONF_DIR when set or '/etc/hadoop/conf'
+     hadoop_conf_dir=/etc/hadoop/conf
 
      # Whether Hue should list this HDFS cluster. For historical reason there is no way to disable HDFS.
      ## is_enabled=true
@@ -110,4 +110,4 @@ data:
 
     [notebook]
     [[interpreters]]
-    {{ .Values.hue.interpreters }}
+    {{ .Values.hue.interpreters | indent 4 }}
