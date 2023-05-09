@@ -48,8 +48,8 @@ spec:
       - name: hue
         image: {{ .Values.image.registry }}/hue:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ['/bin/sh']
-        args: ["-c","sleep infinity"]
+#        command: ['/bin/sh']
+#        args: ["-c","sleep infinity"]
         ports:
           - containerPort: 8888
         resources:
@@ -71,13 +71,13 @@ spec:
           mountPath: /etc/krb5.conf
           subPath: krb5.conf
           readOnly: true
-#        readinessProbe:
-#          httpGet:
-#            path: /desktop/debug/is_alive
-#            port: 8888
-#          initialDelaySeconds: 3
-#          periodSeconds: 3
-#          failureThreshold: 30
+        readinessProbe:
+          httpGet:
+            path: /desktop/debug/is_alive
+            port: 8888
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          failureThreshold: 30
 {{ if .Values.balancer.enabled }}
       - name: nginx
         image: {{ .Values.image.registry }}/nginx:{{ .Values.image.tag }}
