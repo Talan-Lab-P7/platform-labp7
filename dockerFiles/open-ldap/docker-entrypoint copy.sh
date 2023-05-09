@@ -33,6 +33,23 @@ ${KRB5_REALM} = {
     default_domain = $(echo $KRB5_REALM | tr '[:upper:]' '[:lower:]')
     database_module = openldap_ldapconf
 }
+[dbdefaults]
+    ldap_kerberos_container_dn = cn=krbContainer,dc=centos,dc=com
+[dbmodules]
+openldap_ldapconf = {
+    db_library = kldap
+    ldap_kdc_dn = "cn=admin,dc=centos,dc=com"
+
+    # this object needs to have read rights on
+    # the realm container, principal container and realm sub-trees
+    ldap_kadmind_dn = "cn=admin,dc=centos,dc=com"
+
+    # this object needs to have read and write rights on
+    # the realm container, principal container and realm sub-trees
+    ldap_service_password_file = /etc/krb5kdc/service.keyfile
+    ldap_servers = ldap://${LDAP_URI}
+    ldap_conns_per_server = 5
+}
 EOT
 
 if [ ! -f "/var/lib/krb5kdc/principal" ]; then
@@ -58,7 +75,7 @@ cat <<EOT > /var/lib/krb5kdc/kdc.conf
         max_renewable_life = 7d 0h 0m 0s
         master_key_type = aes256-cts
         supported_enctypes = aes256-cts:normal aes128-cts:normal
-        default_principal_flags = +renewable
+        default_principal_flags = +preauth
     }
 
 [logging]

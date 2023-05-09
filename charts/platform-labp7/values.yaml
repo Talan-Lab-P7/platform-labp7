@@ -12,7 +12,7 @@ condition:
     hive-meta-store: true
     ranger-kms: true
     ranger-admin: true
-    
+
 
 
 image:
@@ -257,7 +257,8 @@ hdfs-krb5-k8s:
   ## TODO: Using latest tag is not desirable. The current image does not have specific tags.
   ## Find a way to fix it.
   image:
-    repository: gcavalcante8808/krb5-server
+    #repository: gcavalcante8808/krb5-server
+    repository: adel1992/kerberos:0.0.1
     #repository: adel1992/openldap
 
     #tag: 0.0.7
