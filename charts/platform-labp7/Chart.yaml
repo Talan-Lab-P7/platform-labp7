@@ -136,3 +136,11 @@ dependencies:
       - kerberos
       - simple
       - ranger
+  - name: hue
+    version: 1.0.3
+    repository: "file://../platform-hue"
+    tags:
+      - ha
+      - kerberos
+      - simple
+      - ranger
