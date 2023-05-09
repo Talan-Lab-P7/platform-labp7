@@ -81,6 +81,7 @@ hive:
       <description>Whether hive supports concurrency or not. A zookeeper instance must be up and running for the default hive lock manager to support read-write locks.</description>
     </property>
     -->
+rchitecture: standalone
 
 ## Pod Annotations
 # podAnnotations: {}

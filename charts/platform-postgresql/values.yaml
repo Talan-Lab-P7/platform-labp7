@@ -302,6 +302,7 @@ primary:
          psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_audit;'
          psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_kms;'
          psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE ranger_kms_audit;'
+         psql --host 127.0.0.1 -U postgres -d template1 -p 5432 -c 'CREATE DATABASE hue;'
 
 
 
