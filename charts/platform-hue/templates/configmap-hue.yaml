@@ -8,8 +8,8 @@ data:
 
     [[database]]
     engine={{ .Values.hue.database.engine }}
-    host={{ .Values.hue.database.host }}
-    port={{ .Values.hue.database.port }}
+    host={{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    port={{ include "postgresql.service.port" . }}
     user={{ .Values.hue.database.user }}
 {{- if .Values.hue.database.password_script }}
     password_script={{ .Values.hue.database.password_script }}

@@ -93,7 +93,7 @@ spec:
             name: hue-config-extra
         - name: hive-config-volume
           configMap:
-            name: hive-config
+            name: {{ include "hive-meta-store.config.fullname" . }}
 {{ if .Values.balancer.enabled }}
         - name: nginx-config
           configMap:

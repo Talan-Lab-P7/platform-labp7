@@ -12,6 +12,7 @@ condition:
     hive-meta-store: true
     ranger-kms: true
     ranger-admin: true
+    
 
 
 image:
