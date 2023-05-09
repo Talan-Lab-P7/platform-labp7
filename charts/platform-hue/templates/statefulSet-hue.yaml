@@ -76,6 +76,8 @@ spec:
       - name: nginx
         image: {{ .Values.image.registry }}/nginx:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ['/bin/sh']
+        args: ["-c","sleep infinity"]
         ports:
           - containerPort: 80
         resources:
