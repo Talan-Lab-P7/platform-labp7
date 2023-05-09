@@ -13,6 +13,19 @@ data:
     enable_connectors=true
     enable_hue_5=true
 
+
+    [[database]]
+    engine={{ .Values.hue.database.engine }}
+    host={{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    port={{ include "postgresql.service.port" . }}
+    user={{ .Values.hue.database.user }}
+{{- if .Values.hue.database.password_script }}
+    password_script={{ .Values.hue.database.password_script }}
+{{- else }}
+    password={{ .Values.hue.database.password }}
+{{- end }}
+    name={{ .Values.hue.database.name }}
+
     [[kerberos]]
     # Path to Hue's Kerberos keytab file
     hue_keytab=/etc/security/hue.keytab
