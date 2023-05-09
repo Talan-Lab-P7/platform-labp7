@@ -65,13 +65,13 @@ spec:
           mountPath: /etc/hadoop/conf/
         - name: kerberos-keytabs
           mountPath: /etc/security/
-        readinessProbe:
-          httpGet:
-            path: /desktop/debug/is_alive
-            port: 8888
-          initialDelaySeconds: 3
-          periodSeconds: 3
-          failureThreshold: 30
+#        readinessProbe:
+#          httpGet:
+#            path: /desktop/debug/is_alive
+#            port: 8888
+#          initialDelaySeconds: 3
+#          periodSeconds: 3
+#          failureThreshold: 30
 {{ if .Values.balancer.enabled }}
       - name: nginx
         image: {{ .Values.image.registry }}/nginx:{{ .Values.image.tag }}
