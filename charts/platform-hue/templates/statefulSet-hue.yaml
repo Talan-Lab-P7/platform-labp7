@@ -67,6 +67,10 @@ spec:
           mountPath: /etc/hadoop/conf/
         - name: kerberos-keytabs
           mountPath: /etc/security/
+        - name: kerberos-config
+          mountPath: /etc/krb5.conf
+          subPath: krb5.conf
+          readOnly: true
 #        readinessProbe:
 #          httpGet:
 #            path: /desktop/debug/is_alive
@@ -104,6 +108,8 @@ spec:
                   name: {{ template "hue-keytabs-secret" . }}
               - secret:
                   name: {{ template "hive-keytabs-secret" . }}
+              - secret:
+                  name: {{ template "krb5-keytabs-secret" . }}
         - name: hadoop-config
           projected:
             sources:
