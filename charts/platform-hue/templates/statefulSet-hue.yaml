@@ -117,6 +117,9 @@ spec:
                   name: {{ template "hive-meta-store.config.fullname" . }}
               - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}
+        - name: kerberos-config
+          configMap:
+            name: {{ template "krb5-configmap" . }}
 #        - name: hive-config-volume
 #          configMap:
 #            name: {{ include "hive-meta-store.config.fullname" . }}
