@@ -24,7 +24,7 @@ data:
     [beeswax]
     # Host where HiveServer2 is running.
     # If Kerberos security is enabled, use fully-qualified domain name (FQDN).
-    hive_server_host={{ template "spark-svc-0" . }}
+    hive_server_host={{ template "spark.spark-svc-0" . }}
     # Port where HiveServer2 Thrift server runs on.
     hive_server_port=10000
 
