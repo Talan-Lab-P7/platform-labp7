@@ -7,4 +7,5 @@ kubectl delete secrets --all -n $1
 rm /tmp/hive.keytab
 rm /tmp/spark.keytab
 rm /tmp/hdfs.keytab
+rm /tmp/hue.keytab
 rm /tmp/secrets.sh
