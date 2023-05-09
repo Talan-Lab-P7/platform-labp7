@@ -20,6 +20,7 @@ data:
     hue_principal=hue/{{ template "hue.hue-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     # add kinit path for non root users
     kinit_path=/usr/bin/kinit
+    ccache_path=/tmp/hue_krb5_ccache
 
     [beeswax]
     # Host where HiveServer2 is running.
