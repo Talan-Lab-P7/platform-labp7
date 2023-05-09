@@ -258,11 +258,12 @@ hdfs-krb5-k8s:
   ## Find a way to fix it.
   image:
     #repository: gcavalcante8808/krb5-server
-    repository: adel1992/kerberos:0.0.1
+    repository: adel1992/kerberos
     #repository: adel1992/openldap
 
     #tag: 0.0.7
-    tag: latest
+    #tag: latest
+    tag: 0.0.1
 
     pullPolicy: IfNotPresent
 
