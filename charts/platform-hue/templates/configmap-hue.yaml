@@ -17,7 +17,7 @@ data:
     # Path to Hue's Kerberos keytab file
     hue_keytab=/etc/security/hue.keytab
     # Kerberos principal name for Hue
-    hue_principal=hue/{{ template "hue-svc-0" . }}@{{ .Values.global.kerberosRealm }}
+    hue_principal=hue/{{ template "hue.hue-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     # add kinit path for non root users
     kinit_path=/usr/bin/kinit
 
