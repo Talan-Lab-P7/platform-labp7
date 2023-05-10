@@ -1306,10 +1306,10 @@ data:
 
     # Host where HiveServer2 is running.
     # If Kerberos security is enabled, use fully-qualified domain name (FQDN).
-    hive_server_host={{ .Values.global.kubernetes.master.host }}
+    #hive_server_host={{ .Values.global.kubernetes.master.host }}
     #/default;principal=hive/{{ template "spark.spark-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     # Binary thrift port for HiveServer2.
-    hive_server_port=30527/default;principal=hive/{{ template "spark.spark-svc-0" . }}@{{ .Values.global.kerberosRealm }}
+    #hive_server_port=30527
 
     # Http thrift port for HiveServer2.
     ## hive_server_http_port=10001
