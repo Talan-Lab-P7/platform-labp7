@@ -1306,10 +1306,10 @@ data:
 
     # Host where HiveServer2 is running.
     # If Kerberos security is enabled, use fully-qualified domain name (FQDN).
-    ## hive_server_host=localhost
-
+    hive_server_host={{ .Values.global.kubernetes.master.host }}
+    #/default;principal=hive/{{ template "spark.spark-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     # Binary thrift port for HiveServer2.
-    ## hive_server_port=10000
+    hive_server_port=30527
 
     # Http thrift port for HiveServer2.
     ## hive_server_http_port=10001
@@ -1359,7 +1359,7 @@ data:
     ## hive_metastore_port=9083
 
     # Hive configuration directory, where hive-site.xml is located
-    ## hive_conf_dir=/etc/hive/conf
+    hive_conf_dir=/etc/hive/conf
 
     # Timeout in seconds for thrift calls to Hive service
     ## server_conn_timeout=120
