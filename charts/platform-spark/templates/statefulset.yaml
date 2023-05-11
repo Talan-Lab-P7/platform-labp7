@@ -149,6 +149,8 @@ spec:
                   name: {{ template "spark-keytabs-secret" . }}
               - secret:
                   name: {{ template "hive-keytabs-secret" . }}
+              - secret:
+                  name: {{ template "krb5-keytabs-secret" . }}
         - name: policycache
           emptyDir: {}
         - name: init-mydb
