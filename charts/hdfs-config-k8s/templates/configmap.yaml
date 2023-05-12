@@ -132,6 +132,10 @@ data:
         <value>{{ template "http-principal" . }}</value>
       </property>
       <property>
+        <name>dfs.web.authentication.kerberos.keytab</name>
+        <value>/etc/security/hdfs.keytab</value>
+      </property>
+      <property>
         <name>dfs.namenode.keytab.file</name>
         <value>/etc/security/hdfs.keytab</value>
       </property>
