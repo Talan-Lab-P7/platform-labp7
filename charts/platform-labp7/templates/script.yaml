@@ -61,6 +61,9 @@ data:
     kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/ranger-admin.keytab /tmp/ranger-admin.keytab
     kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/ranger-kms.keytab /tmp/ranger-kms.keytab
     kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/hue.keytab /tmp/hue.keytab
+
+    printf "%b" "read_kt /tmp/hue.keytab\n write_kt /tmp/hdfs.keytab\n" | ktutil
+
     kubectl -n {{ .Release.Namespace }} create secret generic {{ include "krb5-keytabs-secret" . }} --from-file=/tmp/hdfs.keytab
     kubectl -n {{ .Release.Namespace }} create secret generic {{ include "hive-keytabs-secret" . }} --from-file=/tmp/hive.keytab
     kubectl -n {{ .Release.Namespace }} create secret generic {{ include "spark-keytabs-secret" . }} --from-file=/tmp/spark.keytab
