@@ -129,7 +129,7 @@ data:
       </property>
       <property>
         <name>dfs.web.authentication.kerberos.principal</name>
-        <value>*</value>
+        <value>{{ template "http-principal" . }}</value>
       </property>
       <property>
         <name>dfs.web.authentication.kerberos.keytab</name>
