@@ -32,7 +32,15 @@ data:
         <value>httpfs/_HOST@{{ .Values.global.kerberosRealm }}</value>
       </property>
       <property>
-      <name>httpfs.hadoop.authentication.kerberos.keytab</name>
-      <value>/etc/security/httpfs.keytab</value>
+        <name>httpfs.hadoop.authentication.kerberos.keytab</name>
+        <value>/etc/security/httpfs.keytab</value>
+      </property>
+      <property>
+        <name>httpfs.proxyuser.hue.users</name>
+        <value>*</value>
+      </property>
+      <property>
+        <name>httpfs.proxyuser.hue.hosts</name>
+        <value>*</value>
       </property>
     </configuration>
