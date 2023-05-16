@@ -41,7 +41,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
-          args: ["-c" "./sbin/httpfs.sh"]
+          args: ["-c","./sbin/httpfs.sh"]
           ports:
             - name: httpfs
               containerPort: 14000
