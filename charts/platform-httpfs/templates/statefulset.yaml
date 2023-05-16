@@ -40,8 +40,8 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-#          command: ['/bin/sh']
-#          args: ["-c","./sbin/httpfs.sh"]
+          command: ['/bin/sh']
+          args: ["-c","cp -f /etc/hadoop/conf/httpfs-site.xml /opt/hadoop-hdfs-httpfs-0.20.2-cdh3u7-SNAPSHOT/etc/hadoop/ && ./sbin/httpfs.sh run"]
 #          args: ["-c","sleep infinity"]
           ports:
             - name: httpfs

@@ -43,4 +43,8 @@ data:
         <name>httpfs.proxyuser.hue.hosts</name>
         <value>*</value>
       </property>
+        <property>
+      <name>httpfs.hadoop.config.dir</name>
+        <value>/etc/hadoop/conf/</value>
+      </property>
     </configuration>
