@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "httpfs.fullname" . }}
+  labels:
+    {{- include "httpfs.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  serviceName: {{ include "httpfs.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "httpfs.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "httpfs.selectorLabels" . | nindent 8 }}
+    spec:
+      hostNetwork: {{ .Values.hostNetwork }}
+      hostPID: {{ .Values.hostPID }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "httpfs.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        {{- if .Values.global.metastore.external.enabled }}
+        - name: wait-for-metastore
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;']
+        {{- else}}
+        - name: wait-for-postgresql
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
+        - name: init-mydb
+          image: "bringg/hive:3.1.2"
+          command: ['sh', '-c', "/scripts/init-mydb.sh"]
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" . }}
+          volumeMounts:
+            - name: httpfs-config
+              mountPath: /opt/hive/conf/
+              readOnly: true
+            - name: init-mydb
+              mountPath: /scripts
+              readOnly: true
+        {{- end }}
+        {{- if .Values.global.ranger.enabled }}
+        - name: wait-for-ranger-admin
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']
+        - name: init-ranger-admin
+          image: centos
+          command: ['sh', '-c', '/scripts/init-ranger-admin.sh'] 
+          volumeMounts:
+            - name: init-ranger-admin
+              mountPath: /scripts
+              readOnly: true
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ['/bin/sh']
+          args: ["-c" "./sbin/httpfs.sh"]
+          ports:
+            - name: httpfs
+              containerPort: 14000
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: httpfs
+          readinessProbe:
+            tcpSocket:
+              port: httpfs
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: hadoop-config
+              mountPath: /etc/hadoop/conf/
+              readOnly: true
+            - name: kerberos-config
+              mountPath: /etc/krb5.conf
+              subPath: krb5.conf
+              readOnly: true
+            - name: kerberos-keytabs
+              mountPath: /etc/security/
+              readOnly: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: hadoop-config
+          projected:
+            sources:
+              - configMap:
+                  name: {{ template "httpfs.config.fullname" . }}
+              - configMap:
+                  name: {{ template "hive-meta-store.config.fullname" . }}
+              - configMap:
+                  name: {{ template "hdfs-k8s.config.fullname" . }}
+        - name: kerberos-config
+          configMap:
+            name: {{ template "krb5-configmap" . }}
+        - name: init-ranger-admin
+          configMap:
+            name: init-ranger-admin
+            defaultMode: 0744  
+        - name: kerberos-keytabs
+          projected:
+            sources:
+              - secret:
+                  name: {{ template "httpfs-keytabs-secret" . }}
+              - secret:
+                  name: {{ template "hive-keytabs-secret" . }}
+              - secret:
+                  name: {{ template "krb5-keytabs-secret" . }}
+        - name: policycache
+          emptyDir: {}
+        - name: init-mydb
+          configMap:
+            name: {{ template "hive-meta-store.fullname" . }}
+            defaultMode: 0744

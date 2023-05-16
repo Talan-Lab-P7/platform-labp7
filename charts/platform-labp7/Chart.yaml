@@ -144,3 +144,11 @@ dependencies:
       - kerberos
       - simple
       - ranger
+  - name: httpfs
+    version: 0.20.2
+    repository: "file://../platform-httpfs"
+    tags:
+      - ha
+      - kerberos
+      - simple
+      - ranger

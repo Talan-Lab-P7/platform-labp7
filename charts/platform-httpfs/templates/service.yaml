@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "httpfs.fullname" . }}
+  labels:
+    {{- include "httpfs.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      protocol: TCP
+      name: httpfs
+  clusterIP: None
+  selector:
+    {{- include "httpfs.selectorLabels" . | nindent 4 }}
