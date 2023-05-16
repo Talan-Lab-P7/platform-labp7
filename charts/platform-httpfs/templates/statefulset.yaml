@@ -41,7 +41,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
-          args: ["-c","./sbin/httpfs.sh"]
+#          args: ["-c","./sbin/httpfs.sh"]
+          args: ["-c","sellp infinity"]
           ports:
             - name: httpfs
               containerPort: 14000
@@ -49,12 +50,12 @@ spec:
             - name: httpfs-admin
               containerPort: 14001
               protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: httpfs
-          readinessProbe:
-            tcpSocket:
-              port: httpfs
+#          livenessProbe:
+#            tcpSocket:
+#              port: httpfs
+#          readinessProbe:
+#            tcpSocket:
+#              port: httpfs
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
