@@ -31,6 +31,7 @@ data:
     _RANGER_ADMIN_HOST={{ include "ranger-admin.ranger-svc-0" . }}
     _RANGER_KMS_HOST={{ include "ranger-kms.ranger-svc-0" . }}
     _HUE_HOST={{ include "hue.hue-svc-0" . }}
+    _HTTPFS_HOST={{ include "httpfs.httpfs-svc-0" . }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey hive/$_HIVE_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey hive/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey spark/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
@@ -43,12 +44,15 @@ data:
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey HTTP/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey hue/$_HUE_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey HTTP/$_HUE_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey httpfs/$_HTTPFS_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "addprinc -randkey HTTP/$_HTTPFS_HOST@" .Values.global.kerberosRealm | quote }}
 
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hive.keytab hive/$_HIVE_HOST@" .Values.global.kerberosRealm " hive/$_SPARK_HOST@" .Values.global.kerberosRealm " HTTP/$_SPARK_HOST@" .Values.global.kerberosRealm " HTTP/$_HIVE_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/spark.keytab spark/$_SPARK_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/ranger-admin.keytab ranger-admin/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm " HTTP/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/ranger-kms.keytab ranger-kms/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm " HTTP/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm " ranger-admin/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hue.keytab hue/$_HUE_HOST@" .Values.global.kerberosRealm " HTTP/$_HUE_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hue.keytab httpfs/$_HTTPFS_HOST@" .Values.global.kerberosRealm " HTTP/$_HTTPFS_HOST@" .Values.global.kerberosRealm | quote }}
 
     for _HOST in $_HOSTS; do
      kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/$_HOST.keytab /tmp/$_HOST.keytab
@@ -61,6 +65,7 @@ data:
     kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/ranger-admin.keytab /tmp/ranger-admin.keytab
     kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/ranger-kms.keytab /tmp/ranger-kms.keytab
     kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/hue.keytab /tmp/hue.keytab
+    kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/httpfs.keytab /tmp/httpfs.keytab
 
     printf "%b" "read_kt /tmp/hue.keytab\n write_kt /tmp/hdfs.keytab\n" | ktutil
 
@@ -69,4 +74,5 @@ data:
     kubectl -n {{ .Release.Namespace }} create secret generic {{ include "spark-keytabs-secret" . }} --from-file=/tmp/spark.keytab
     kubectl -n {{ .Release.Namespace }} create secret generic {{ include "ranger-admin-keytabs-secret" . }} --from-file=/tmp/ranger-admin.keytab
     kubectl -n {{ .Release.Namespace }} create secret generic {{ include "ranger-kms-keytabs-secret" . }} --from-file=/tmp/ranger-kms.keytab
-    kubectl -n {{ .Release.Namespace }} create secret generic {{ include "hue-keytabs-secret" . }} --from-file=/tmp/hue.keytab    
+    kubectl -n {{ .Release.Namespace }} create secret generic {{ include "hue-keytabs-secret" . }} --from-file=/tmp/hue.keytab
+    kubectl -n {{ .Release.Namespace }} create secret generic {{ include "httpfs-keytabs-secret" . }} --from-file=/tmp/httpfs.keytab    

@@ -74,7 +74,7 @@ data:
       </property>
       <property>
         <name>hive.server2.authentication.spnego.principal</name>
-        <value>HTTP/_HOST@LABP7.CNAM</value>
+        <value>HTTP/_HOST@{{ .Values.global.kerberosRealm }}</value>
       </property>
       <property>
         <name>hive.server2.enable.doAs</name>

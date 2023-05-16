@@ -46,6 +46,9 @@ spec:
             - name: httpfs
               containerPort: 14000
               protocol: TCP
+            - name: httpfs-admin
+              containerPort: 14001
+              protocol: TCP
           livenessProbe:
             tcpSocket:
               port: httpfs
@@ -84,28 +87,15 @@ spec:
               - configMap:
                   name: {{ template "httpfs.config.fullname" . }}
               - configMap:
-                  name: {{ template "hive-meta-store.config.fullname" . }}
-              - configMap:
                   name: {{ template "hdfs-k8s.config.fullname" . }}
         - name: kerberos-config
           configMap:
             name: {{ template "krb5-configmap" . }}
-        - name: init-ranger-admin
-          configMap:
-            name: init-ranger-admin
-            defaultMode: 0744  
         - name: kerberos-keytabs
           projected:
             sources:
               - secret:
                   name: {{ template "httpfs-keytabs-secret" . }}
               - secret:
-                  name: {{ template "hive-keytabs-secret" . }}
-              - secret:
                   name: {{ template "krb5-keytabs-secret" . }}
-        - name: policycache
-          emptyDir: {}
-        - name: init-mydb
-          configMap:
-            name: {{ template "hive-meta-store.fullname" . }}
-            defaultMode: 0744
+

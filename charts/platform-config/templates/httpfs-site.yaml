@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "httpfs.config.fullname" . }}
+  labels:
+    app: {{ template "httpfs.app.name" . }}
+    chart: {{ template "httpfs.subchart" . }}
+    release: {{ .Release.Name }}
+data:
+  httpfs-site.xml: |
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+    <configuration>    
+      <property>
+        <name>httpfs.authentication.type</name>
+        <value>kerberos</value>
+      </property>
+      <property>
+        <name>httpfs.hadoop.authentication.type</name>
+        <value>kerberos</value>
+      </property>
+      <property>
+        <name>httpfs.authentication.kerberos.principal</name>
+        <value>HTTP/_HOST@{{ .Values.global.kerberosRealm }}</value>
+      </property>
+      <property>
+        <name>httpfs.authentication.kerberos.keytab</name>
+        <value>/etc/security/httpfs.keytab</value>
+      </property>
+      <property>
+        <name>httpfs.hadoop.authentication.kerberos.principal</name>
+        <value>httpfs/_HOST@{{ .Values.global.kerberosRealm }}</value>
+      </property>
+      <property>
+      <name>httpfs.hadoop.authentication.kerberos.keytab</name>
+      <value>/etc/security/httpfs.keytab</value>
+      </property>
+    </configuration>

@@ -10,6 +10,9 @@ spec:
     - port: {{ .Values.service.port }}
       protocol: TCP
       name: httpfs
+    - port: 14001
+      protocol: TCP
+      name: httpfs-admin
   clusterIP: None
   selector:
     {{- include "httpfs.selectorLabels" . | nindent 4 }}
