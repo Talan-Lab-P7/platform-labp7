@@ -52,7 +52,7 @@ data:
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/ranger-admin.keytab ranger-admin/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm " HTTP/$_RANGER_ADMIN_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/ranger-kms.keytab ranger-kms/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm " HTTP/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm " ranger-admin/$_RANGER_KMS_HOST@" .Values.global.kerberosRealm | quote }}
     kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hue.keytab hue/$_HUE_HOST@" .Values.global.kerberosRealm " HTTP/$_HUE_HOST@" .Values.global.kerberosRealm | quote }}
-    kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/hue.keytab httpfs/$_HTTPFS_HOST@" .Values.global.kerberosRealm " HTTP/$_HTTPFS_HOST@" .Values.global.kerberosRealm | quote }}
+    kubectl -n {{ .Release.Namespace }} exec {{ include "hdfs-k8s.krb5.fullname" . }}-0 -- kadmin.local -q {{ print "ktadd -norandkey -k /tmp/httpfs.keytab httpfs/$_HTTPFS_HOST@" .Values.global.kerberosRealm " HTTP/$_HTTPFS_HOST@" .Values.global.kerberosRealm | quote }}
 
     for _HOST in $_HOSTS; do
      kubectl -n {{ .Release.Namespace }} cp {{ include "hdfs-k8s.krb5.fullname" . }}-0:/tmp/$_HOST.keytab /tmp/$_HOST.keytab
