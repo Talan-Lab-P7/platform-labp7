@@ -42,7 +42,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
 #          args: ["-c","./sbin/httpfs.sh"]
-          args: ["-c","sellp infinity"]
+          args: ["-c","sleep infinity"]
           ports:
             - name: httpfs
               containerPort: 14000
