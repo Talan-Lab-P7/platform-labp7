@@ -254,4 +254,9 @@ data:
         <name>dfs.permissions.enabled</name>
         <value>false</value>
       </property>
+      <property>
+        <name>dfs.user.home.base.dir</name>
+        <value>/user</value>
+        <description>Base directory of user home.</description>
+      </property>
     </configuration>
