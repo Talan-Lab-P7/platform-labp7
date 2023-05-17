@@ -23,7 +23,7 @@ data:
 
     # Set this to a random string, the longer the better.
     # This is used for secure hashing in the session store.
-    secret_key=
+    secret_key=qksjdhfqsdf-qsdf_qsdbàààqçsdf))f
 
     # Execute this script to produce the Django secret key. This will be used when
     # 'secret_key' is not set.
@@ -40,7 +40,7 @@ data:
     time_zone=America/Los_Angeles
 
     # Enable or disable debug mode.
-    django_debug_mode=false
+    django_debug_mode=true
 
     # Enable development mode, where notably static files are not cached.
     ## dev=false
@@ -52,7 +52,7 @@ data:
     ## send_dbug_messages=false
 
     # Enable or disable backtrace for server error
-    http_500_debug_mode=false
+    http_500_debug_mode=true
 
     # Enable or disable instrumentation. If django_debug_mode is True, this is automatically enabled
     ## instrumentation=false
@@ -79,10 +79,10 @@ data:
     ## server_group=hue
 
     # This should be the Hue admin and proxy user
-    ## default_user=hue
+    default_user=hue
 
     # This should be the hadoop cluster admin
-    ## default_hdfs_superuser=hdfs
+    default_hdfs_superuser=hdfs
 
     # If set to false, runcpserver will not actually start the web server.
     # Used if Apache is being used as a WSGI container.
@@ -1837,7 +1837,7 @@ data:
 
     [useradmin]
     # Default home directory permissions
-    ## home_dir_permissions=0755
+    home_dir_permissions=0755
 
     # Disable to use umask from hdfs else new user home directory would be created with the permissions from home_dir_permissions
     ## use_home_dir_permissions=true
