@@ -1034,14 +1034,14 @@ data:
     #   interface=sqlalchemy
     #   options='{"url": "druid://host:8082/druid/v2/sql/"}'
 
-    [[[sparksql]]]
-      name = Spark Sql
-      interface=sqlalchemy
-      options='{"url": "jdbc:hive2://{{ .Values.global.kubernetes.master.host }}:30527/default"}'
+    #[[[sparksql]]]
+    #  name = Spark Sql
+    #  interface=sqlalchemy
+    #  options='{"url": "hive://{{ .Values.global.kubernetes.master.host }}:30527/default"}'
 
-    # [[[sparksql]]]
-    #   name=SparkSql
-    #   interface=livy
+    [[[sparksql]]]
+      name=SparkSql
+      interface=hiveserver2
 
     # [[[spark]]]
     #   name=Scala
