@@ -1037,7 +1037,7 @@ data:
     [[[sparksql]]]
       name = Spark Sql
       interface=sqlalchemy
-      options='{"url": "jdbc:hive2://{{ .Values.global.kubernetes.master.host }}:30527/default;principal=hive/{{ include "spark.spark-svc-0" . }}@LABP7.CNAM"}'
+      options='{"url": "hive://{{ .Values.global.kubernetes.master.host }}:30527/default;principal=hive/{{ include "spark.spark-svc-0" . }}@LABP7.CNAM""}'
 
     # [[[sparksql]]]
     #   name=SparkSql
