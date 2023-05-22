@@ -7,12 +7,10 @@ auth:
 replicaCount: 1
 
 image:
-  #repository: ukwa/httpfs
-  repository: adel1992/namenode
+  repository: adel1992/httpfs
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  #tag: "cdh3u5-v2"
-  tag: "3.1.1_ranger"
+  tag: "0.0.1"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

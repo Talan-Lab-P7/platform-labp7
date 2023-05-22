@@ -30,10 +30,10 @@ spec:
       serviceAccountName: {{ include "httpfs.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-#      initContainers:
-#        - name: wait-for-postgresql
-#          image: busybox
-#          command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
+      initContainers:
+        - name: wait-for-postgresql
+          image: busybox
+          command: ['sh', '-c', 'until nc -zv {{ template "namenode-svc-0" . }} 8020; do echo "Waiting for namenode to be available..."; sleep 10; done;'] 
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -41,8 +41,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
-#          args: ["-c","cp -f /etc/hadoop/conf/httpfs-site.xml /opt/hadoop-hdfs-httpfs-0.20.2-cdh3u7-SNAPSHOT/etc/hadoop/ && ./sbin/httpfs.sh run"]
-          args: ["-c","sleep infinity"]
+          args: ["-c","cp -f /etc/hadoop/conf/httpfs-site.xml /opt/hadoop-hdfs-httpfs-0.20.2-cdh3u7-SNAPSHOT/etc/hadoop/ && ./sbin/httpfs.sh run"]
           ports:
             - name: httpfs
               containerPort: 14000
@@ -50,12 +49,12 @@ spec:
             - name: httpfs-admin
               containerPort: 14001
               protocol: TCP
-#          livenessProbe:
-#            tcpSocket:
-#              port: httpfs
-#          readinessProbe:
-#            tcpSocket:
-#              port: httpfs
+          livenessProbe:
+            tcpSocket:
+              port: httpfs
+          readinessProbe:
+            tcpSocket:
+              port: httpfs
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

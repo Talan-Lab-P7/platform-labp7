@@ -1,0 +1,4 @@
+FROM adel1992/namenode:3.1.1_ranger
+RUN apt install -y wget
+RUN wget https://repo1.maven.org/maven2/javax/activation/activation/1.1.1/activation-1.1.1.jar -O /opt/hadoop-3.1.1/share/hadoop/common/lib/activation-1.1.1.jar
+RUN cp /opt/hadoop-3.1.1/share/hadoop/common/lib/activation-1.1.1.jar /opt/hadoop-3.1.1/lib/
