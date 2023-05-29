@@ -1,0 +1,2 @@
+FROM adel1992/datanode:centos
+RUN yum install -y perl
