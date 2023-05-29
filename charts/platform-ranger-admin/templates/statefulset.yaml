@@ -50,16 +50,16 @@ spec:
             - name: http
               containerPort: 6080
               protocol: TCP
-#          livenessProbe:
-#            tcpSocket:
-#              port: http
-#            initialDelaySeconds: 500
-#            periodSeconds: 30
-#          readinessProbe:
-#            tcpSocket:
-#              port: http
-#            initialDelaySeconds: 500
-#            periodSeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 500
+            periodSeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 500
+            periodSeconds: 30
           volumeMounts:
             - name: hdfs-kms-config
               mountPath: /etc/hadoop/conf
@@ -77,15 +77,15 @@ spec:
               mountPath: /scripts/
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.global.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.global.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

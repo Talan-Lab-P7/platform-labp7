@@ -146,32 +146,17 @@ spec:
       {{- else }}
       dnsPolicy: ClusterFirst
       {{- end }}
-      {{- if .Values.affinity }}
-      affinity:
-{{ toYaml .Values.affinity | indent 8 }}
-      {{- else if .Values.global.defaultAffinityEnabled }}
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: "app"
-                    operator: In
-                    values:
-                      - {{ template "hdfs-k8s.namenode.name" . }}
-                  - key: "release"
-                    operator: In
-                    values:
-                      - {{ .Release.Name }}
-              topologyKey: "kubernetes.io/hostname"
-      {{- end }}
-      {{- if .Values.nodeSelector }}
+      {{- with .Values.global.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.tolerations }}
+      {{- with .Values.global.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.tolerations }}
       tolerations:
-{{ toYaml .Values.tolerations | indent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         # TODO: Support hadoop version as option.

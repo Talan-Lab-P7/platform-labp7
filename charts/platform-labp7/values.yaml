@@ -389,6 +389,23 @@ global:
   ## the jsvc utility. See the reference doc at
   ## https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SecureMode.html#Secure_DataNode
   jsvcEnabled: true
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  
+  #tolerations:
+  #- key: "platformlabp7"
+  #  operator: "Exists"
+  #  effect: "NoSchedule"
+  #affinity:
+  #  nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      nodeSelectorTerms:
+  #      - matchExpressions:
+  #        - key: labp7/platform
+  #          operator: In
+  #          values:
+  #          - bigdata
 
 ## Tags and conditions for triggering a group of relevant subcharts.
 tags:

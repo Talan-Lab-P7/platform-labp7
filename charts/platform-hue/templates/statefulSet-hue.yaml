@@ -120,11 +120,20 @@ spec:
         - name: kerberos-config
           configMap:
             name: {{ template "krb5-configmap" . }}
-#        - name: hive-config-volume
-#          configMap:
-#            name: {{ include "hive-meta-store.config.fullname" . }}
 {{ if .Values.balancer.enabled }}
         - name: nginx-config
           configMap:
             name: nginx-config
 {{ end }}
+      {{- with .Values.global.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

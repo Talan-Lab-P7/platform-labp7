@@ -17,7 +17,6 @@ data:
     spark.executor.memory 1g
     spark.executor.cores 1
     spark.executor.instances 3
-    spark.driver.memory 2g
     spark.driver.host {{ template "spark.spark-svc-0" . }}
     spark.driver.port 16780
     {{- if .Values.global.ranger.enabled }}
@@ -26,3 +25,10 @@ data:
     spark.kerberos.principal spark/{{ template "spark.spark-svc-0" . }}@{{ .Values.global.kerberosRealm }}
     spark.kerberos.keytab /etc/security/spark.keytab
     spark.kubernetes.kerberos.krb5.path /etc/krb5.conf
+    spark.sql.adaptive.enabled true
+    spark.sql.adaptive.coalescepartitions.enable true
+    spark.sql.adaptive.skewjoin.enabled true
+    spark.dynamicallocation.enabled true
+    spark.dynamicallocation.maxexecutors 20
+
+
