@@ -10,4 +10,5 @@ spec:
   ports:
   - name: hue
     port: 8888
+    nodePort: 32748
   type: NodePort
