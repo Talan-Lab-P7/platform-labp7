@@ -282,7 +282,7 @@ global:
       enabled: false
   ## @param global.imageRegistry Global Docker image registry
   ##
-  imageRegistry: ""
+  imageRegistry: "55.39.206.23:50000"
   ## @param global.imagePullSecrets Global Docker registry secret names as an array
   ## e.g.
   ## imagePullSecrets:
