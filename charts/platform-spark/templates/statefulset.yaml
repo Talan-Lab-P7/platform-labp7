@@ -33,14 +33,14 @@ spec:
       initContainers:
         {{- if .Values.global.metastore.external.enabled }}
         - name: wait-for-metastore
-          image: {{ .Values.global.registry }}/busybox
+          image: {{ .Values.global.imageRegistry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ template "hive-meta-store.metastore-svc-0" . }} 9083; do echo "Waiting for metastore to be available..."; sleep 10; done;']
         {{- else}}
         - name: wait-for-postgresql
-          image: {{ .Values.global.registry }}/busybox
+          image: {{ .Values.global.imageRegistry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
         - name: init-mydb
-          image: "{{ .Values.global.registry }}/hive:3.1.2"
+          image: "{{ .Values.global.imageRegistry }}/hive:3.1.2"
           command: ['sh', '-c', "/scripts/init-mydb.sh"]
           env:
           - name: POSTGRES_PASSWORD
@@ -58,10 +58,10 @@ spec:
         {{- end }}
         {{- if .Values.global.ranger.enabled }}
         - name: wait-for-ranger-admin
-          image: {{ .Values.global.registry }}/busybox
+          image: {{ .Values.global.imageRegistry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']
         - name: init-ranger-admin
-          image: {{ .Values.global.registry }}/centos
+          image: {{ .Values.global.imageRegistry }}/centos
           command: ['sh', '-c', '/scripts/init-ranger-admin.sh'] 
           volumeMounts:
             - name: init-ranger-admin
@@ -72,7 +72,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['/bin/sh']
           args: ["-c","/opt/spark/bin/spark-submit --master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}  --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 spark-internal"]

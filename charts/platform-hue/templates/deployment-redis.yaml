@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: {{ .Values.global.registry }}/redis
+        image: {{ .Values.global.imageRegistry }}/redis
         resources:
           requests:
             cpu: 30m

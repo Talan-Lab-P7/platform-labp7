@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgres-hue
-          image: {{ .Values.global.registry }}/postgres:9.5
+          image: {{ .Values.global.imageRegistry }}/postgres:9.5
           env:
             - name: POSTGRES_USER
               value: {{ .Values.hue.database.user }}

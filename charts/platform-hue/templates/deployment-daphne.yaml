@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: daphne-websocket
-          image: {{ .Values.global.registry }}/hue:{{ .Values.image.tag }}
+          image: {{ .Values.global.imageRegistry }}/hue:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['./build/env/bin/daphne', '-p', '8001', 'desktop.asgi:application', '--bind', '0.0.0.0']
           resources:

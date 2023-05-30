@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: hdfs-client
-          image: {{ .Values.global.registry }}/hadoop:3.1.1
+          image: {{ .Values.global.imageRegistry }}/hadoop:3.1.1
           env:
             - name: HADOOP_CUSTOM_CONF_DIR
               value: /etc/hadoop-custom-conf

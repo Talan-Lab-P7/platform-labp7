@@ -275,7 +275,6 @@ hdfs-krb5-k8s:
 ## Global values affecting all sub-charts:
 ## ------------------------------------------------------------------------------
 global:
-  registry: 55.39.206.23:50000
   ldapuri: 37.59.140.104
   metastore:
     external:

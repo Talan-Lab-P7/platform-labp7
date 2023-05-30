@@ -30,13 +30,13 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: wait-for-postgresql
-          image: {{ .Values.global.registry }}/busybox
+          image: {{ .Values.global.imageRegistry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;'] 
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
           args: ["-c","rm /opt/ranger-2.1.0-admin/install.properties && cp /tmp/install/install.properties /opt/ranger-2.1.0-admin/ && /opt/ranger-2.1.0-admin/setup.sh && /opt/ranger-2.1.0-admin/ews/start-ranger-admin.sh && /scripts/init-users.sh && sleep infinity"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
