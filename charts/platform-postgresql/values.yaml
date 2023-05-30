@@ -1201,8 +1201,8 @@ metrics:
   ## @param metrics.image.pullSecrets Specify image pull secrets
   ##
   image:
-    registry: docker.io
-    repository: bitnami/postgres-exporter
+    registry: 55.39.206.23:50000
+    repository: postgres-exporter
     tag: 0.11.1-debian-11-r69
     digest: ""
     pullPolicy: IfNotPresent
