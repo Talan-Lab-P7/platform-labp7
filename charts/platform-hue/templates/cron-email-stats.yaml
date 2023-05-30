@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: email-stats
-            image: {{ .Values.image.registry }}/hue:{{ .Values.image.tag }}
+            image: {{ .Values.global.registry }}/hue:{{ .Values.image.tag }}
             imagePullPolicy: {{ .Values.image.pullPolicy }}
             args:
             - /bin/bash

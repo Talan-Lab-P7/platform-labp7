@@ -60,7 +60,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: hdfs-namenode
-          image: adel1992/namenode:3.1.1_ranger
+          image: {{ .Values.global.registry }}/namenode:3.1.1_ranger
           env:
             - name: HADOOP_CUSTOM_CONF_DIR
               value: /etc/hadoop-custom-conf
@@ -96,10 +96,10 @@ spec:
       {{- if .Values.global.kerberosEnabled }}
       initContainers:
         - name: wait-for-ranger-admin
-          image: busybox
+          image: {{ .Values.global.registry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']
         - name: copy-kerberos-keytab
-          image: busybox:1.27.1
+          image: {{ .Values.global.registry }}/busybox:1.27.1
           command: ['sh', '-c']
           args:
             - cp /kerberos-keytabs/hdfs.keytab /kerberos-keytab-copy/hdfs.keytab

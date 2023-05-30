@@ -33,7 +33,7 @@ spec:
       initContainers:
         
         - name: hue-init
-          image: {{ .Values.image.registry }}/hue:{{ .Values.image.tag }}
+          image: {{ .Values.global.registry }}/hue:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - /bin/sh
@@ -46,7 +46,7 @@ spec:
 {{ end }}
       containers:
       - name: hue
-        image: {{ .Values.image.registry }}/hue:{{ .Values.image.tag }}
+        image: {{ .Values.global.registry }}/hue:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
 #        command: ['/bin/sh']
 #        args: ["-c","sleep infinity"]
@@ -80,7 +80,7 @@ spec:
           failureThreshold: 30
 {{ if .Values.balancer.enabled }}
       - name: nginx
-        image: {{ .Values.image.registry }}/nginx:{{ .Values.image.tag }}
+        image: {{ .Values.global.registry }}/nginx:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
           - containerPort: 80

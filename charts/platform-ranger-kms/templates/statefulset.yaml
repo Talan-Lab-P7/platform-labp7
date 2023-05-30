@@ -30,16 +30,16 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: wait-for-postgresql
-          image: busybox
+          image: {{ .Values.global.registry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ include "postgresql.primary.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local {{ include "postgresql.service.port" . }}; do echo "Waiting for postgres to be available..."; sleep 10; done;']
         - name: wait-for-ranger-admin
-          image: busybox
+          image: {{ .Values.global.registry }}/busybox
           command: ['sh', '-c', 'until nc -zv {{ template "ranger-admin.ranger-svc-0" . }} 6080; do echo "Waiting for metastore to be available..."; sleep 10; done;']   
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['/bin/sh']
           args: ["-c","cp -f /etc/hadoop/conf/kms-site.xml /opt/ranger-2.3.0-kms/ews/webapp/WEB-INF/classes/conf.dist/ && rm /opt/ranger-2.3.0-kms/install.properties && cp /tmp/install/install.properties /opt/ranger-2.3.0-kms/ && /opt/ranger-2.3.0-kms/setup.sh && ranger-kms start && sleep infinity"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}

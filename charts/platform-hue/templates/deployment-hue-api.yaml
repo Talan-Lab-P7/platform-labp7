@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: hue
-        image: gethue/compose:latest
+        image: {{ .Values.global.registry }}/compose:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 8005

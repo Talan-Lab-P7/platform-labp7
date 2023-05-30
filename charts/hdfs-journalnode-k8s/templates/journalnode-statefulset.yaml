@@ -90,7 +90,7 @@ spec:
       {{- end }}
       containers:
         - name: hdfs-journalnode
-          image: adel1992/namenode:3.1.1
+          image: {{ .Values.global.registry }}/namenode:3.1.1
           env:
             - name: HADOOP_CUSTOM_CONF_DIR
               value: /etc/hadoop-custom-conf
@@ -126,7 +126,7 @@ spec:
      {{- if .Values.global.kerberosEnabled }}
       initContainers:
         - name: copy-kerberos-keytab
-          image: busybox:1.27.1
+          image: {{ .Values.global.registry }}/busybox:1.27.1
           command: ['sh', '-c']
           args:
             - cp /kerberos-keytabs/hdfs.keytab /kerberos-keytab-copy/hdfs.keytab

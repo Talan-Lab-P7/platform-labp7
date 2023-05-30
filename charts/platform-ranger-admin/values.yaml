@@ -8,7 +8,7 @@ auth:
   existingSecret: ""
 
 image:
-  repository: adel1992/apache-ranger-admin
+  repository: apache-ranger-admin
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2.3.0"

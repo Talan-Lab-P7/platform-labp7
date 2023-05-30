@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: {{ .Values.global.registry }}/busybox
       command: ['wget']
       args: ['{{ include "platform-labp7.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never

@@ -258,7 +258,7 @@ hdfs-krb5-k8s:
   ## Find a way to fix it.
   image:
     #repository: gcavalcante8808/krb5-server
-    repository: adel1992/kerberos
+    repository: kerberos
     #repository: adel1992/openldap
 
     #tag: 0.0.7
@@ -275,6 +275,7 @@ hdfs-krb5-k8s:
 ## Global values affecting all sub-charts:
 ## ------------------------------------------------------------------------------
 global:
+  registry:
   ldapuri: 37.59.140.104
   metastore:
     external:
@@ -392,7 +393,7 @@ global:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  
+
   #tolerations:
   #- key: "platformlabp7"
   #  operator: "Exists"

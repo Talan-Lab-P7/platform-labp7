@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: celery-beat
-          image: {{ .Values.image.registry }}/hue:{{ .Values.image.tag }}
+          image: {{ .Values.global.registry }}/hue:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['./build/env/bin/celery', 'beat', '-A', 'desktop', '-l', 'info']
           resources:
