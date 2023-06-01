@@ -141,17 +141,17 @@ data:
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.ranger-kms.groups</name>
+            <name>hadoop.kms.proxyuser.ranger-admin.groups</name>
             <value>*</value>
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.ranger-kms.hosts</name>
+            <name>hadoop.kms.proxyuser.ranger-admin.hosts</name>
             <value>*</value>
       </property>
 
       <property>
-            <name>hadoop.kms.proxyuser.ranger-kms.users</name>
+            <name>hadoop.kms.proxyuser.ranger-admin.users</name>
             <value>*</value>
       </property>
     </configuration>
