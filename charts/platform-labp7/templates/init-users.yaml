@@ -15,4 +15,6 @@ data:
     useradd -m -g supergroup -s /bin/bash spark
     useradd -m -g supergroup -s /bin/bash ranger-admin
     useradd -m -g supergroup -s /bin/bash ranger-kms
+    useradd -m -g supergroup -s /bin/bash hue
+    useradd -m -g supergroup -s /bin/bash admin
     
