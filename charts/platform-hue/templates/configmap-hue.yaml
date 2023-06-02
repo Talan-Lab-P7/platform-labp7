@@ -211,7 +211,7 @@ data:
     # Comma separated list of apps to not load at server startup.
     # e.g.: pig,zookeeper
     ## app_blacklist=beeswax,impala,security,jobbrowser,rdbms,jobsub,pig,hbase,sqoop,zookeeper,metastore,oozie,indexer
-    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms
+    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms,notebook
 
     # Id of the cluster where Hue is located.
     ## cluster_id='default'
