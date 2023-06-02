@@ -320,7 +320,7 @@ data:
     ## enable_gist_preview=true
 
     # Turn on the direct link sharing of saved document.
-    ## enable_link_sharing=true
+    enable_link_sharing=false
 
     # Use JWT as Bearer header for authentication when using Thrift over HTTP transport.
     ## use_thrift_http_jwt=false
