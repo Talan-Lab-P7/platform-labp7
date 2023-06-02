@@ -1432,13 +1432,13 @@ data:
 
     [metastore]
     # Flag to turn on the new version of the create table wizard.
-    ## enable_new_create_table=true
+    enable_new_create_table=true
 
     # Flag to force all metadata calls (e.g. list tables, table or column details...) to happen via HiveServer2 if available instead of Impala.
     ## force_hs2_metadata=false
 
     # Choose whether to show the table ERD component. Default false
-    ## show_table_erd=false
+    show_table_erd=false
 
     ###########################################################################
     # Settings to configure Impala
@@ -1571,19 +1571,19 @@ data:
     ## oozie_jobs_count=100
 
     # Use Cron format for defining the frequency of a Coordinator instead of the old frequency number/unit.
-    ## enable_cron_scheduling=true
+    enable_cron_scheduling=false
 
     # Flag to enable the saved Editor queries to be dragged and dropped into a workflow.
-    ## enable_document_action=true
+    enable_document_action=false
 
     # Flag to enable Oozie backend filtering instead of doing it at the page level in Javascript. Requires Oozie 4.3+.
-    ## enable_oozie_backend_filtering=true
+    enable_oozie_backend_filtering=false
 
     # Flag to enable the Impala action.
-    ## enable_impala_action=false
+    enable_impala_action=false
 
     # Flag to enable the Altus action.
-    ## enable_altus_action=false
+    enable_altus_action=false
 
 
     ###########################################################################
@@ -1733,16 +1733,16 @@ data:
     ## config_jars_libs_path=/user/oozie/libext/libs
 
     # Flag to turn on the Solr Morphline indexer.
-    ## enable_scalable_indexer=true
+    enable_scalable_indexer=false
 
     # Flag to turn on Sqoop ingest.
-    ## enable_sqoop=true
+    enable_sqoop=false
 
     # Flag to turn on Kafka topic ingest.
-    ## enable_kafka=false
+    enable_kafka=false
 
     # Flag to turn on the direct upload of a small file.
-    ## enable_direct_upload=true
+    enable_direct_upload=false
 
 
     ###########################################################################
@@ -1765,7 +1765,7 @@ data:
     [jobbrowser]
     # Share submitted jobs information with all users. If set to false,
     # submitted jobs are visible only to the owner and administrators.
-    ## share_jobs=true
+    share_jobs=false
 
     # Whether to disalbe the job kill button for all users in the jobbrowser
     ## disable_killing_jobs=false
@@ -1780,10 +1780,10 @@ data:
     ## enable_v2=true
 
     # Show the Impala query section for listing and showing more troubleshooting information.
-    ## enable_query_browser=true
+    enable_query_browser=false
 
     # Show the Hive section for listing the query history and providing more troubleshooting information.
-    ## enable_hive_query_browser=false
+    enable_hive_query_browser=false
 
     # Use the proxy API instead of the ORM to access the query_store.
     ## use_proxy=true
@@ -1793,7 +1793,7 @@ data:
     ##server_url=
 
     # Show the Hive/Impala queries UI. The value is automatically set to false if server_url is empty, else true.
-    ##is_enabled=false
+    is_enabled=false
 
     ###########################################################################
     # Settings to configure Sentry / Security App.
@@ -2184,7 +2184,7 @@ data:
 
     [[kafka]]
     # Enable the Kafka integration.
-    ## is_enabled=false
+    is_enabled=false
 
     # URL of Kafka REST API.
     ## api_url=http://localhost:8082
