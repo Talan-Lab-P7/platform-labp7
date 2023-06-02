@@ -211,13 +211,13 @@ data:
     # Comma separated list of apps to not load at server startup.
     # e.g.: pig,zookeeper
     ## app_blacklist=beeswax,impala,security,jobbrowser,rdbms,jobsub,pig,hbase,sqoop,zookeeper,metastore,oozie,indexer
-    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms,spark
+    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms
 
     # Id of the cluster where Hue is located.
     ## cluster_id='default'
 
     # Choose whether to show the new SQL editor.
-    ## use_new_editor=true
+    use_new_editor=false
 
     # Global setting to allow or disable end user downloads in all Hue.
     # e.g. Query result in Editors and Dashboards, file in File Browser...
