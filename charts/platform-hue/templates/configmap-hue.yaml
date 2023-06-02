@@ -1557,6 +1557,7 @@ data:
     ###########################################################################
 
     [oozie]
+    is_enabled=false
     # Location on local FS where the examples are stored.
     ## local_data_dir=..../examples
 
