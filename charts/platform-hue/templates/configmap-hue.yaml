@@ -211,7 +211,8 @@ data:
     # Comma separated list of apps to not load at server startup.
     # e.g.: pig,zookeeper
     ## app_blacklist=beeswax,impala,security,jobbrowser,rdbms,jobsub,pig,hbase,sqoop,zookeeper,metastore,oozie,indexer
-    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms,documents,indexes
+    ## app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms
+    app_whitelist=spark,filebrowser
 
     # Id of the cluster where Hue is located.
     ## cluster_id='default'
@@ -231,7 +232,7 @@ data:
     ## enable_sql_syntax_check=true
 
     # Choose whether to use new charting library across the whole Hue.
-    ## use_new_charts=false
+    use_new_charts=false
 
     # Choose whether to allow multi tenancy or not.
     ## enable_organizations=false
