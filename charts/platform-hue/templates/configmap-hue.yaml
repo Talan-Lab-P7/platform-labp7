@@ -210,8 +210,8 @@ data:
 
     # Comma separated list of apps to not load at server startup.
     # e.g.: pig,zookeeper
-    ## app_blacklist=beeswax,impala,security,jobbrowser,rdbms,jobsub,pig,hbase,sqoop,zookeeper,metastore,oozie,indexer
-    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms,search,mydocuments
+    app_blacklist=sqoop,zookeeper,metastore,oozie,indexer,security,hbase,jobbrowser,pig,impala,jobsub,rdbms,search,hive,dashboard,notebook,kafka
+
     
 
     # Id of the cluster where Hue is located.
@@ -313,7 +313,7 @@ data:
     ## enable_prometheus=false
 
     # Turn on the Gist snippet sharing.
-    ## enable_gist=true
+    enable_gist=false
 
     # Add public description so that the link can be unfurled in a preview by websites like Slack.
     # Only enabled automatically in private setups.
