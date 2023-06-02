@@ -1001,9 +1001,6 @@ data:
     # Define the name and how to connect and execute the language.
     # https://docs.gethue.com/administrator/configuration/editor/
 
-    [[importer]]
-    visible=false
-
     # [[[mysql]]]
     #   name = MySQL
     #   interface=sqlalchemy
@@ -1171,10 +1168,10 @@ data:
     # Settings to configure your Analytics Dashboards
     ###########################################################################
 
-    #[dashboard]
+    [dashboard]
 
     # Activate the Dashboard link in the menu.
-    ## is_enabled=true
+    is_enabled=false
 
     # Activate the SQL Dashboard (beta).
     ## has_sql_enabled=false
@@ -1247,9 +1244,9 @@ data:
 
     # Configuration for YARN (MR2)
     # ------------------------------------------------------------------------
-    #[[yarn_clusters]]
+    [[yarn_clusters]]
 
-    #[[[default]]]
+    [[[default]]]
     # Enter the host on which you are running the ResourceManager
     ## resourcemanager_host=localhost
 
@@ -1559,7 +1556,7 @@ data:
     # Settings to configure the Oozie app
     ###########################################################################
 
-    #[oozie]
+    [oozie]
     # Location on local FS where the examples are stored.
     ## local_data_dir=..../examples
 
