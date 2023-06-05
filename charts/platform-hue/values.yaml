@@ -11,8 +11,8 @@ hue:
     host: "postgres-hue"
     port: 5432
     user: "postgres"
-    #password: "E6WQgFr6Ub"
-    password_script: echo ${POSTGRES_PASSWORD}
+    password: "E6WQgFr6Ub"
+    #password_script: echo ${POSTGRES_PASSWORD}
     name: "hue"
     storageName: "microk8s-hostpath"
   interpreters: |

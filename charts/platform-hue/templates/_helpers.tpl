@@ -114,3 +114,18 @@ Construct the full name of hue statefulset member 0.
 {{- $domain := include "hue.svc-domain" . -}}
 {{- printf "%s.%s.%s" $pod $service $domain -}}
 {{- end -}}
+
+
+{{/*
+password postgres secret name
+*/}}
+{{- define "hue.secret.password.name" -}}
+{{- printf "%s" "postgres-password-secret" -}}
+{{- end -}}
+
+{{/*
+password postgres
+*/}}
+{{- define "hue.secret.password.key" -}}
+{{- printf "%s" "postgres-password" -}}
+{{- end -}}
