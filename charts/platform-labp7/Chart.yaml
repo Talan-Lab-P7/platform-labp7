@@ -56,13 +56,6 @@ dependencies:
     condition: condition.subchart.ranger-admin
     tags:
       - ranger
-  - name: zookeeper
-    version: "2.1.6"
-    repository: https://charts.helm.sh/incubator
-    condition: condition.subchart.zookeeper
-    tags:
-      - ha
-      - kerberos
   - name: hdfs-config-k8s
     version: "0.1.0"
     repository: "file://../hdfs-config-k8s"
@@ -145,7 +138,7 @@ dependencies:
       - simple
       - ranger
   - name: httpfs
-    version: 0.20.2
+    version: 0.0.1
     repository: "file://../platform-httpfs"
     tags:
       - ha

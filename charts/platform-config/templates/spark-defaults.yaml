@@ -11,8 +11,7 @@ data:
     spark.kubernetes.driver.master k8s://{{ .Values.global.kubernetes.master.host }}:{{ .Values.global.kubernetes.master.port }}
     spark.kubernetes.authenticate.serviceAccountName default
     spark.kubernetes.namespace {{ .Release.Namespace }}
-    spark.kubernetes.container.image adel1992/spark-3.2.2:0.0.3
-    spark.jars.packages org.postgresql:postgresql:42.6.0
+    spark.kubernetes.container.image 55.39.206.23:5000/spark-3.2.2:postgresql_kyuubi
     spark.sql.warehouse.dir hdfs://{{ template "namenode-svc-0" . }}:8020/hive/warehouse
     spark.executor.memory 1g
     spark.executor.cores 1

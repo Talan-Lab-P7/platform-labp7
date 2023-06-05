@@ -281,7 +281,7 @@ global:
       enabled: false
   ## @param global.imageRegistry Global Docker image registry
   ##
-  imageRegistry: "55.39.206.23:50000"
+  imageRegistry: "55.39.206.23:5000"
   ## @param global.imagePullSecrets Global Docker registry secret names as an array
   ## e.g.
   ## imagePullSecrets:
@@ -320,7 +320,7 @@ global:
   kubernetes: 
     master:
       port: "6443"
-      host: "5.135.90.212"
+      host: "55.39.206.20"
   ranger:
     enabled: true
 

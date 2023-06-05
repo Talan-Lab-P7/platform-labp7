@@ -2,3 +2,4 @@
 hive-metastore/
 postgresql/
 **/Chart.lock
+charts/platform-labp7/charts/*.tgz
