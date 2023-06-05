@@ -48,6 +48,12 @@ spec:
       - name: hue
         image: {{ .Values.global.imageRegistry }}/hue:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgresql.secretName" . }}
+                key: {{ template "postgresql.adminPasswordKey" . }}
 #        command: ['/bin/sh']
 #        args: ["-c","sleep infinity"]
         ports:
