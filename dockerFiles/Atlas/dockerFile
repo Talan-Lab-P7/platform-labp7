@@ -1,0 +1,2 @@
+FROM manjitsing664/atlasimage
+RUN apk update && apk add curl unzip
